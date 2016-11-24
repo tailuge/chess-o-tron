@@ -1,6 +1,6 @@
 {
 "ignore": [
-    "**/lib/**",
+    " html/js/chess.js",
     "lib/**",
     "**/thirdparty/**",
     "**/third_party/**"
