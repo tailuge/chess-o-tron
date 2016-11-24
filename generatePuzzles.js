@@ -3,8 +3,8 @@
  * 
  * example usage from lichess game dump:
  * 
- * cat lichess_tailuge_2016-09-03.pgn | grep -A15 Event..Rated | grep -A12 "White..tailuge" | grep -A3 Termination..Normal | grep 1..e4.e5 | tail -n 100 | node generatePuzzles.js | tee 100puzzles.json
- *
+ * head -10 example100.pgn | node generatePuzzles.js | tee puzzles.json
+ * 
  */
 
 var Chess = require('./lib/chess').Chess;
@@ -28,7 +28,9 @@ rl.on('line', function (line) {
     findAllLoosePieces(line).forEach(x => console.log(JSON.stringify(x)+","));
 });
 
-
+/**
+ * Step through all positions in PGN.
+ */
 function findAllLoosePieces(pgn) {
     var gameMoves = pgn.replace(/([0-9]+\.\s)/gm, '').trim();
     var moveArray = gameMoves.split(' ').filter(function (n) {
@@ -101,6 +103,9 @@ function loosePieces(fen) {
     return pieces.filter(square => !isCheckAfterPlacingKingAtSquare(fen, king, square));
 }
 
+/**
+ * A piece is loose if you can put the oponents king in place of it and that king is not in check.
+ */
 function isCheckAfterPlacingKingAtSquare(fen, king, square) {
     var chess = new Chess();
     chess.load(fen);
