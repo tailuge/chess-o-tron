@@ -1,6 +1,9 @@
 /**
  * Generate chess puzzles by stepping through a PGN of a game on stdin
  * 
+ * node --version
+ * > v4.2.4
+ * 
  * example usage from lichess game dump:
  * 
  * head -10 example100.pgn | node generatePuzzles.js | tee puzzles.json
