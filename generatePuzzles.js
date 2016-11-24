@@ -7,7 +7,7 @@
  *
  */
 
-var Chess = require('./node_modules/chess.js/chess').Chess;
+var Chess = require('./lib/chess').Chess;
 
 /**
  * Read from stdin and apply puzzle generator to each line
