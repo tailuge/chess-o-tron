@@ -1,6 +1,8 @@
+{
 "ignore": [
     "**/lib/**",
     "lib/**",
     "**/thirdparty/**",
     "**/third_party/**"
   ]
+}
