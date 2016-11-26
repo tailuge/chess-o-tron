@@ -1,0 +1,6 @@
+{
+  "name": "Chess-o-tron",
+  "tagline": "Chess experiments",
+  "body": "# chess-o-tron [![bitHound Overall Score](https://www.bithound.io/github/tailuge/chess-o-tron/badges/score.svg)](https://www.bithound.io/github/tailuge/chess-o-tron)\r\n\r\ngit clone https://github.com/tailuge/chess-o-tron.git\r\n\r\ncd chess-o-tron\r\n\r\nhead -10 example100.pgn | node generatePuzzles.js | tee puzzles.json\r\n\r\n\r\n(node 4.2.4)\r\n\r\n\r\n[demo](https://tailuge.github.io/chess-o-tron/html/loose-piece-o-tron.html)\r\n\r\n[related](https://tailuge.github.io/chess-o-tron/)\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
