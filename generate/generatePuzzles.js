@@ -6,7 +6,7 @@
  * 
  * example usage from lichess game dump:
  * 
- * head -10 example100.pgn | node generatePuzzles.js | tee puzzles.json
+ * head -10 example100.pgn | node generatePuzzles.js | tee ../html/js/loose-piece-o-tron-data.js
  * 
  */
 
@@ -22,9 +22,9 @@ var rl = readline.createInterface({
     terminal: false
 });
 
-console.log("[");
+console.log("var problems = [");
 rl.on('close', function () {
-    console.log("]");
+    console.log("];");
 });
 
 rl.on('line', function (line) {
