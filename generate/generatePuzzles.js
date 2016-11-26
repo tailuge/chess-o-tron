@@ -12,6 +12,7 @@
 
 var Chess = require('./lib/chess').Chess;
 
+
 /**
  * Read from stdin and apply puzzle generator to each line
  */
@@ -29,9 +30,9 @@ rl.on('close', function () {
 
 rl.on('line', function (pgnLine) {
     pgnToFens(pgnLine)
-    .map(generate)
-    .filter(filterForChanges)
-    .forEach( puzzle => console.log(JSON.stringify(puzzle) + ","));
+        .map(generate)
+        .filter(filterForChanges)
+        .forEach(puzzle => console.log(JSON.stringify(puzzle) + ","));
 });
 
 /**
@@ -49,7 +50,7 @@ function generate(fen) {
  * Loose piece analysis added to puzzle.
  */
 function enrichWithLoosePieces(puzzle) {
-    puzzle.targetPieces = loosePieces(puzzle.fen);
+    puzzle.targetPieces = loosePiecesForBothSides(puzzle.fen);
     return puzzle;
 }
 
@@ -138,6 +139,12 @@ function piecesForColour(fen, colour) {
     });
 }
 
+function loosePiecesForBothSides(fen) {
+    var blackLoosePieces = loosePieces(fen);
+    var whiteLoosePieces = loosePieces(fenForOtherSide(fen));
+    return blackLoosePieces.concat(whiteLoosePieces);
+}
+
 function loosePieces(fen) {
     var chess = new Chess();
     chess.load(fen);
@@ -159,4 +166,15 @@ function isCheckAfterPlacingKingAtSquare(fen, king, square) {
         color: chess.turn()
     }, square);
     return chess.in_check();
+}
+
+function fenForOtherSide(fen) {
+    return fen.replace(/ w .*/, " b - - 0 1");
+}
+
+// handy to investigate a single fen
+
+if (process.argv.length === 3) {
+    console.log(generate(process.argv[2]));
+    process.exit();
 }
