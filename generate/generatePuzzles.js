@@ -79,7 +79,7 @@ function kingsSquare(fen, colour) {
     chess.load(fen);
     return allSquares.find(square => {
         var r = chess.get(square);
-        return r == null ? false : (r.color == colour && r.type.toLowerCase() === 'k');
+        return r === null ? false : (r.color == colour && r.type.toLowerCase() === 'k');
     });
 }
 
@@ -91,7 +91,7 @@ function piecesForColour(fen, colour) {
     chess.load(fen);
     return allSquares.filter(square => {
         var r = chess.get(square);
-        if ((r==null) || (r.type == 'k')) {
+        if ((r===null) || (r.type === 'k')) {
             return false;
         }
         return r.color == colour;
