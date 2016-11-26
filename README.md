@@ -10,5 +10,6 @@ head -10 example100.pgn | node generatePuzzles.js | tee puzzles.json
 (node 4.2.4)
 
 
-https://tailuge.github.io/chess-o-tron/html/loose-piece-o-tron.html
+[demo](https://tailuge.github.io/chess-o-tron/html/loose-piece-o-tron.html)
 
+[related](https://tailuge.github.io/chess-o-tron/)
