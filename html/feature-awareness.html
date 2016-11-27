@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Feature awareness trainer</title>
+    <meta name="description" content="Chess feature detection trainer">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/chessboard-0.3.0.min.css">
+</head>
+
+<body>
+    <h1 align="center">Feature awareness trainer</h1>
+    <h3 align="center">Find all tactical features in each category</h3>
+    <h1 id="clock" align="center"> - </h1>
+    <div align="center" style="width:100%;">
+        <table border="0" width="100%" style="margin: 10px;">
+            <tr>
+                <td style="width:30%">
+                    <div id="whiteFeatures">
+                        <div class="feature" id="w0"></div>
+                        <div class="feature" id="w1"></div>
+                        <div class="feature" id="w2"></div>
+                        <div class="feature" id="w3"></div>
+                        <div class="feature" id="w4"></div>
+                    </div>
+                </td>
+                <td style="width:40%">
+                    <div align="center" id="board" style="width: 60%; margin: auto;"></div>
+                </td>
+                <td style="width:30%">
+                    <div id="blackFeatures">
+                        <div class="feature" id="b0"></div>
+                        <div class="feature" id="b1"></div>
+                        <div class="feature" id="b2"></div>
+                        <div class="feature" id="b3"></div>
+                        <div class="feature" id="b4"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <p>
+            <button onclick="location.href = 'feature-awareness.html';" id="restart"> Restart </button>
+        </p>
+
+        <p>
+            <span id="status"></span>
+        </p>
+
+        <p>FEN:
+            <span id="fen"></span>
+        </p>
+        <p>
+            <div id="debugDiv"></div>
+        </p>
+        <p>
+            <div>Data auto generated from games on <a href="http://lichess.org">lichess.org</a>. Source code on <a href="../index.html">GitHub</a></div>
+        </p>
+
+        <!-- libraries -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+        <script src="js/chessboard-0.3.0.min.js"></script>
+        <script src="js/chess.js"></script>
+
+        <!-- puzzle data -->
+        <script src="js/feature-awareness-data.js"></script>
+
+        <!-- code -->
+        <script src="js/feature-awareness.js"></script>
+
+</body>
+
+</html>

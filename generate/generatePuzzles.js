@@ -13,8 +13,6 @@
 var Chess = require('./lib/chess').Chess;
 var ChessExt = require('./chessExt');
 
-console.log(ChessExt.allSquares);
-
 /**
  * Read from stdin and apply puzzle generator to each line
  */
@@ -86,7 +84,7 @@ function filterForChanges(elt, index, array) {
 
 function loosePiecesForBothSides(fen) {
     var blackLoosePieces = loosePieces(fen);
-    var whiteLoosePieces = loosePieces(fenForOtherSide(fen));
+    var whiteLoosePieces = loosePieces(ChessExt.fenForOtherSide(fen));
     return blackLoosePieces.concat(whiteLoosePieces);
 }
 
@@ -95,27 +93,10 @@ function loosePieces(fen) {
     chess.load(fen);
     var king = ChessExt.kingsSquare(fen, chess.turn());
     var pieces = ChessExt.piecesForColour(fen, chess.turn() == 'w' ? 'b' : 'w');
-    return pieces.filter(square => !isCheckAfterPlacingKingAtSquare(fen, king, square));
+    return pieces.filter(square => !ChessExt.isCheckAfterPlacingKingAtSquare(fen, king, square));
 }
 
-/**
- * A piece is loose if you can put the oponents king in place of it and that king is not in check.
- */
-function isCheckAfterPlacingKingAtSquare(fen, king, square) {
-    var chess = new Chess();
-    chess.load(fen);
-    chess.remove(square);
-    chess.remove(king);
-    chess.put({
-        type: 'k',
-        color: chess.turn()
-    }, square);
-    return chess.in_check();
-}
 
-function fenForOtherSide(fen) {
-    return fen.replace(/ w .*/, " b - - 0 1");
-}
 
 // handy to investigate a single fen
 

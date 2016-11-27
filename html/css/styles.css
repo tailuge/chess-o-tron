@@ -58,6 +58,16 @@ textarea:-moz-placeholder { color:#a9a9a9; }
   left: 200px;
 }
 
+.feature {
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border:solid 1px black; 
+    padding:5px;
+    text-shadow: 0.5px 0.5px #888888;
+    width:250px;
+    text-align:center;
+}
+
 .highlight-bad {
   -webkit-box-shadow: inset 0 0 3px 3px red;
   -moz-box-shadow: inset 0 0 3px 3px red;
