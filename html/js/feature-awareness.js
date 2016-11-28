@@ -1,4 +1,4 @@
-/* globals clearHighlights, highlightFromDescriptions, ChessBoard, $, problems */
+/* globals clearHighlights, highlightFromDescriptions, initializeClock, ChessBoard, $, problems */
 
 'use strict';
 
@@ -21,24 +21,6 @@ $("#board").on("click", ".square-55d63", clickOnSquare);
 var problem;
 var problemIndex = 0;
 console.log("Loaded " + problems.length + " problems.");
-
-/**
- * Timer
- */
-function initializeClock(id, endtime) {
-    var clock = document.getElementById(id);
-    var timeinterval = setInterval(function () {
-        var t = endtime - Date.now();
-        var seconds = (t / 1000).toFixed(1);
-        clock.innerHTML = seconds;
-        if (t <= 0) {
-            clearInterval(timeinterval);
-            clock.innerHTML = "SCORE : " + score;
-        }
-    }, 100);
-}
-
-initializeClock('clock', Date.now() + 60.5 * 1000);
 
 var score = 0;
 
@@ -175,28 +157,10 @@ function renderFeature(f,i) {
 
 $(document).ready(function () {
     console.log("begin");
+    initializeClock('clock', Date.now() + 60.5 * 1000);
     getNextProblem();
     console.log(JSON.stringify(problem));
     problem.features.forEach(renderFeature);
     board.position(problem.fen);
     updateStatus();
 });
-
-/**
- * Debug logger
- *
- *
- *
- */
-
-if (typeof console != "undefined")
-    if (typeof console.log != 'undefined') console.olog = console.log;
-    else console.olog = function () {};
-
-console.log = function (message) {
-    console.olog(message);
-    $('#debugDiv').append('' + message + '<br/>');
-    $("#debugDiv").scrollTop($("#debugDiv")[0].scrollHeight);
-};
-
-console.error = console.debug = console.info = console.log;
