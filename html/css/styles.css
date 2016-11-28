@@ -68,28 +68,34 @@ textarea:-moz-placeholder { color:#a9a9a9; }
     text-align:center;
 }
 
-.highlight-f0 {
+.highlight-loose-white {
   -webkit-box-shadow: inset 0 0 3px 3px green;
   -moz-box-shadow: inset 0 0 3px 3px green;
   box-shadow: inset 0 0 3px 3px green;  
 }
 
-.highlight-f1 {
+.highlight-loose-black {
   -webkit-box-shadow: inset 0 0 3px 3px red;
   -moz-box-shadow: inset 0 0 3px 3px red;
   box-shadow: inset 0 0 3px 3px red;  
 }
 
-.highlight-f2 {
+.highlight-checking-white {
   -webkit-box-shadow: inset 0 0 3px 3px olive;
   -moz-box-shadow: inset 0 0 3px 3px olive;
   box-shadow: inset 0 0 3px 3px olive;  
 }
 
-.highlight-f3 {
+.highlight-checking-black {
   -webkit-box-shadow: inset 0 0 3px 3px blue;
   -moz-box-shadow: inset 0 0 3px 3px blue;
   box-shadow: inset 0 0 3px 3px blue;  
+}
+
+.highlight-unknown {
+  -webkit-box-shadow: inset 0 0 3px 3px blue;
+  -moz-box-shadow: inset 0 0 3px 3px blue;
+  box-shadow: inset 0 0 5px 5px gray;  
 }
 
 .movelistitem {

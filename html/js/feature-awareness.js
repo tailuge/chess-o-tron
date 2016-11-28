@@ -1,4 +1,4 @@
-/* globals Chess, ChessBoard, $, problems */
+/* globals clearHighlights, highlightFromDescriptions, ChessBoard, $, problems */
 
 'use strict';
 
@@ -8,6 +8,12 @@ var fenEl = $('#fen');
 var whiteFeaturesEl = $('#whiteFeatures');
 var blackFeaturesEl = $('#blackFeatures');
 
+function clickOnSquare(evt) {
+  var target = $(this).data("square");
+  updateProblemState(target);
+}
+
+$("#board").on("click", ".square-55d63", clickOnSquare);
 /**
  * Get problem from local array loaded in data element of main page.
  */
@@ -52,7 +58,7 @@ var onDrop = function (source, target) {
 
 
 var moveToNextProblem = function () {
-    clearHighlights();
+    clearHighlights(boardEl);
     getNextProblem();
     board.position(problem.fen);
     problem.features.forEach(renderFeature);
@@ -91,25 +97,6 @@ var cfg = {
 var board = new ChessBoard('board', cfg);
 
 /**
- * Highlighter
- *
- *
- *
- */
-
-var highlight = function (square, cssclass) {
-    boardEl.find('.square-' + square).addClass(cssclass);
-};
-
-var clearHighlights = function () {
-    boardEl.find('.square-55d63').removeClass('highlight-f0');
-    boardEl.find('.square-55d63').removeClass('highlight-f1');
-    boardEl.find('.square-55d63').removeClass('highlight-f2');
-    boardEl.find('.square-55d63').removeClass('highlight-f3');
-};
-
-
-/**
  * pick problems in random order
  */
 var getNextProblem = function () {
@@ -127,14 +114,12 @@ var getNextProblem = function () {
  * update the problem if target is valid and move to next puzzle if all found.
  */
 function updateProblemState(target) {
-    var before = overallProblemScore(problem);
-    updateProblemFeatures(problem, target);
-    var after = overallProblemScore(problem);
-    if (before === after) {
+    var descriptions = updateProblemFeatures(problem, target);
+    if (descriptions.length === 0) {
         score--;
     } else {
         score++;
-        highlight(target,"highlight-f0");
+        highlightFromDescriptions(boardEl, target,descriptions);
         problem.features.forEach(renderFeature);
     }
 
@@ -150,21 +135,16 @@ function updateProblemState(target) {
  * Scan through all features and move matched targets into completed.
  */
 function updateProblemFeatures(problem, target) {
+    var identified = [];
     problem.features.forEach(feature => {
         var index = feature.todo.indexOf(target);
         if (index !== -1) {
             feature.todo.splice(index,1);
             feature.completed.push(target);
+            identified.push(feature.description);
         }
     });
-}
-
-function overallProblemScore(problem) {
-    var total = 0;
-    problem.features.forEach(feature => {
-        total += feature.completed.length;
-    });
-    return total;
+    return identified;
 }
 
 function overallProblemTargetsRemaining(problem) {
