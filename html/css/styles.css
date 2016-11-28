@@ -68,22 +68,28 @@ textarea:-moz-placeholder { color:#a9a9a9; }
     text-align:center;
 }
 
-.highlight-bad {
-  -webkit-box-shadow: inset 0 0 3px 3px red;
-  -moz-box-shadow: inset 0 0 3px 3px red;
-  box-shadow: inset 0 0 3px 3px red;  
-}
-
-.highlight-best {
+.highlight-f0 {
   -webkit-box-shadow: inset 0 0 3px 3px green;
   -moz-box-shadow: inset 0 0 3px 3px green;
   box-shadow: inset 0 0 3px 3px green;  
 }
 
-.highlight-best-shortterm {
+.highlight-f1 {
+  -webkit-box-shadow: inset 0 0 3px 3px red;
+  -moz-box-shadow: inset 0 0 3px 3px red;
+  box-shadow: inset 0 0 3px 3px red;  
+}
+
+.highlight-f2 {
   -webkit-box-shadow: inset 0 0 3px 3px olive;
   -moz-box-shadow: inset 0 0 3px 3px olive;
   box-shadow: inset 0 0 3px 3px olive;  
+}
+
+.highlight-f3 {
+  -webkit-box-shadow: inset 0 0 3px 3px blue;
+  -moz-box-shadow: inset 0 0 3px 3px blue;
+  box-shadow: inset 0 0 3px 3px blue;  
 }
 
 .movelistitem {

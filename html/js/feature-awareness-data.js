@@ -3,12 +3,22 @@ var problems = [{
     "features": [{
         "description": "Blacks loose pieces",
         "side": "b",
-        "targets": ["a8", "c7", "d4", "g5"],
+        "targets": ["a8", "c7", "d4", "g5","h8"],
         "completed":[]
     }, {
         "description": "White's loose pieces",
         "side": "w",
         "targets": ["a1", "e4", "e5", "g2", "h1"],
+        "completed":[]
+    }, {
+        "description": "White's check giving squares",
+        "side": "w",
+        "targets": ["f7"],
+        "completed":[]
+    }, {
+        "description": "Black's check giving squares",
+        "side": "b",
+        "targets": ["f3","d2","c2","e3"],
         "completed":[]
     }]
 }, {
@@ -21,7 +31,12 @@ var problems = [{
     }, {
         "description": "White's loose pieces",
         "side": "w",
-        "targets": ["b12"],
+        "targets": ["b2"],
+        "completed":[]
+    }, {
+        "description": "White's check giving squares",
+        "side": "w",
+        "targets": ["d7"],
         "completed":[]
     }]
 }];

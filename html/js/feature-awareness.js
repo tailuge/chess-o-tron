@@ -32,7 +32,7 @@ function initializeClock(id, endtime) {
     }, 100);
 }
 
-//initializeClock('clock', Date.now() + 60.5 * 1000);
+initializeClock('clock', Date.now() + 60.5 * 1000);
 
 var score = 0;
 
@@ -45,34 +45,17 @@ var score = 0;
 
 // always snapback, we just want the square clicked.
 var onDrop = function (source, target) {
-    updateGameState(target);
+    updateProblemState(target);
     return 'snapback';
 };
 
 
-var updateGameState = function (target) {
-    var index = problem.pinsRemaining.indexOf(target);
-    if (index === -1) {
-        score--;
-    }
-    else {
-        score++;
-        problem.pinsRemaining.splice(index, 1);
-        highlight(target, 'highlight-best');
-    }
-
-    if (problem.pinsRemaining.length === 0) {
-        //move to next problem
-        console.log("All targets found");
-        setTimeout(moveToNextProblem, 500);
-    }
-    updateStatus();
-};
 
 var moveToNextProblem = function () {
     clearHighlights();
     getNextProblem();
     board.position(problem.fen);
+    problem.features.forEach(renderFeature);
     updateStatus();
 };
 
@@ -84,9 +67,10 @@ var moveToNextProblem = function () {
  */
 var updateStatus = function () {
     var scoreStatus = 'Score : ' + ((score > 0) ? '+' : '') + score;
-    var status = (problem.pinsRemaining.length === 0) ?
+    var remaining = overallProblemTargetsRemaining(problem);
+    var status = (remaining === 0) ?
         '<b>COMPLETE!</b>' + scoreStatus :
-        'There are ' + problem.pinsRemaining.length + ' squares to find. ' + scoreStatus;
+        'There are ' + remaining + ' squares to find. ' + scoreStatus;
     statusEl.html(status);
     fenEl.html(board.fen());
     console.log(JSON.stringify(problem));
@@ -118,9 +102,10 @@ var highlight = function (square, cssclass) {
 };
 
 var clearHighlights = function () {
-    boardEl.find('.square-55d63').removeClass('highlight-bad');
-    boardEl.find('.square-55d63').removeClass('highlight-best');
-    boardEl.find('.square-55d63').removeClass('highlight-best-shortterm');
+    boardEl.find('.square-55d63').removeClass('highlight-f0');
+    boardEl.find('.square-55d63').removeClass('highlight-f1');
+    boardEl.find('.square-55d63').removeClass('highlight-f2');
+    boardEl.find('.square-55d63').removeClass('highlight-f3');
 };
 
 
@@ -132,10 +117,63 @@ var getNextProblem = function () {
     console.log("Problem : #" + problemIndex);
     problem = problems[problemIndex++];
     problem.features.forEach((feature,i) => {
+        problem.features[i].todo = feature.targets.slice();
         problem.features[i].completed = [];
     });
     return problem;
 };
+
+/**
+ * update the problem if target is valid and move to next puzzle if all found.
+ */
+function updateProblemState(target) {
+    var before = overallProblemScore(problem);
+    updateProblemFeatures(problem, target);
+    var after = overallProblemScore(problem);
+    if (before === after) {
+        score--;
+    } else {
+        score++;
+        highlight(target,"highlight-f0");
+        problem.features.forEach(renderFeature);
+    }
+
+    if (overallProblemTargetsRemaining(problem) === 0) {
+        //move to next problem
+        console.log("All targets found");
+        setTimeout(moveToNextProblem, 500);
+    }
+    updateStatus();
+}
+
+/**
+ * Scan through all features and move matched targets into completed.
+ */
+function updateProblemFeatures(problem, target) {
+    problem.features.forEach(feature => {
+        var index = feature.todo.indexOf(target);
+        if (index !== -1) {
+            feature.todo.splice(index,1);
+            feature.completed.push(target);
+        }
+    });
+}
+
+function overallProblemScore(problem) {
+    var total = 0;
+    problem.features.forEach(feature => {
+        total += feature.completed.length;
+    });
+    return total;
+}
+
+function overallProblemTargetsRemaining(problem) {
+    var total = 0;
+    problem.features.forEach(feature => {
+        total += feature.todo.length;
+    });
+    return total;
+}
 
 var emptyStar = '<span class="empty">☆</span>';
 var fullStar = '<span class="full">★</span>';
@@ -145,7 +183,7 @@ var fullStar = '<span class="full">★</span>';
  * 
  */
 function renderFeature(f,i) {
-    document.getElementById(f.side+i).innerHTML = f.description + "<br>" + fullStar.repeat(f.completed.length) + emptyStar.repeat(f.targets.length);
+    document.getElementById(f.side+i).innerHTML = f.description + "<br>" + fullStar.repeat(f.completed.length) + emptyStar.repeat(f.todo.length);
 }
 
 /**
@@ -161,7 +199,7 @@ $(document).ready(function () {
     console.log(JSON.stringify(problem));
     problem.features.forEach(renderFeature);
     board.position(problem.fen);
-    //    updateStatus();
+    updateStatus();
 });
 
 /**
