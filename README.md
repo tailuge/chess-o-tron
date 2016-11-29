@@ -7,7 +7,7 @@
 ```
 git clone https://github.com/tailuge/chess-o-tron.git
 cd chess-o-tron/generate
-head -10 example100.pgn | node generatePuzzles.js | tee puzzles.json
+head -100 raw.puzzles | node checkingSquares.js | node absolutePin.js | node loosePieces.js 
 ```
 
 (node 4.2.4)

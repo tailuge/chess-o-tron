@@ -21,16 +21,28 @@ function isCheckAfterPlacingKingAtSquare(fen, king, square) {
     return chess.in_check();
 }
 
-/**
- * Switch side to play (and remove en-passent information)
- */ 
-function fenForOtherSide(fen) {
-    return fen.replace(/ w .*/, " b - - 0 1");
+function isCheckAfterRemovingPieceAtSquare(fen, square) {
+    var chess = new Chess();
+    chess.load(fen);
+    chess.remove(square);
+    return chess.in_check();
 }
 
 /**
- * Where is the kings
- */ 
+ * Switch side to play (and remove en-passent information)
+ */
+function fenForOtherSide(fen) {
+    if (fen.search(" w ") > 0) {
+        return fen.replace(/ w .*/, " b - - 0 1");
+    }
+    else {
+        return fen.replace(/ b .*/, " w - - 0 2");
+    }
+}
+
+/**
+ * Where is the king.
+ */
 function kingsSquare(fen, colour) {
     var chess = new Chess();
     chess.load(fen);
@@ -90,9 +102,10 @@ function pgnToFens(pgn) {
     return fens;
 }
 
-module.exports.allSquares= allSquares;
+module.exports.allSquares = allSquares;
 module.exports.pgnToFens = pgnToFens;
 module.exports.kingsSquare = kingsSquare;
 module.exports.piecesForColour = piecesForColour;
 module.exports.isCheckAfterPlacingKingAtSquare = isCheckAfterPlacingKingAtSquare;
 module.exports.fenForOtherSide = fenForOtherSide;
+module.exports.isCheckAfterRemovingPieceAtSquare = isCheckAfterRemovingPieceAtSquare;
