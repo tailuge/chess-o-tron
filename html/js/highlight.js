@@ -16,4 +16,8 @@ function highlight(boardElement, square, cssclass) {
 function clearHighlights(boardElement) {
     boardElement.find('.square-55d63').removeClass('highlight-w-loose-pieces');
     boardElement.find('.square-55d63').removeClass('highlight-b-loose-pieces');
+    boardElement.find('.square-55d63').removeClass('highlight-w-pinned-pieces');
+    boardElement.find('.square-55d63').removeClass('highlight-b-pinned-pieces');
+    boardElement.find('.square-55d63').removeClass('highlight-w-checking-squares');
+    boardElement.find('.square-55d63').removeClass('highlight-b-checking-squares');
 }
