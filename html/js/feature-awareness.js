@@ -1,4 +1,4 @@
-/* globals clearHighlights, highlightFromDescriptions, initializeClock, ChessBoard, $, problems */
+/* globals clearHighlights, highlightFromDescriptions, initializeClock, ChessBoard, $, problems, renderFeature */
 
 'use strict';
 
@@ -129,19 +129,6 @@ function overallProblemTargetsRemaining(problem) {
     return total;
 }
 
-var emptyStar = '<span class="empty">☆</span>';
-var fullStar = '<span class="full">★</span>';
-
-/**
- * Render feature from state.
- * 
- */
-function renderFeature(f, i) {
-    var description = (f.side === 'w' ? "White's " : "Black's ") + f.description + "<br>";
-    document.getElementById(f.side + i).innerHTML = description +
-        fullStar.repeat(f.completed.length) + emptyStar.repeat(f.todo.length);
-}
-
 /**
  * Entry point
  *
@@ -155,6 +142,7 @@ $(document).ready(function () {
     getNextProblem();
     console.log(JSON.stringify(problem));
     problem.features.forEach(renderFeature);
+    // need a way to disable features not in the problem
     board.position(problem.fen);
     updateStatus();
 });

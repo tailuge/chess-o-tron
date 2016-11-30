@@ -22,11 +22,10 @@ function addPinsForCurrentPlayer(fen, features) {
     var opponent = chess.turn() === 'w' ? 'b' : 'w';
     var pieces = ChessExt.piecesForColour(fen, chess.turn());
     var pinned = pieces.filter(square => ChessExt.isCheckAfterRemovingPieceAtSquare(fen, square));
-    if (pinned.length !== 0) {
-        features.push({
-            description: "pinned pieces",
-            side: chess.turn(),
-            targets: pinned
-        });
-    }
+    features.push({
+        description: "pinned pieces",
+        side: chess.turn(),
+        targets: pinned
+    });
+
 }

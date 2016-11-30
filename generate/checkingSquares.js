@@ -24,11 +24,12 @@ function addCheckingSquares(fen, features) {
         verbose: true
     });
     moves = moves.filter(move => move.san.indexOf("+") > 0).map(move => move.to);
-    if (moves.length !== 0) {
-        features.push({
-            description: "checking squares",
-            side: chess.turn(),
-            targets: moves
-        });
-    }
+    features.push({
+        description: "checking squares",
+        side: chess.turn(),
+        targets: moves.sort().filter(function (el, i, a) {
+            return i == a.indexOf(el);
+        })
+    });
+
 }
