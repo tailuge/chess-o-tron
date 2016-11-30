@@ -24,7 +24,7 @@ function addPinsForCurrentPlayer(fen, features) {
     var pinned = pieces.filter(square => ChessExt.isCheckAfterRemovingPieceAtSquare(fen, square));
     if (pinned.length !== 0) {
         features.push({
-            description: "Pinned Pieces",
+            description: "pinned pieces",
             side: chess.turn(),
             targets: pinned
         });

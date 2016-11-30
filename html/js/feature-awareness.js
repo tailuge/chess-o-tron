@@ -115,7 +115,7 @@ function updateProblemFeatures(problem, target) {
         if (index !== -1) {
             feature.todo.splice(index, 1);
             feature.completed.push(target);
-            identified.push(feature.description);
+            identified.push(feature.side + '-' + feature.description.replace(" ", "-"));
         }
     });
     return identified;
@@ -137,7 +137,9 @@ var fullStar = '<span class="full">★</span>';
  * 
  */
 function renderFeature(f, i) {
-    document.getElementById(f.side + i).innerHTML = f.description + "<br>" + fullStar.repeat(f.completed.length) + emptyStar.repeat(f.todo.length);
+    var description = (f.side === 'w' ? "White's " : "Black's ") + f.description + "<br>";
+    document.getElementById(f.side + i).innerHTML = description +
+        fullStar.repeat(f.completed.length) + emptyStar.repeat(f.todo.length);
 }
 
 /**

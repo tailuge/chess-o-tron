@@ -91,66 +91,38 @@ body {
     text-align:center;
 }
 
-.myButton {
-	-moz-box-shadow:inset 0px 0px 14px -3px #f2fadc;
-	-webkit-box-shadow:inset 0px 0px 14px -3px #f2fadc;
-	box-shadow:inset 0px 0px 14px -3px #f2fadc;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dbe6c4), color-stop(1, #9ba892));
-	background:-moz-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);
-	background:-webkit-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);
-	background:-o-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);
-	background:-ms-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);
-	background:linear-gradient(to bottom, #dbe6c4 5%, #9ba892 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dbe6c4', endColorstr='#9ba892',GradientType=0);
-	background-color:#dbe6c4;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	border:1px solid #b2b8ad;
-	display:inline-block;
-	cursor:pointer;
-	color:#757d6f;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:16px 76px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #ced9bf;
-}
-.myButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #9ba892), color-stop(1, #dbe6c4));
-	background:-moz-linear-gradient(top, #9ba892 5%, #dbe6c4 100%);
-	background:-webkit-linear-gradient(top, #9ba892 5%, #dbe6c4 100%);
-	background:-o-linear-gradient(top, #9ba892 5%, #dbe6c4 100%);
-	background:-ms-linear-gradient(top, #9ba892 5%, #dbe6c4 100%);
-	background:linear-gradient(to bottom, #9ba892 5%, #dbe6c4 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#9ba892', endColorstr='#dbe6c4',GradientType=0);
-	background-color:#9ba892;
-}
-.myButton:active {
-	position:relative;
-	top:1px;
-}
 
-.highlight-loose-white {
+.highlight-w-loose-pieces {
   -webkit-box-shadow: inset 0 0 3px 3px green;
   -moz-box-shadow: inset 0 0 3px 3px green;
   box-shadow: inset 0 0 3px 3px green;  
 }
 
-.highlight-loose-black {
+.highlight-b-loose-pieces {
   -webkit-box-shadow: inset 0 0 3px 3px red;
   -moz-box-shadow: inset 0 0 3px 3px red;
   box-shadow: inset 0 0 3px 3px red;  
 }
 
-.highlight-checking-white {
+.highlight-w-pinned-pieces {
   -webkit-box-shadow: inset 0 0 3px 3px olive;
   -moz-box-shadow: inset 0 0 3px 3px olive;
   box-shadow: inset 0 0 3px 3px olive;  
 }
 
-.highlight-checking-black {
+.highlight-b-pinned-pieces {
+  -webkit-box-shadow: inset 0 0 3px 3px blue;
+  -moz-box-shadow: inset 0 0 3px 3px blue;
+  box-shadow: inset 0 0 3px 3px blue;  
+}
+
+.highlight-w-checking-squares {
+  -webkit-box-shadow: inset 0 0 3px 3px olive;
+  -moz-box-shadow: inset 0 0 3px 3px olive;
+  box-shadow: inset 0 0 3px 3px olive;  
+}
+
+.highlight-b-checking-squares {
   -webkit-box-shadow: inset 0 0 3px 3px blue;
   -moz-box-shadow: inset 0 0 3px 3px blue;
   box-shadow: inset 0 0 3px 3px blue;  

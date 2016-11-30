@@ -2,6 +2,7 @@
  * Enrich puzzle with checking squares feature if found.
  * 
  * Deduced from legal moves that check. Problem with revealed checks.
+ * (try deleting all other pieces to see if it is check?)
  */
 
 var Chess = require('./lib/chess').Chess;
@@ -25,7 +26,7 @@ function addCheckingSquares(fen, features) {
     moves = moves.filter(move => move.san.indexOf("+") > 0).map(move => move.to);
     if (moves.length !== 0) {
         features.push({
-            description: "Checking Squares",
+            description: "checking squares",
             side: chess.turn(),
             targets: moves
         });

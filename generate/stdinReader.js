@@ -1,5 +1,8 @@
 /**
  * Read from stdin and apply puzzle generator to each line
+ * 
+ * cat raw.puzzles | node absolutePin.js | node loosePieces.js | node checkingSquares.js | sed 's/$/,/' > enriched.js
+ * 
  */
 function handle(callback) {
 
@@ -13,7 +16,9 @@ function handle(callback) {
     rl.on('close', function () {});
 
     rl.on('line', function (line) {
-        console.log(JSON.stringify(callback(JSON.parse(line))));
+        var puzzle = JSON.parse(line);
+        puzzle.fen = puzzle.fen.replace(/0$/,"2");
+        console.log(JSON.stringify(callback(puzzle)));
     });
 
 }
