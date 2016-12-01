@@ -2,7 +2,6 @@
 
 'use strict';
 
-var statusEl = $('#status');
 var boardEl = $('#board');
 var fenEl = $('#fen');
 var problem;
@@ -12,10 +11,7 @@ var score = 0;
 
 /**
  * Callbacks for chessboard.
- *
- *
  */
-
 
 // always snapback, we just want the square clicked.
 var onDrop = function (source, target) {
@@ -55,11 +51,6 @@ var moveToNextProblem = function () {
  * Show status of game on screen.
  */
 var updateStatus = function () {
-    var remaining = overallProblemTargetsRemaining(problem);
-    var status = (remaining === 0) ?
-        '<b>COMPLETE!</b>' :
-        'There are ' + remaining + ' squares to find.';
-    statusEl.html(status);
     fenEl.html(board.fen());
     console.log(JSON.stringify(problem));
 };
@@ -97,7 +88,7 @@ function updateProblemState(target) {
     if (overallProblemTargetsRemaining(problem) === 0) {
         //move to next problem
         console.log("All targets found");
-        setTimeout(moveToNextProblem, 500);
+        setTimeout(moveToNextProblem, 1000);
     }
     updateStatus();
 }
@@ -129,17 +120,13 @@ function overallProblemTargetsRemaining(problem) {
 /**
  * Entry point
  *
- *
- *
  */
-
 $(document).ready(function () {
     console.log("Loaded " + problems.length + " problems.");
-    initializeClock('clock', Date.now() + 60.5 * 1000);
+    initializeClock('clock', Date.now() + 5 * 60 * 1000);
     getNextProblem();
     console.log(JSON.stringify(problem));
     problem.features.forEach(renderFeature);
-    // need a way to disable features not in the problem
     board.position(problem.fen);
     updateStatus();
 });
