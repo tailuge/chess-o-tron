@@ -23,7 +23,7 @@ function addCheckingSquares(fen, features) {
     var moves = chess.moves({
         verbose: true
     });
-    moves = moves.filter(move => move.san.indexOf("+") > 0).map(move => move.to);
+    moves = moves.filter(move => /\+|\#/.test(move.san)).map(move => move.to);
     features.push({
         description: "checking squares",
         side: chess.turn(),

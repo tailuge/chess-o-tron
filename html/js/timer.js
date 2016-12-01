@@ -10,10 +10,10 @@ function initializeClock(id, endtime) {
     var timeinterval = setInterval(function () {
         var t = endtime - Date.now();
         var seconds = (t / 1000).toFixed(1);
-        clock.innerHTML = seconds;
+        clock.innerHTML = "TIME: " + seconds + " &emsp; SCORE: " + score;
         if (t <= 0) {
             clearInterval(timeinterval);
-            clock.innerHTML = "SCORE : " + score;
+            clock.innerHTML = "SCORE: " + score;
         }
     }, 100);
 }

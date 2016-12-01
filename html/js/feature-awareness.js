@@ -5,8 +5,6 @@
 var statusEl = $('#status');
 var boardEl = $('#board');
 var fenEl = $('#fen');
-var whiteFeaturesEl = $('#whiteFeatures');
-var blackFeaturesEl = $('#blackFeatures');
 var problem;
 var problemIndex = 0;
 var score = 0;
@@ -57,11 +55,10 @@ var moveToNextProblem = function () {
  * Show status of game on screen.
  */
 var updateStatus = function () {
-    var scoreStatus = 'Score : ' + ((score > 0) ? '+' : '') + score;
     var remaining = overallProblemTargetsRemaining(problem);
     var status = (remaining === 0) ?
-        '<b>COMPLETE!</b>' + scoreStatus :
-        'There are ' + remaining + ' squares to find. ' + scoreStatus;
+        '<b>COMPLETE!</b>' :
+        'There are ' + remaining + ' squares to find.';
     statusEl.html(status);
     fenEl.html(board.fen());
     console.log(JSON.stringify(problem));
