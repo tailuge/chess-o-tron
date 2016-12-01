@@ -16,7 +16,12 @@ function elementFromFeature(f) {
  * 
  */
 function renderFeature(f) {
+    var element = elementFromFeature(f)
     var description = (f.side === 'w' ? "White's " : "Black's ") + f.description + "<br>";
-    elementFromFeature(f).innerHTML = description +
+    console.log(element)
+    element.innerHTML = description +
         fullStar.repeat(f.completed.length) + emptyStar.repeat(f.todo.length);
+    element.className = "feature" + ((f.todo.length === 0) ? " inactive" : "");
+
+
 }
