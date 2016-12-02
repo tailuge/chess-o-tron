@@ -3,6 +3,7 @@
  * 
  * Deduced from legal moves that check. Problem with revealed checks.
  * (try deleting all other pieces to see if it is check?)
+ * grep "1q1r1k2/1b2Rpp1/p1pQ3p/PpPp4/3P1NP1/1P3P1P/6K1/8" raw.puzzles | node checkingSquares.js
  */
 
 var Chess = require('./lib/chess').Chess;
