@@ -1,14 +1,8 @@
-/* A Linux- and Windows-friendly sans-serif font stack: http://prospects.mhurrell.co.uk/post/updating-the-helvetica-font-stack */
-
 body {
   font: 13px Verdana;
+  background: #222222;
+  text-align: center;
 }
-
-
-/* Using local fonts? Check out Font Squirrel's webfont generator: http://www.fontsquirrel.com/tools/webfont-generator */
-
-
-/* We like off-black for text. */
 
 body,
 select,
@@ -47,44 +41,10 @@ a:link {
   -webkit-tap-highlight-color: #fcd700;
 }
 
-ins {
-  background-color: #fcd700;
-  color: #000;
-  text-decoration: none;
-}
-
-mark {
-  background-color: #fcd700;
-  color: #000;
-  font-style: italic;
-  font-weight: bold;
-}
-
-
-/* Mozilla dosen't style place holders by default */
-
-input:-moz-placeholder {
-  color: #a9a9a9;
-}
-
-textarea:-moz-placeholder {
-  color: #a9a9a9;
-}
-
-body {
-  background: #222222;
-}
-
 #clock {
   color: #008800;
   font-size: 150%;
   margin: 0 auto;
-}
-
-#instructions {
-  color: #ffffff;
-  font-size: 150%;
-  background-color: #aaaaaa;
 }
 
 #info {
@@ -100,12 +60,13 @@ body {
   display: inline-block;
   color: #757d6f;
   font-family: Arial;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   text-decoration: none;
   text-shadow: 0px 1px 0px #ced9bf;
   width: 250px;
-  height: 60px;
+  padding-top: 3px;
+  padding-bottom: 2px;
   text-align: center;
   margin: 5px;
 }
@@ -139,13 +100,31 @@ body {
   text-shadow: 0px 1px 0px #528ecc;
 }
 
+#w-queen-forks.feature,
+#b-queen-forks.feature,
+#w-pawn-forks.feature,
+#b-pawn-forks.feature,
+#w-rook-forks.feature,
+#b-rook-forks.feature,
+#w-bishop-forks.feature,
+#b-bishop-forks.feature,
+#w-knight-forks.feature,
+#b-knight-forks.feature {
+  box-shadow: inset 0px 1px 0px 0px #efdcfb;
+  background: linear-gradient(to bottom, #bf9dca 5%, #9c60ca 100%);
+  background-color: #dfbdfa;
+  border: 1px solid #c584f3;
+  color: #ffffff;
+  text-shadow: 0px 1px 1px #9752ac;
+}
+
 .feature.inactive {
-  opacity: 0.0;
+  opacity: 0.1;
   transition: opacity 1s ease-in-out;
 }
 
 .feature.complete {
-  opacity: 0.3;
+  opacity: 0.4;
   transition: opacity 1s ease-in-out;
 }
 
@@ -162,12 +141,22 @@ body {
   box-shadow: inset 0 0 25px 25px rgba(220, 220, 20, 0.8);
 }
 
-.tt {
-  box-shadow: inset 0 0 25px 25px rgba(220, 0, 222, 0.8);
+.highlight-b-pinned-pieces,
+.highlight-w-pinned-pieces {
+  box-shadow: inset 0 0 25px 25px rgba(50, 100, 50, 0.8);
 }
 
-.highlight-tt {
-  box-shadow: inset 1 1 5px 5px #00ff00;
+.highlight-w-queen-forks,
+.highlight-w-knight-forks,
+.highlight-w-bishop-forks,
+.highlight-w-rook-forks,
+.highlight-w-pawn-forks,
+.highlight-b-queen-forks,
+.highlight-b-knight-forks,
+.highlight-b-bishop-forks,
+.highlight-b-rook-forks,
+.highlight-b-pawn-forks {
+  box-shadow: inset 0 0 30px 30px rgba(153, 51, 255, 0.8);
 }
 
 .full {
@@ -182,6 +171,11 @@ hr {
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
-#blackFeatures {
+.whiteFeatures {
+  text-align: right;  
+  
+}
 
+.blackFeatures {
+  text-align: left;  
 }

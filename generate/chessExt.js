@@ -44,14 +44,26 @@ function fenForOtherSide(fen) {
  * Where is the king.
  */
 function kingsSquare(fen, colour) {
+    return squaresOfPiece(fen, colour, 'k');
+}
+
+function squaresOfPiece(fen, colour, pieceType) {
     var chess = new Chess();
     chess.load(fen);
     return allSquares.find(square => {
         var r = chess.get(square);
-        return r === null ? false : (r.color == colour && r.type.toLowerCase() === 'k');
+        return r === null ? false : (r.color == colour && r.type.toLowerCase() === pieceType);
     });
 }
 
+function movesOfPieceOn(fen, square) {
+    var chess = new Chess();
+    chess.load(fen);
+    var moves = chess.moves({
+        verbose: true
+    });
+    return moves.filter(move => move.from === square);
+}
 /**
  * Find position of all of one colours pieces excluding the king.
  */
@@ -72,7 +84,7 @@ function piecesForColour(fen, colour) {
  */
 function pgnToFens(pgn) {
     var gameMoves = pgn.replace(/([0-9]+\.\s)/gm, '').trim();
-    var moveArray = gameMoves.split(' ').filter(function (n) {
+    var moveArray = gameMoves.split(' ').filter(function(n) {
         return n;
     });
 
@@ -109,3 +121,5 @@ module.exports.piecesForColour = piecesForColour;
 module.exports.isCheckAfterPlacingKingAtSquare = isCheckAfterPlacingKingAtSquare;
 module.exports.fenForOtherSide = fenForOtherSide;
 module.exports.isCheckAfterRemovingPieceAtSquare = isCheckAfterRemovingPieceAtSquare;
+module.exports.movesOfPieceOn = movesOfPieceOn;
+

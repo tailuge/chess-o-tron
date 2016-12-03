@@ -20,4 +20,14 @@ function clearHighlights(boardElement) {
     boardElement.find('.square-55d63').removeClass('highlight-b-pinned-pieces');
     boardElement.find('.square-55d63').removeClass('highlight-w-checking-squares');
     boardElement.find('.square-55d63').removeClass('highlight-b-checking-squares');
+    boardElement.find('.square-55d63').removeClass('highlight-w-queen-forks');
+    boardElement.find('.square-55d63').removeClass('highlight-w-knight-forks');
+    boardElement.find('.square-55d63').removeClass('highlight-w-rook-forks');
+    boardElement.find('.square-55d63').removeClass('highlight-w-bishop-forks');
+    boardElement.find('.square-55d63').removeClass('highlight-w-pawn-forks');
+    boardElement.find('.square-55d63').removeClass('highlight-b-queen-forks');
+    boardElement.find('.square-55d63').removeClass('highlight-b-knight-forks');
+    boardElement.find('.square-55d63').removeClass('highlight-b-rook-forks');
+    boardElement.find('.square-55d63').removeClass('highlight-b-bishop-forks');
+    boardElement.find('.square-55d63').removeClass('highlight-b-pawn-forks');
 }

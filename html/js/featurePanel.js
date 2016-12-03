@@ -17,9 +17,9 @@ function elementFromFeature(f) {
  */
 function renderFeature(f) {
     var element = elementFromFeature(f);
-    var description = (f.side === 'w' ? "White's " : "Black's ") + f.description + "<hr>";
-    element.innerHTML = description +
-        fullStar.repeat(f.completed.length) + emptyStar.repeat(f.todo.length);
+    var description = (f.side === 'w' ? "White's " : "Black's ") + f.description;
+    element.innerHTML = description + "<hr>" + "&nbsp;" +
+        fullStar.repeat(f.completed.length) + emptyStar.repeat(f.todo.length) + "&nbsp;";
         
     
     if (f.todo.length > 0) {    

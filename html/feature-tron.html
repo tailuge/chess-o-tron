@@ -5,58 +5,81 @@
     <meta charset="utf-8">
     <title>Feature-tron</title>
     <meta name="description" content="Chess feature trainer">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="css/newstyles.css">
     <link rel="stylesheet" href="css/chessboard-0.3.0.min.css">
 </head>
 
 <body>
-    <h1 align="center">Feature-tron </h1>
-    <h4 align="center">Find all tactical features in each category</h4>
-    <h1 id="clock" align="center"> </h1>
-    <div align="center" style="width:100%;">
-        <table border="0" width="100%" style="margin: 10px;">
-            <tr>
-                <td style="width:32%">
-                    <div id="whiteFeatures" align="right">
-                        <div class="feature" id="w-loose-pieces"></div>
-                        <div class="feature" id="w-checking-squares"></div>
-                        <div class="feature" id="w-pinned-pieces"></div>
-                    </div>
-                </td>
-                <td style="width:36%">
-                    <div align="center" id="board" style="width: 100%; margin: auto;"></div>
-                </td>
-                <td style="width:32%">
-                    <div id="blackFeatures" align="left">
-                        <div class="feature" id="b-loose-pieces"></div>
-                        <div class="feature" id="b-checking-squares"></div>
-                        <div class="feature" id="b-pinned-pieces"></div>
-                    </div>
-                </td>
-            </tr>
-        </table>
+    <h1>Feature-tron </h1>
+    <p>Find all tactical features in each category</p>
+    <h1 id="clock"> </h1>
+    <table border="0" width="100%" style="margin: 10px;">
+        <tr>
+            <td style="width:32%">
+                <div class="whiteFeatures">
+                    <div class="feature" id="w-loose-pieces"></div>
+                    <br/>
+                    <div class="feature" id="w-checking-squares"></div>
+                    <br/>
+                    <div class="feature" id="w-pinned-pieces"></div>
+                    <br/>
+                    <div class="feature" id="w-queen-forks"></div>
+                    <br/>
+                    <div class="feature" id="w-knight-forks"></div>
+                    <br/>
+                    <div class="feature" id="w-bishop-forks"></div>
+                    <br/>
+                    <div class="feature" id="w-rook-forks"></div>
+                    <br/>
+                    <div class="feature" id="w-pawn-forks"></div>
+                </div>
+            </td>
+            <td style="width:36%">
+                <div id="board" style="width: 100%; margin: auto;"></div>
+            </td>
+            <td style="width:32%">
+                <div class="blackFeatures">
+                    <div class="feature" id="b-loose-pieces"></div>
+                    <br/>
+                    <div class="feature" id="b-checking-squares"></div>
+                    <br/>
+                    <div class="feature" id="b-pinned-pieces"></div>
+                    <br/>
+                    <div class="feature" id="b-queen-forks"></div>
+                    <br/>
+                    <div class="feature" id="b-knight-forks"></div>
+                    <br/>
+                    <div class="feature" id="b-bishop-forks"></div>
+                    <br/>
+                    <div class="feature" id="b-rook-forks"></div>
+                    <br/>
+                    <div class="feature" id="b-pawn-forks"></div>
+                </div>
+            </td>
+        </tr>
+    </table>
 
-        
-        <p>FEN:
-            <span id="fen"></span>
-        </p>
-        <p>
-            <div><small>Data auto generated from games on <a href="http://lichess.org">lichess.org</a>. Source code on <a href="../index.html">GitHub</a></small></div>
-        </p>
 
-        <!-- libraries -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-        <script src="js/chessboard-0.3.0.min.js"></script>
+    <p>FEN:
+        <span id="fen"></span>
+    </p>
+    <p>
+        <div><small>Data auto generated from games on <a href="http://lichess.org">lichess.org</a>. Source code on <a href="../index.html">GitHub</a></small></div>
+    </p>
 
-        <!-- puzzle data -->
-        <script src="js/feature-tron-data.js"></script>
+    <!-- libraries -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="js/chessboard-0.3.0.min.js"></script>
 
-        <!-- code -->
-        <script src="js/timer.js"></script>
-        <script src="js/highlight.js"></script>
-        <script src="js/featurePanel.js"></script>
-        <script src="js/feature-tron.js"></script>
+    <!-- puzzle data -->
+    <script src="js/feature-tron-data.js"></script>
+
+    <!-- code -->
+    <script src="js/timer.js"></script>
+    <script src="js/highlight.js"></script>
+    <script src="js/featurePanel.js"></script>
+    <script src="js/feature-tron.js"></script>
 
 </body>
 
