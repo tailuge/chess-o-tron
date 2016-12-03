@@ -102,7 +102,7 @@ a:hover {
 }
 
 .feature.complete {
-  opacity: 0.4;
+  opacity: 0.2;
   transition: opacity 1s ease-in-out;
 }
 

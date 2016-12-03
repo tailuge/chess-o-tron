@@ -1,12 +1,7 @@
 /**
  * Enrich puzzle with forking squares feature if found.
  * 
- * per piece
- * play move for piece
- * if check then remove king
- * switch turn back to player
- * can it capture a piece? fork
- * not check , can it capture 2 or more - fork
+ * issue with promotion square being counted in forks.
  * 
  */
 
@@ -40,9 +35,7 @@ function isFork(fen, move) {
     var chess = new Chess();
     chess.load(fen);
     chess.move(move);
-    var inCheck = chess.in_check();
-    if (inCheck) return false;
-    // remove king - change to pawn?
+
     var sameSidesTurnFen = ChessExt.fenForOtherSide(chess.fen());
     var pieceMoves = ChessExt.movesOfPieceOn(sameSidesTurnFen, move.to);
     var captures = pieceMoves.filter(capturesMajorPiece).length;
