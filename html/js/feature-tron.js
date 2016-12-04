@@ -7,14 +7,14 @@ var fenEl = $('#fen');
 var problem;
 var problemIndex = 0;
 var score = 0;
-var filter=['loose pieces'];
+var filter = [];
 
 /**
  * Callbacks for chessboard.
  */
 
 // always snapback, we just want the square clicked.
-var onDrop = function (source, target) {
+var onDrop = function(source, target) {
     updateProblemState(target);
     return 'snapback';
 };
@@ -39,38 +39,58 @@ var cfg = {
 
 var board = new ChessBoard('board', cfg);
 
-var moveToNextProblem = function () {
+var moveToNextProblem = function() {
     clearHighlights(boardEl);
     getNextProblem();
     board.position(problem.fen);
     problem.features.forEach(renderFeature);
-    updateStatus();
-};
-
-/**
- * Show status of game on screen.
- */
-var updateStatus = function () {
     fenEl.html(board.fen());
-    console.log(JSON.stringify(problem));
 };
-
 
 
 /**
  * pick problems in random order
  */
-var getNextProblem = function () {
+var getNextProblem = function() {
     problemIndex = Math.floor(Math.random() * problems.length);
     console.log("Problem : #" + problemIndex);
     problem = problems[problemIndex++];
     problem.features.forEach((feature, i) => {
-        problem.features[i].todo = feature.targets.slice();
+        if (filter.includes(feature.description)) {
+            problem.features[i].todo = feature.targets.slice();
+        }
+        else {
+            problem.features[i].todo = [];
+        }
         problem.features[i].completed = [];
     });
+
+    var includedFeatures = problem.features.filter(f => f.todo && f.todo.length > 0);
+    // if no features in puzzle try again
+    if (includedFeatures.length === 0) {
+        console.log("filtered features not found, finding next puzzle");
+        return getNextProblem();
+    }
+
+
     return problem;
 };
 
+function updateFilters() {
+    var options = document.forms[0];
+    filter = [];
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].checked) {
+            filter.push(options[i].value);
+        }
+    }
+    if (filter.length === 0){
+        options[0].checked = true;
+        return updateFilters();
+    }
+    console.log("filter: " + JSON.stringify(filter));
+    moveToNextProblem();
+}
 /**
  * update the problem if target is valid and move to next puzzle if all found.
  */
@@ -90,7 +110,7 @@ function updateProblemState(target) {
         console.log("All targets found");
         setTimeout(moveToNextProblem, 1000);
     }
-    updateStatus();
+
 }
 
 /**
@@ -121,12 +141,8 @@ function overallProblemTargetsRemaining(problem) {
  * Entry point
  *
  */
-$(document).ready(function () {
+$(document).ready(function() {
     console.log("Loaded " + problems.length + " problems.");
     initializeClock('clock', Date.now() + 5 * 60 * 1000);
-    getNextProblem();
-    console.log(JSON.stringify(problem));
-    problem.features.forEach(renderFeature);
-    board.position(problem.fen);
-    updateStatus();
+    updateFilters();
 });

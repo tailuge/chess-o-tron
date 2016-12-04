@@ -7,6 +7,7 @@
     <title>Feature-tron</title>
     <meta name="description" content="Chess feature trainer">
     <link rel="stylesheet" href="css/newstyles.css">
+    <link rel="stylesheet" href="css/checkbox.css">
     <link rel="stylesheet" href="css/chessboard-0.3.0.min.css">
 </head>
 
@@ -63,6 +64,17 @@
     </table>
 
 
+    <small>
+    <form class="options">
+        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="loose pieces" class="css-checkbox" checked/>loose pieces</label>
+        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="checking squares" class="css-checkbox" checked/>checking squares</label>
+        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="pinned pieces" class="css-checkbox" checked/>pinned pieces</label>
+        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="queen forks" class="css-checkbox" checked/>queen forks</label>
+        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="rook forks" class="css-checkbox" checked/>rook forks</label>
+        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="bishop forks" class="css-checkbox" checked/>bishop forks</label>
+        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="pawn forks" class="css-checkbox" checked/>pawn forks</label>
+    </form>
+    </small>
     <p> FEN: <span id="fen"></span> </p>
     <div><small>Data auto generated from games on <a href="http://lichess.org">lichess.org</a>. Source code on <a href="../index.html">GitHub</a></small></div>
 
