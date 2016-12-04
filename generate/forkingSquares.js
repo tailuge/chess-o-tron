@@ -1,8 +1,7 @@
 /**
  * Enrich puzzle with forking squares feature if found.
  * 
- * issue with promotion square being counted in forks.
- * 
+ *
  */
 
 var Chess = require('./lib/chess').Chess;
@@ -38,8 +37,11 @@ function isFork(fen, move) {
 
     var sameSidesTurnFen = ChessExt.fenForOtherSide(chess.fen());
     var pieceMoves = ChessExt.movesOfPieceOn(sameSidesTurnFen, move.to);
-    var captures = pieceMoves.filter(capturesMajorPiece).length;
-    return (captures >= 2);
+    var captures = pieceMoves.filter(capturesMajorPiece).map(m => m.to);
+    captures = captures.sort().filter(function(el, i, a) {
+        return i === a.indexOf(el);
+    });
+    return (captures.length >= 2);
 }
 
 function capturesMajorPiece(move) {

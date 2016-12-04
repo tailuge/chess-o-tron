@@ -7,7 +7,7 @@ var fenEl = $('#fen');
 var problem;
 var problemIndex = 0;
 var score = 0;
-
+var filter=['loose pieces'];
 
 /**
  * Callbacks for chessboard.
