@@ -13,11 +13,26 @@ function handle(callback) {
         terminal: false
     });
 
-    rl.on('close', function () {});
+    rl.on('close', function() {});
 
-    rl.on('line', function (line) {
-        var puzzle = JSON.parse(line);
-        puzzle.fen = puzzle.fen.replace(/0$/,"2");
+    rl.on('line', function(line) {
+        var puzzle;
+        try {
+            puzzle = JSON.parse(line);
+        }
+        catch (e) {
+            if (/.*\/.*\/.*\/.*/.test(line)) {
+                // if line is a fen, convert to puzzle
+                puzzle = {
+                    fen: line,
+                    features: []
+                };
+            } else {
+                // skip non fen lines
+                return;
+            }
+        }
+        puzzle.fen = puzzle.fen.replace(/0$/, "2");
         console.log(JSON.stringify(callback(puzzle)));
     });
 
