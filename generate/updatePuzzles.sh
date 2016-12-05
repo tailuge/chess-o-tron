@@ -7,6 +7,7 @@ cat raw.puzzles | \
     node loosePieces.js | \
     node checkingSquares.js | \
     node forkingSquares.js | \
+    node aligned.js | \
     sed 's/$/,/' >> ../html/js/feature-tron-data.js
 echo "];" >> ../html/js/feature-tron-data.js
 

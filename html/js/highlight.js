@@ -30,4 +30,6 @@ function clearHighlights(boardElement) {
     boardElement.find('.square-55d63').removeClass('highlight-b-rook-forks');
     boardElement.find('.square-55d63').removeClass('highlight-b-bishop-forks');
     boardElement.find('.square-55d63').removeClass('highlight-b-pawn-forks');
+    boardElement.find('.square-55d63').removeClass('highlight-w-aligned-pieces');
+    boardElement.find('.square-55d63').removeClass('highlight-b-aligned-pieces');
 }

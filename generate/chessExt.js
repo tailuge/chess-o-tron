@@ -79,6 +79,36 @@ function piecesForColour(fen, colour) {
     });
 }
 
+function majorPiecesForColour(fen, colour) {
+    var chess = new Chess();
+    chess.load(fen);
+    return allSquares.filter(square => {
+        var r = chess.get(square);
+        if ((r === null) || (r.type === 'p')) {
+            return false;
+        }
+        return r.color == colour;
+    });
+}
+
+function canCapture(from, fromPiece, to, toPiece) {
+    var chess = new Chess();
+    chess.clear();
+    chess.put({
+        type: fromPiece.type,
+        color: 'w'
+    }, from);
+    chess.put({
+        type: toPiece.type,
+        color: 'b'
+    }, to);
+    var moves = chess.moves({
+        square: from,
+        verbose: true
+    }).filter(m => (/.*x.*/.test(m.san)));
+    return moves.length > 0;
+}
+
 /**
  * Convert PGN to list of FENs.
  */
@@ -122,4 +152,5 @@ module.exports.isCheckAfterPlacingKingAtSquare = isCheckAfterPlacingKingAtSquare
 module.exports.fenForOtherSide = fenForOtherSide;
 module.exports.isCheckAfterRemovingPieceAtSquare = isCheckAfterRemovingPieceAtSquare;
 module.exports.movesOfPieceOn = movesOfPieceOn;
-
+module.exports.majorPiecesForColour = majorPiecesForColour;
+module.exports.canCapture = canCapture;
