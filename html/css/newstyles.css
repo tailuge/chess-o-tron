@@ -20,8 +20,8 @@ a:hover {
 }
 
 h1 {
-  margin:0px,0px,0px,0px;
-  padding:0px;
+  -webkit-margin-after:0em;
+
 }
 
 .tagline {
