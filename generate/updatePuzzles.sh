@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "var problems=[" > ../html/js/feature-tron-data.js
-sort -R raw.puzzles | head -n 200 | \
+cat raw.puzzles | head -n 200 | \
     node fen2puzzle.js | \
     node absolutePin.js | \
     node loosePieces.js | \
