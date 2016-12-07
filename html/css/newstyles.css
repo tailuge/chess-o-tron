@@ -19,6 +19,17 @@ a:hover {
   color: #69f;
 }
 
+h1 {
+  margin:0px,0px,0px,0px;
+  padding:0px;
+}
+
+.tagline {
+  border: 0;
+  padding:0px;
+  margin:0px,0px,0px,0px;
+}
+
 #clock {
   color: #008800;
   font-size: 150%;
@@ -145,6 +156,11 @@ a:hover {
 .highlight-b-mate-in-one-threats,
 .highlight-w-mate-in-one-threats {
   box-shadow: inset 0 0 30px 30px rgba(51, 251, 95, 0.6);
+}
+
+.highlight-b-mating-squares,
+.highlight-w-mating-squares {
+  box-shadow: inset 0 0 30px 30px rgba(251, 0, 0, 0.9);
 }
 
 .full {

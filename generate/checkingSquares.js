@@ -10,7 +10,7 @@ var Chess = require('./lib/chess').Chess;
 var ChessExt = require('./chessExt');
 var StdinReader = require('./stdinReader');
 
-StdinReader.handle(function (puzzle) {
+StdinReader.handle(function(puzzle) {
     var chess = new Chess();
     chess.load(puzzle.fen);
     addCheckingSquares(puzzle.fen, puzzle.features);
@@ -24,11 +24,19 @@ function addCheckingSquares(fen, features) {
     var moves = chess.moves({
         verbose: true
     });
-    moves = moves.filter(move => /\+|\#/.test(move.san)).map(move => move.to);
+    var mates = moves.filter(move => /\#/.test(move.san)).map(move => move.to);
+    var checks = moves.filter(move => /\+/.test(move.san)).map(move => move.to);
     features.push({
         description: "checking squares",
         side: chess.turn(),
-        targets: moves.sort().filter(function (el, i, a) {
+        targets: checks.sort().filter(function(el, i, a) {
+            return i == a.indexOf(el);
+        })
+    });
+    features.push({
+        description: "mating squares",
+        side: chess.turn(),
+        targets: mates.sort().filter(function(el, i, a) {
             return i == a.indexOf(el);
         })
     });

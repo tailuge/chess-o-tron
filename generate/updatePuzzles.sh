@@ -5,11 +5,11 @@ cat raw.puzzles | head -n 200 | \
     node fen2puzzle.js | \
     node absolutePin.js | \
     node loosePieces.js | \
-    node checkingSquares.js | \
     node forkingSquares.js | \
     node aligned.js | \
     node mateInOneThreat.js | \
-    sed -r '/^.{,215}$/d' | \
+    node checkingSquares.js | \
+    node filterMatesPrimary.js | \
     sed 's/$/,/' >> ../html/js/feature-tron-data.js
 echo "];" >> ../html/js/feature-tron-data.js
 

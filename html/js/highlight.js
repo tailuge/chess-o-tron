@@ -34,4 +34,6 @@ function clearHighlights(boardElement) {
     boardElement.find('.square-55d63').removeClass('highlight-b-aligned-pieces');
     boardElement.find('.square-55d63').removeClass('highlight-w-mate-in-one-threats');
     boardElement.find('.square-55d63').removeClass('highlight-b-mate-in-one-threats');
+    boardElement.find('.square-55d63').removeClass('highlight-w-mating-squares');
+    boardElement.find('.square-55d63').removeClass('highlight-b-mating-squares');
 }
