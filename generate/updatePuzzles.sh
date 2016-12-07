@@ -6,7 +6,7 @@ cat raw.puzzles | head -n 200 | \
     node absolutePin.js | \
     node loosePieces.js | \
     node forkingSquares.js | \
-    node aligned.js | \
+    node hiddenAttacks.js | \
     node mateInOneThreat.js | \
     node checkingSquares.js | \
     node filterMatesPrimary.js | \

@@ -30,8 +30,8 @@ function clearHighlights(boardElement) {
     boardElement.find('.square-55d63').removeClass('highlight-b-rook-forks');
     boardElement.find('.square-55d63').removeClass('highlight-b-bishop-forks');
     boardElement.find('.square-55d63').removeClass('highlight-b-pawn-forks');
-    boardElement.find('.square-55d63').removeClass('highlight-w-aligned-pieces');
-    boardElement.find('.square-55d63').removeClass('highlight-b-aligned-pieces');
+    boardElement.find('.square-55d63').removeClass('highlight-w-hidden-attacks');
+    boardElement.find('.square-55d63').removeClass('highlight-b-hidden-attacks');
     boardElement.find('.square-55d63').removeClass('highlight-w-mate-in-one-threats');
     boardElement.find('.square-55d63').removeClass('highlight-b-mate-in-one-threats');
     boardElement.find('.square-55d63').removeClass('highlight-w-mating-squares');

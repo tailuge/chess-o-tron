@@ -148,8 +148,8 @@ h1 {
   box-shadow: inset 0 0 30px 30px rgba(153, 51, 255, 0.8);
 }
 
-.highlight-b-aligned-pieces,
-.highlight-w-aligned-pieces {
+.highlight-b-hidden-attacks,
+.highlight-w-hidden-attacks {
   box-shadow: inset 0 0 30px 30px rgba(51, 51, 255, 0.8);
 }
 
