@@ -123,7 +123,7 @@ function updateProblemFeatures(problem, target) {
         if (index !== -1) {
             feature.todo.splice(index, 1);
             feature.completed.push(target);
-            identified.push(feature.side + '-' + feature.description.replace(" ", "-"));
+            identified.push(feature.side + '-' + feature.description.replace(/ /g, "-"));
         }
     });
     return identified;
