@@ -1,5 +1,5 @@
 /**
- * Enrich puzzle with forking squares feature if found.
+ * Enrich puzzle with mate in one threats feature if found.
  * 
  *
  */

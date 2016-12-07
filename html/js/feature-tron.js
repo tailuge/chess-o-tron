@@ -1,4 +1,6 @@
-/* globals clearHighlights, highlightFromDescriptions, initializeClock, ChessBoard, $, problems, renderFeature */
+/* globals clearHighlights, highlightFromDescriptions, 
+    initializeClock, ChessBoard, $, problems, renderFeature, updateUrlWithState, getParameterByName,
+    updateFilters */
 
 'use strict';
 
@@ -39,22 +41,27 @@ var cfg = {
 
 var board = new ChessBoard('board', cfg);
 
-var moveToNextProblem = function() {
+function moveToNextProblem(p) {
     clearHighlights(boardEl);
-    getNextProblem();
+    initialiseProblem(p ? p : randomPromlem());
     board.position(problem.fen);
     problem.features.forEach(renderFeature);
     fenEl.html(board.fen());
-};
+    updateUrlWithState(problemIndex);
+}
 
 
 /**
  * pick problems in random order
  */
-var getNextProblem = function() {
-    problemIndex = Math.floor(Math.random() * problems.length);
+function randomPromlem() {
+    return Math.floor(Math.random() * problems.length);
+}
+
+function initialiseProblem(p) {
+    problemIndex = p;
     console.log("Problem : #" + problemIndex);
-    problem = problems[problemIndex++];
+    problem = problems[problemIndex];
     problem.features.forEach((feature, i) => {
         if (filter.includes(feature.description)) {
             problem.features[i].todo = feature.targets.slice();
@@ -66,31 +73,19 @@ var getNextProblem = function() {
     });
 
     var includedFeatures = problem.features.filter(f => f.todo && f.todo.length > 0);
-    // if no features in puzzle try again
+    // if none of selected features in puzzle try again
     if (includedFeatures.length === 0) {
         console.log("filtered features not found, finding next puzzle");
-        return getNextProblem();
+        return initialiseProblem(randomPromlem());
     }
-
-
-    return problem;
 };
 
-function updateFilters() {
-    var options = document.forms[0];
-    filter = [];
-    for (var i = 0; i < options.length; i++) {
-        if (options[i].checked) {
-            filter.push(options[i].value);
-        }
-    }
-    if (filter.length === 0){
-        options[0].checked = true;
-        return updateFilters();
-    }
-    console.log("filter: " + JSON.stringify(filter));
+function filterChanged() {
+    updateFilters();
+    // reload if filters change (need to reset timer)
     moveToNextProblem();
 }
+
 /**
  * update the problem if target is valid and move to next puzzle if all found.
  */
@@ -100,7 +95,7 @@ function updateProblemState(target) {
         score--;
     }
     else {
-        score++;
+        score += descriptions.length;
         highlightFromDescriptions(boardEl, target, descriptions);
         problem.features.forEach(renderFeature);
     }
@@ -114,7 +109,7 @@ function updateProblemState(target) {
 }
 
 /**
- * Scan through all features and move matched targets into completed.
+ * Update state of current problem, move matched targets into completed.
  */
 function updateProblemFeatures(problem, target) {
     var identified = [];
@@ -142,7 +137,9 @@ function overallProblemTargetsRemaining(problem) {
  *
  */
 $(document).ready(function() {
-    console.log("Loaded " + problems.length + " problems.");
+    var p = getParameterByName("p");
+    console.log("Loaded " + problems.length + " problems. Specified problem index:" + p);
     initializeClock('clock', Date.now() + 5 * 60 * 1000);
     updateFilters();
+    moveToNextProblem(p);
 });

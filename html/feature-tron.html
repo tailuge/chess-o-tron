@@ -74,22 +74,22 @@
 
     <small>
     <form class="options">
-        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="loose pieces" class="css-checkbox" checked/>loose pieces</label>
-        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="checking squares" class="css-checkbox" checked/>checking squares</label>
-        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="pinned pieces" class="css-checkbox" checked/>pinned pieces</label>
-        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="queen forks" class="css-checkbox" checked/>queen forks</label>
-        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="rook forks" class="css-checkbox" checked/>rook forks</label>
+        <label class="css-label"><input type="checkbox" onclick="filterChanged()" value="loose pieces" class="css-checkbox" checked/>loose pieces</label>
+        <label class="css-label"><input type="checkbox" onclick="filterChanged()" value="checking squares" class="css-checkbox" checked/>checking squares</label>
+        <label class="css-label"><input type="checkbox" onclick="filterChanged()" value="pinned pieces" class="css-checkbox" checked/>pinned pieces</label>
+        <label class="css-label"><input type="checkbox" onclick="filterChanged()" value="queen forks" class="css-checkbox" checked/>queen forks</label>
+        <label class="css-label"><input type="checkbox" onclick="filterChanged()" value="rook forks" class="css-checkbox" checked/>rook forks</label>
         <br/>
-        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="bishop forks" class="css-checkbox" checked/>bishop forks</label>
-        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="pawn forks" class="css-checkbox" checked/>pawn forks</label>
-        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="aligned pieces" class="css-checkbox" checked/>aligned pieces</label>
-        <label class="css-label"><input type="checkbox" onclick="updateFilters()" value="mate in one threats" class="css-checkbox" />mate in one threats</label>
+        <label class="css-label"><input type="checkbox" onclick="filterChanged()" value="bishop forks" class="css-checkbox" checked/>bishop forks</label>
+        <label class="css-label"><input type="checkbox" onclick="filterChanged()" value="pawn forks" class="css-checkbox" checked/>pawn forks</label>
+        <label class="css-label"><input type="checkbox" onclick="filterChanged()" value="aligned pieces" class="css-checkbox" checked/>aligned pieces</label>
+        <label class="css-label"><input type="checkbox" onclick="filterChanged()" value="mate in one threats" class="css-checkbox" />mate in one threats</label>
     </form>
     </small>
     <p> FEN: <span id="fen"></span> </p>
     <div><small>Data auto generated from games on <a href="http://lichess.org">lichess.org</a>. Source code on <a href="../index.html">GitHub</a></small></div>
 
-    <!-- libraries -->
+   <!-- libraries -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="js/chessboard-0.3.0.min.js"></script>
 
@@ -98,6 +98,8 @@
 
     <!-- code -->
     <script src="js/timer.js"></script>
+    <script src="js/queryParam.js"></script>
+    <script src="js/filters.js"></script>
     <script src="js/highlight.js"></script>
     <script src="js/featurePanel.js"></script>
     <script src="js/feature-tron.js"></script>
