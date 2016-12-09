@@ -1,0 +1,38 @@
+{
+  "name": "chess-trainer",
+  "version": "1.1.10",
+  "description": "Training Chess UI",
+  "main": "src/main.js",
+  "directories": {
+    "example": "examples"
+  },
+   "devDependencies": {
+    "browserify": "~13.0",
+    "gulp": "~3.9",
+    "gulp-streamify": "~1.0",
+    "gulp-uglify": "~1.5",
+    "gulp-util": "~3.0",
+    "vinyl-source-stream": "~1.1",
+    "watchify": "~3.7"
+  },
+  "dependencies": {
+    "chessground": "github:ornicar/chessground#v4.3.9",
+    "lodash": "~3.7.0",
+    "merge": "~1.2.0",
+    "mithril": "github:ornicar/mithril.js#v1.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tailuge/chess-o-tron.git"
+  },
+  "keywords": [
+    "chess",
+    "training"
+  ],
+  "author": "Copied from lichess",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/tailuge/chess-o-tron/issues"
+  },
+  "homepage": "https://tailuge.github.io/chess-o-tron/"
+}
