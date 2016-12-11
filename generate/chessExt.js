@@ -165,6 +165,7 @@ module.exports.piecesForColour = piecesForColour;
 module.exports.isCheckAfterPlacingKingAtSquare = isCheckAfterPlacingKingAtSquare;
 module.exports.fenForOtherSide = fenForOtherSide;
 module.exports.isCheckAfterRemovingPieceAtSquare = isCheckAfterRemovingPieceAtSquare;
+module.exports.isDiscoveryAfterMovingPieceAtSquare = isDiscoveryAfterMovingPieceAtSquare;
 module.exports.movesOfPieceOn = movesOfPieceOn;
 module.exports.majorPiecesForColour = majorPiecesForColour;
 module.exports.canCapture = canCapture;
