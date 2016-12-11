@@ -1,7 +1,7 @@
 /**
  * Enrich puzzle with pieces aligned with others.
  * 
- *
+ * Only include pieces if there is a discovery move.
  */
 
 var Chess = require('./lib/chess').Chess;
@@ -34,7 +34,8 @@ function addAligned(fen, features) {
             opponentsPieces.forEach(to => {
                 if (ChessExt.canCapture(from, chess.get(from), to, chess.get(to))) {
                     var availableOnBoard = moves.filter(m => m.from === from && m.to === to);
-                    if (availableOnBoard.length === 0) {
+                    if (availableOnBoard.length === 0 &&
+                        ChessExt.isDiscoveryAfterMovingPieceAtSquare(fen, from, chess.get(from), to, chess.get(to))) {
                         aligned.push(from);
                     }
                 }

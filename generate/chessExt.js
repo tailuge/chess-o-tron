@@ -28,6 +28,20 @@ function isCheckAfterRemovingPieceAtSquare(fen, square) {
     return chess.in_check();
 }
 
+function isDiscoveryAfterMovingPieceAtSquare(fen, from, fromPiece, to, toPiece) {
+    var chess = new Chess();
+    chess.load(fen);
+    var pieces = piecesForColour(chess.turn());
+    pieces.forEach(from => {
+        var moves = movesOfPieceOn(square);
+        if (moves.filter(move => !canCapture(from, fromPiece, move.to, toPiece)).length > 0) {
+            chess.remove(square);
+            return canCapture(from, fromPiece, to, toPiece);
+        }
+    }
+    return false;
+}
+
 /**
  * Switch side to play (and remove en-passent information)
  */
