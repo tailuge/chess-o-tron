@@ -7,8 +7,8 @@
     "example": "examples"
   },
    "devDependencies": {
-    "browserify": "~13.0",
-    "gulp": "~3.9",
+    "browserify": "~13.1",
+    "gulp": "~3.9.1",
     "gulp-streamify": "~1.0",
     "gulp-uglify": "~1.5",
     "gulp-util": "~3.0",
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "chessground": "github:ornicar/chessground#v4.3.9",
-    "lodash": "~3.7.0",
+    "lodash": "~4.17.2",
     "merge": "~1.2.0",
     "mithril": "github:ornicar/mithril.js#v1.0.1"
   },
