@@ -34,8 +34,7 @@ function addAligned(fen, features) {
             opponentsPieces.forEach(to => {
                 if (ChessExt.canCapture(from, chess.get(from), to, chess.get(to))) {
                     var availableOnBoard = moves.filter(m => m.from === from && m.to === to);
-                    if (availableOnBoard.length === 0 &&
-                        ChessExt.isDiscoveryAfterMovingPieceAtSquare(fen, from, chess.get(from), to, chess.get(to))) {
+                    if (availableOnBoard.length === 0 && ChessExt.doesAnyMoveResultInCaptureThreat(fen, from, to)) {
                         aligned.push(from);
                     }
                 }

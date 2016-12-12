@@ -28,18 +28,34 @@ function isCheckAfterRemovingPieceAtSquare(fen, square) {
     return chess.in_check();
 }
 
-function isDiscoveryAfterMovingPieceAtSquare(fen, from, fromPiece, to, toPiece) {
+function doesAnyMoveResultInCaptureThreat(fen, from, to) {
     var chess = new Chess();
     chess.load(fen);
-    var pieces = piecesForColour(chess.turn());
-    pieces.forEach(from => {
-        var moves = movesOfPieceOn(square);
-        if (moves.filter(move => !canCapture(from, fromPiece, move.to, toPiece)).length > 0) {
-            chess.remove(square);
-            return canCapture(from, fromPiece, to, toPiece);
-        }
-    }
-    return false;
+    var moves = chess.moves({
+        verbose: true
+    });
+
+    // do any of the moves reveal the desired capture 
+    return moves.filter(m => doesMoveResultInCaptureThreat(m, fen, from, to)).length > 0;
+}
+
+function doesMoveResultInCaptureThreat(move, fen, from, to) {
+    var chess = new Chess();
+    chess.load(fen);
+
+    //apply move of intermediary piece (state becomes other sides turn)
+    chess.move(move);
+
+    //null move for opponent to regain the move for original side
+    chess.load(fenForOtherSide(chess.fen()));
+
+    //get legal moves
+    var moves = chess.moves({
+        verbose: true
+    });
+
+    // do any of the moves match from,to 
+    return moves.filter(m => m.from === from && m.to === to).length > 0;
 }
 
 /**
@@ -165,7 +181,7 @@ module.exports.piecesForColour = piecesForColour;
 module.exports.isCheckAfterPlacingKingAtSquare = isCheckAfterPlacingKingAtSquare;
 module.exports.fenForOtherSide = fenForOtherSide;
 module.exports.isCheckAfterRemovingPieceAtSquare = isCheckAfterRemovingPieceAtSquare;
-module.exports.isDiscoveryAfterMovingPieceAtSquare = isDiscoveryAfterMovingPieceAtSquare;
+module.exports.doesAnyMoveResultInCaptureThreat = doesAnyMoveResultInCaptureThreat;
 module.exports.movesOfPieceOn = movesOfPieceOn;
 module.exports.majorPiecesForColour = majorPiecesForColour;
 module.exports.canCapture = canCapture;
