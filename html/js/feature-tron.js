@@ -22,6 +22,7 @@ var onDrop = function(source, target) {
 };
 
 function clickOnSquare(evt) {
+    /*jshint validthis: true */
     var target = $(this).data("square");
     updateProblemState(target);
 }
@@ -78,7 +79,7 @@ function initialiseProblem(p) {
         console.log("filtered features not found, finding next puzzle");
         return initialiseProblem(randomPromlem());
     }
-};
+}
 
 function filterChanged() {
     updateFilters();
