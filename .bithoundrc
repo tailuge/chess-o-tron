@@ -6,5 +6,6 @@
         "html/js/chessboard-0.3.0.min.js",
         "**/third_party/**",
         "**/compiled/**"
-    ]
+    ],
+    "packageJsonLocation": "ui/package.json"
 }
