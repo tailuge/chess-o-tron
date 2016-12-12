@@ -1,10 +1,10 @@
 {
-"ignore": [
-    " html/js/chess.js",
-    "html/js/loose-piece-o-tron-data.js",
-    "generate/lib/**",
-    "html/js/chessboard-0.3.0.min.js",
-    "**/third_party/**"
-    "**/compiled/**"
-  ]
+    "ignore": [
+        " html/js/chess.js",
+        "html/js/loose-piece-o-tron-data.js",
+        "generate/lib/**",
+        "html/js/chessboard-0.3.0.min.js",
+        "**/third_party/**",
+        "**/compiled/**"
+    ]
 }
