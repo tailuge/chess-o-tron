@@ -74,4 +74,4 @@ module.exports = function(opts, i18n) {
     },
     promotion: promotion
   };
-}
+};
