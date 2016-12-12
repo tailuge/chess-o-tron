@@ -25,10 +25,10 @@ module.exports = function(data, config, pref, onMove) {
     },
     events: {
       move: function(orig, dest, capturedPiece) {
-        console.log(orig, dest, capturedPiece)
+        console.log(orig, dest, capturedPiece);
       },
       select: function(key) {
-        console.log(key)
+        console.log(key);
       }
     }
   });

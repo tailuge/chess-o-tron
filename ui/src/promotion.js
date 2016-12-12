@@ -35,7 +35,7 @@ module.exports = function(vm, ground) {
       };
       ground.setPieces(pieces);
     }
-  }
+  };
 
   var finish = function(role) {
     if (promoting) promote(ground, promoting.dest, role);
@@ -49,7 +49,7 @@ module.exports = function(vm, ground) {
       ground.set(vm.cgConfig);
       m.redraw();
     }
-  }
+  };
 
   var renderPromotion = function(dest, pieces, color, orientation) {
     if (!promoting) return;

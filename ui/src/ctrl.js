@@ -24,7 +24,6 @@ module.exports = function(opts, i18n) {
   };
 
   var showGround = function() {
-    var node = vm.node;
     var color = 'white';
     var dests = [];
     var movable = {
