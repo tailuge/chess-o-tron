@@ -68,6 +68,7 @@ module.exports = function(opts, i18n) {
     },
     fen: m.prop(''),
     ground: ground,
+    features:[1,2,3,4],
 
     getOrientation: function() {
       return ground.data.orientation;
