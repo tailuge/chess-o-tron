@@ -1,9 +1,8 @@
-/* global filter */
-
 'use strict';
 
 function initialiseFilters() {
     var options = document.forms[0];
+    /*global filter:true */
     filter = [];
     for (var i = 0; i < options.length; i++) {
         filter.push(options[i].value);
@@ -12,6 +11,7 @@ function initialiseFilters() {
 
 function updateFilters() {
     var options = document.forms[0];
+    /*global filter:true */
     filter = [];
     for (var i = 0; i < options.length; i++) {
         if (options[i].checked) {
