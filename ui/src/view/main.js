@@ -10,7 +10,7 @@ function visualBoard(ctrl) {
   ]),
   m('br'),
   m('div.fen',fenbar(ctrl))
-  ]
+  ];
 }
 
 module.exports = function(ctrl) {
