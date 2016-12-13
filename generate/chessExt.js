@@ -34,9 +34,10 @@ function doesAnyMoveResultInCaptureThreat(fen, from, to) {
     var moves = chess.moves({
         verbose: true
     });
-
+    var squaresBetween = between(from, to);
     // do any of the moves reveal the desired capture 
-    return moves.filter(m => doesMoveResultInCaptureThreat(m, fen, from, to)).length > 0;
+    return moves.filter(move => squaresBetween.indexOf(move.from) !== -1)
+        .filter(m => doesMoveResultInCaptureThreat(m, fen, from, to)).length > 0;
 }
 
 function doesMoveResultInCaptureThreat(move, fen, from, to) {
@@ -172,6 +173,18 @@ function pgnToFens(pgn) {
         fens.push(chess.fen());
     });
     return fens;
+}
+
+function between(from, to) {
+    var result = [];
+    var n = from;
+    while (n !== to) {
+        n = String.fromCharCode(n.charCodeAt() + Math.sign(to.charCodeAt() - n.charCodeAt())) +
+            String.fromCharCode(n.charCodeAt(1) + Math.sign(to.charCodeAt(1) - n.charCodeAt(1)));
+        result.push(n);
+    }
+    result.pop();
+    return result;
 }
 
 module.exports.allSquares = allSquares;
