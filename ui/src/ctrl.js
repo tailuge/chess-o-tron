@@ -56,7 +56,7 @@ module.exports = function(opts, i18n) {
 
   };
 
-
+  
   initiate(opts.data);
 
   var promotion = makePromotion(vm, ground);
@@ -66,7 +66,7 @@ module.exports = function(opts, i18n) {
     getData: function() {
       return data;
     },
-
+    fen: m.prop(''),
     ground: ground,
 
     getOrientation: function() {
