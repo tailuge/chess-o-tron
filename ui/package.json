@@ -16,6 +16,7 @@
     "watchify": "~3.7"
   },
   "dependencies": {
+    "chess.js": "github:ornicar/chess.js#learn",
     "chessground": "github:ornicar/chessground#v4.3.9",
     "lodash": "~4.17.2",
     "merge": "~1.2.0",

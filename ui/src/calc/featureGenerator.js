@@ -1,3 +1,6 @@
+var Chess = require('chess.js').Chess;
+var c = require('./chessutils');
+
 // deduce features from position
 
 module.exports = {
