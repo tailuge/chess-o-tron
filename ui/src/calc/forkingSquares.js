@@ -7,7 +7,7 @@ module.exports = function(puzzle) {
     var chess = new Chess();
     chess.load(puzzle.fen);
     addForks(puzzle.fen, puzzle.features);
-    //   addForks(c.fenForOtherSide(puzzle.fen), puzzle.features);
+    addForks(c.fenForOtherSide(puzzle.fen), puzzle.features);
     return puzzle;
 };
 
