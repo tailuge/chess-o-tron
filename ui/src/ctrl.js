@@ -1,13 +1,15 @@
 var m = require('mithril');
 var groundBuild = require('./ground');
-var featureGenerator = require('./featureGenerator');
-
+var f = require('./featureGenerator');
 
 module.exports = function(opts, i18n) {
 
+//console.log(f);
+console.log(f.features);
+
   var fen = m.prop(opts.data.fen);
   var ground;
-  var features = featureGenerator(fen());
+  var features = f.features(fen());
 
   function showGround() {
     var color = 'white';
@@ -39,8 +41,9 @@ module.exports = function(opts, i18n) {
   var onSelect = function(dest) {
     console.log(dest);
     ground.set({
-      fen: fen()
+      fen: fen(),
     });
+    ground.setAutoShapes(f.diagramForTarget(dest,features));
   };
 
   showGround();

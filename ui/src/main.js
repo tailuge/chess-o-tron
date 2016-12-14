@@ -15,6 +15,6 @@ function main(opts) {
 main({
     element: document.getElementById("wrapper"),
     data: {
-        fen: "4k2r/5pp1/4pp2/5n2/8/5N2/6PP/5K1R w - - 0 1"
+        fen: "b3k2r/1p3pp1/5p2/5n2/8/5N2/6PP/5K1R w - -"
     }
 });
