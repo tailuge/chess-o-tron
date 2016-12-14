@@ -22,8 +22,9 @@ module.exports = {
    * Find all features in the position.
    */
   features: function(fen) {
+    console.log(c.repairFen(fen))
       var puzzle = {
-        fen: fen,
+        fen: c.repairFen(fen),
         features: []
       };
       puzzle = forkingSquares(puzzle);

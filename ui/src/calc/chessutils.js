@@ -187,6 +187,14 @@ function between(from, to) {
     return result;
 }
 
+function repairFen(fen) {
+    if (/^[^ ]*$/.test(fen)) {
+        return fen + " w - - 0 1";
+    }
+
+    return fen.replace(/ w .*/, ' w - - 0 1').replace(/ b .*/, ' b - - 0 1')
+}
+
 module.exports.allSquares = allSquares;
 module.exports.pgnToFens = pgnToFens;
 module.exports.kingsSquare = kingsSquare;
@@ -198,3 +206,4 @@ module.exports.movesThatResultInCaptureThreat = movesThatResultInCaptureThreat;
 module.exports.movesOfPieceOn = movesOfPieceOn;
 module.exports.majorPiecesForColour = majorPiecesForColour;
 module.exports.canCapture = canCapture;
+module.exports.repairFen = repairFen;

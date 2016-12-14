@@ -7,7 +7,7 @@ module.exports = function(puzzle) {
     var chess = new Chess();
     chess.load(puzzle.fen);
     addForks(puzzle.fen, puzzle.features);
-    addForks(c.fenForOtherSide(puzzle.fen), puzzle.features);
+    //   addForks(c.fenForOtherSide(puzzle.fen), puzzle.features);
     return puzzle;
 };
 
@@ -36,9 +36,7 @@ function enrichMoveWithForkCaptures(fen, move) {
     var sameSidesTurnFen = c.fenForOtherSide(chess.fen());
     var pieceMoves = c.movesOfPieceOn(sameSidesTurnFen, move.to);
     var captures = pieceMoves.filter(capturesMajorPiece).map(m => m.to);
-    captures = captures.sort().filter(function(el, i, a) {
-        return i === a.indexOf(el);
-    });
+
     move.captures = captures;
     return move;
 }
