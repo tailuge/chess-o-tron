@@ -1,8 +1,8 @@
 var chessground = require('chessground');
 
-module.exports = function(config, pref, onSelect) {
+module.exports = function(fen, onSelect) {
   return new chessground.controller({
-    fen: config.fen,
+    fen: fen,
     viewOnly: false,
     turnColor: 'white',
     animation: {
@@ -15,7 +15,6 @@ module.exports = function(config, pref, onSelect) {
       dests: [],
       events: {
         after: function() {
-          console.log("after");
         }
       }
     },
