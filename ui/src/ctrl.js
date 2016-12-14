@@ -16,7 +16,13 @@ module.exports = function(opts, i18n) {
     ground.set({
       fen: fen(),
     });
-    ground.setAutoShapes(f.diagramForTarget(dest,features));
+    ground.setAutoShapes(f.diagramForTarget(dest, features));
+  }
+
+  function updateFen(value) {
+    fen(value);
+    features = f.features(fen());
+    m.redraw();
   }
 
   showGround();
@@ -26,5 +32,6 @@ module.exports = function(opts, i18n) {
     fen: fen,
     ground: ground,
     features: features,
+    updateFen: updateFen
   };
 };

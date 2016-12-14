@@ -5,7 +5,7 @@ module.exports = function(controller) {
     m('label[for=instructions]', 'FEN:'),
     m('input#instructions[type=text].form-control input-lg', {
       value: controller.fen(),
-      oninput: m.withAttr('value', controller.fen)
+      oninput: m.withAttr('value', controller.updateFen)
     }),
     m('h3', ['info: ', m('span.text-warning', controller.fen())])
   ];

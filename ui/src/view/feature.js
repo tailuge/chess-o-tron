@@ -8,5 +8,5 @@ function getStars(feature) {
 }
 
 module.exports = function(controller, feature) {
-    return m('li', [m('div.name', feature.name), m('div.stars', getStars(feature))]);
+    return m('li', [m('div.name', feature.side + ' ' + feature.description), m('div.stars', getStars(feature))]);
 };

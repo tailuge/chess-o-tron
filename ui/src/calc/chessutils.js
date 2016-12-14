@@ -28,7 +28,7 @@ function isCheckAfterRemovingPieceAtSquare(fen, square) {
     return chess.in_check();
 }
 
-function doesAnyMoveResultInCaptureThreat(fen, from, to) {
+function movesThatResultInCaptureThreat(fen, from, to) {
     var chess = new Chess();
     chess.load(fen);
     var moves = chess.moves({
@@ -37,7 +37,7 @@ function doesAnyMoveResultInCaptureThreat(fen, from, to) {
     var squaresBetween = between(from, to);
     // do any of the moves reveal the desired capture 
     return moves.filter(move => squaresBetween.indexOf(move.from) !== -1)
-        .filter(m => doesMoveResultInCaptureThreat(m, fen, from, to)).length > 0;
+        .filter(m => doesMoveResultInCaptureThreat(m, fen, from, to));
 }
 
 function doesMoveResultInCaptureThreat(move, fen, from, to) {
@@ -194,7 +194,7 @@ module.exports.piecesForColour = piecesForColour;
 module.exports.isCheckAfterPlacingKingAtSquare = isCheckAfterPlacingKingAtSquare;
 module.exports.fenForOtherSide = fenForOtherSide;
 module.exports.isCheckAfterRemovingPieceAtSquare = isCheckAfterRemovingPieceAtSquare;
-module.exports.doesAnyMoveResultInCaptureThreat = doesAnyMoveResultInCaptureThreat;
+module.exports.movesThatResultInCaptureThreat = movesThatResultInCaptureThreat;
 module.exports.movesOfPieceOn = movesOfPieceOn;
 module.exports.majorPiecesForColour = majorPiecesForColour;
 module.exports.canCapture = canCapture;

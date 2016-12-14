@@ -1,10 +1,13 @@
 var Chess = require('chess.js').Chess;
 var c = require('./chessutils');
-
-// deduce features from position
+var forkingSquares = require('./forkingSquares');
+var hiddenAttacks = require('./hiddenAttacks');
 
 module.exports = {
 
+  /**
+   * Find all diagrams associated with target square in the list of features.
+   */
   diagramForTarget: function(target, features) {
     var diagram = [];
     features.forEach(f => f.targets.forEach(t => {
@@ -15,72 +18,18 @@ module.exports = {
     return diagram;
   },
 
+  /**
+   * Find all features in the position.
+   */
   features: function(fen) {
-    return [{
-      name: '♘ forks',
-      side: 'w',
-      targets: [{
-        target: 'g3',
-        diagram: [{
-          orig: 'f5',
-          dest: 'g3',
-          brush: 'paleBlue'
-        }, {
-          orig: 'g3',
-          dest: 'f1',
-          brush: 'red'
-        }, {
-          orig: 'g3',
-          dest: 'h1',
-          brush: 'red'
-        }]
-      }, {
-        target: 'b2',
-        diagram: [{
-          orig: 'c4',
-          dest: 'f5',
-          brush: 'green'
-        }, {
-          orig: 'h5',
-          dest: 'a7',
-          brush: 'paleBlue'
-        }, {
-          orig: 'g4',
-          brush: 'yellow'
-        }]
-      }]
-    }, {
-      name: 'hidden',
-      side: 'b',
-      targets: [{
-        target: 'a8',
-        diagram: [{
-          orig: 'a8',
-          dest: 'f3',
-          brush: 'red'
-        }, {
-          orig: 'b7',
-          dest: 'b6',
-          brush: 'paleBlue'
-        }, {
-          orig: 'b7',
-          dest: 'b5',
-          brush: 'paleBlue'
-        }]
-      }, {
-        target: 'b2',
-        diagram: [{
-          orig: 'c4',
-          brush: 'green'
-        }]
-      }, {
-        target: 'b3',
-        diagram: [{
-          orig: 'c4',
-          brush: 'green'
-        }]
-      }]
-    }];
-  }
-
+      var puzzle = {
+        fen: fen,
+        features: []
+      };
+      puzzle = forkingSquares(puzzle);
+      puzzle = hiddenAttacks(puzzle);
+      
+      console.log(JSON.stringify(puzzle,null,1));
+      return puzzle.features;
+    }
 };
