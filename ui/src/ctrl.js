@@ -9,7 +9,6 @@ module.exports = function(opts, i18n) {
   var vm = {};
   var data, ground;
 
-
   var initiate = function(fromData) {
     data = fromData;
     vm.mode = 'play'; // play | try | view
@@ -31,7 +30,7 @@ module.exports = function(opts, i18n) {
       dests: dests || {}
     };
     var config = {
-      fen: '2R5/4bppk/1p1p4/5R1P/4PQ2/5P2/r4q1P/7K',
+      fen: opts.fen,
       orientation: color,
       turnColor: color,
       movable: movable,
@@ -47,16 +46,16 @@ module.exports = function(opts, i18n) {
 
 
     vm.cgConfig = config;
-    if (!ground) ground = groundBuild(data, config, opts.pref, userMove);
+    if (!ground) ground = groundBuild(data, config, opts.pref, onSelect);
     ground.set(config);
   };
 
-  var userMove = function(orig, dest, capture) {
-    vm.justPlayed = orig;
-
+  var onSelect = function(dest) {
+    vm.justPlayed = dest;
+    console.log(dest);
   };
 
-  
+
   initiate(opts.data);
 
   var promotion = makePromotion(vm, ground);
@@ -66,9 +65,63 @@ module.exports = function(opts, i18n) {
     getData: function() {
       return data;
     },
-    fen: m.prop(''),
+    fen: m.prop(opts.data.fen),
     ground: ground,
-    features:[1,2,3,4],
+    features: [{
+      name: '♕ forks',
+      side: 'w',
+      targets: [{
+        target: 'e4',
+        diagram: [{
+          orig: 'd4',
+          dest: 'e5',
+          brush: 'paleBlue'
+        }, {
+          orig: 'e5',
+          dest: 'e7',
+          brush: 'red'
+        }, {
+          orig: 'a4',
+          brush: 'paleBlue'
+        }]
+      }, {
+        target: 'b2',
+        diagram: [{
+          orig: 'c4',
+          dest: 'f5',
+          brush: 'green'
+        }, {
+          orig: 'h5',
+          dest: 'a7',
+          brush: 'paleBlue'
+        }, {
+          orig: 'g4',
+          brush: 'yellow'
+        }]
+      }]
+    }, {
+      name: 'loose',
+      side: 'w',
+      targets: [{
+        target: 'e4',
+        diagram: [{
+          orig: 'd4',
+          brush: 'paleBlue'
+        }]
+      }, {
+        target: 'b2',
+        diagram: [{
+          orig: 'c4',
+          brush: 'green'
+        }]
+      }, {
+        target: 'b2',
+        diagram: [{
+          orig: 'c4',
+          brush: 'green'
+        }]
+      }]
+    }],
 
     getOrientation: function() {
       return ground.data.orientation;

@@ -1,7 +1,6 @@
 var chessground = require('chessground');
 
-module.exports = function(data, config, pref, onMove) {
-  console.log(data.fen);
+module.exports = function(data, config, pref, onSelect) {
   return new chessground.controller({
     fen: data.fen,
     viewOnly: false,
@@ -25,10 +24,10 @@ module.exports = function(data, config, pref, onMove) {
     },
     events: {
       move: function(orig, dest, capturedPiece) {
-        console.log(orig, dest, capturedPiece);
+        onSelect(dest);
       },
       select: function(key) {
-        console.log(key);
+        onSelect(key);
       }
     }
   });
