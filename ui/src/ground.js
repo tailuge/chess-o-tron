@@ -1,8 +1,8 @@
 var chessground = require('chessground');
 
-module.exports = function(data, config, pref, onSelect) {
+module.exports = function(config, pref, onSelect) {
   return new chessground.controller({
-    fen: data.fen,
+    fen: config.fen,
     viewOnly: false,
     turnColor: 'white',
     animation: {

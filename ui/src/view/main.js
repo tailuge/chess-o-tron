@@ -5,8 +5,7 @@ var features = require('./features');
 
 function visualBoard(ctrl) {
   return m('div.lichess_board', [
-    chessground.view(ctrl.ground),
-    ctrl.promotion.view()
+    chessground.view(ctrl.ground)
   ]);
 }
 
