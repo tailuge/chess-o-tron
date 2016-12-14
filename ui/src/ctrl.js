@@ -22,7 +22,10 @@ module.exports = function(opts, i18n) {
   function updateFen(value) {
     fen(value);
     features = f.features(fen());
-    m.redraw();
+    ground.set({
+      fen: fen(),
+    });
+    ground.setAutoShapes([]);
   }
 
   showGround();
