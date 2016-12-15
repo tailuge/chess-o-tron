@@ -15,23 +15,21 @@ module.exports = {
         diagram = diagram.concat(t.diagram);
       }
     }));
-    console.log(JSON.stringify(diagram,null,1))
     return diagram;
   },
 
   /**
    * Find all features in the position.
    */
-  features: function(fen) {
-    console.log(c.repairFen(fen))
-      var puzzle = {
-        fen: c.repairFen(fen),
-        features: []
-      };
-      puzzle = forkingSquares(puzzle);
-      puzzle = hiddenAttacks(puzzle);
-      
- //     console.log(JSON.stringify(puzzle,null,1));
-      return puzzle.features;
-    }
+  extractFeatures: function(fen) {
+    var puzzle = {
+      fen: c.repairFen(fen),
+      features: []
+    };
+    puzzle = forkingSquares(puzzle);
+    puzzle = hiddenAttacks(puzzle);
+
+    //     console.log(JSON.stringify(puzzle,null,1));
+    return puzzle.features;
+  }
 };

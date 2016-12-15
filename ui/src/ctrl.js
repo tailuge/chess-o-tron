@@ -5,8 +5,8 @@ var f = require('./calc/featureGenerator');
 module.exports = function(opts, i18n) {
 
   var fen = m.prop(opts.fen);
+  var features = m.prop(f.extractFeatures(fen()));
   var ground;
-  var features = f.features(fen());
 
   function showGround() {
     if (!ground) ground = groundBuild(fen(), onSelect);
@@ -16,12 +16,13 @@ module.exports = function(opts, i18n) {
     ground.set({
       fen: fen(),
     });
-    ground.setShapes(f.diagramForTarget(dest, features));
+    ground.setShapes(f.diagramForTarget(dest, features()));
   }
 
   function updateFen(value) {
+
     fen(value);
-    features = f.features(fen());
+    features(f.extractFeatures(fen()));
     ground.set({
       fen: fen(),
     });
@@ -35,6 +36,7 @@ module.exports = function(opts, i18n) {
     fen: fen,
     ground: ground,
     features: features,
-    updateFen: updateFen
+    updateFen: updateFen,
+    onSelect: onSelect
   };
 };
