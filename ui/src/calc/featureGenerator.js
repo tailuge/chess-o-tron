@@ -15,6 +15,7 @@ module.exports = {
         diagram = diagram.concat(t.diagram);
       }
     }));
+    console.log(JSON.stringify(diagram,null,1))
     return diagram;
   },
 
@@ -30,7 +31,7 @@ module.exports = {
       puzzle = forkingSquares(puzzle);
       puzzle = hiddenAttacks(puzzle);
       
-      console.log(JSON.stringify(puzzle,null,1));
+ //     console.log(JSON.stringify(puzzle,null,1));
       return puzzle.features;
     }
 };

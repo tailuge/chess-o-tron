@@ -13,6 +13,7 @@ module.exports = function(fen, onSelect) {
       color: 'white',
       premove: true,
       dests: [],
+      showDests:false,
       events: {
         after: function() {
         }
