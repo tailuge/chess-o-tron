@@ -3,8 +3,6 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var watchify = require('watchify');
 var browserify = require('browserify');
-var uglify = require('gulp-uglify');
-var streamify = require('gulp-streamify');
 
 var sources = ['./src/main.js'];
 var destination = '../public/compiled/';
@@ -19,7 +17,6 @@ gulp.task('prod', function() {
   }).bundle()
     .on('error', onError)
     .pipe(source('app.min.js'))
-    .pipe(streamify(uglify()))
     .pipe(gulp.dest(destination));
 });
 

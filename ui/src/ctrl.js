@@ -29,6 +29,10 @@ module.exports = function(opts, i18n) {
     ground.setAutoShapes([]);
   }
 
+  function nextFen(dest) {
+    console.log('next fen');
+  }
+  
   showGround();
   m.redraw();
 
@@ -37,6 +41,7 @@ module.exports = function(opts, i18n) {
     ground: ground,
     features: features,
     updateFen: updateFen,
-    onSelect: onSelect
+    onSelect: onSelect,
+    nextFen: nextFen
   };
 };

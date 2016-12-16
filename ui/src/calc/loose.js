@@ -5,8 +5,8 @@ var c = require('./chessutils');
 
 module.exports = function(puzzle) {
     var chess = new Chess();
-//    addLoosePieces(puzzle.fen, puzzle.features);
-//    addLoosePieces(c.fenForOtherSide(puzzle.fen), puzzle.features);
+    addLoosePieces(puzzle.fen, puzzle.features);
+    addLoosePieces(c.fenForOtherSide(puzzle.fen), puzzle.features);
     return puzzle;
 };
 
@@ -20,6 +20,14 @@ function addLoosePieces(fen, features) {
     features.push({
         description: "loose pieces",
         side: opponent,
-        targets: pieces
+        targets: pieces.map(t => {
+            return {
+                target: t,
+                diagram: [{
+                    orig: t,
+                    brush: 'yellow'
+                }]
+            };
+        })
     });
 }

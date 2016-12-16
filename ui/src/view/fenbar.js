@@ -7,6 +7,7 @@ module.exports = function(controller) {
       value: controller.fen(),
       oninput: m.withAttr('value', controller.updateFen)
     }),
+    m('div', {onclick:function(){}},'↻'),
     m('h3', ['info: ', m('span.text-warning', controller.fen())])
   ];
 };
