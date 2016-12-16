@@ -1,6 +1,6 @@
 var m = require('mithril');
 var groundBuild = require('./ground');
-var f = require('./calc/featureGenerator');
+var f = require('./calc/generate');
 
 module.exports = function(opts, i18n) {
 

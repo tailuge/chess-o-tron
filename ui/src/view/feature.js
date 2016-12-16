@@ -11,5 +11,8 @@ function makeStars(controller, feature) {
 }
 
 module.exports = function(controller, feature) {
+    if (feature.targets.length === 0) {
+        return [];
+    }
     return m('li.feature', [m('div.name', feature.side + ' ' + feature.description), m('div.stars', makeStars(controller, feature))]);
 };

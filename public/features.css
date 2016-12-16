@@ -1,21 +1,20 @@
+.all {
+    display: inline-block;
+}
+.mainboard {
+    margin-left: 20%;
+}
+
 .featuresall {
-	width: 600px;
-	margin: 0 auto;
-	height: 100px;
+    margin: 0 auto;
+    width: 20%;
+    display: inline-block;
+    float: left;
 }
 
-.features {
-	-moz-column-count: 5;
-	-moz-column-gap: 1px;
-	-webkit-column-count: 5;
-	-webkit-column-gap: 0px;
-	column-count: 5;
-	column-gap: 1px;
-	width: 600px;
-}
+.features {}
 
-.feature 
-{
+.feature {
     margin: 3px;
     padding: 3px;
     border: 1px solid black;

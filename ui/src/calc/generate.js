@@ -1,7 +1,11 @@
 var Chess = require('chess.js').Chess;
 var c = require('./chessutils');
-var forkingSquares = require('./forkingSquares');
-var hiddenAttacks = require('./hiddenAttacks');
+var forks = require('./forks');
+var hidden = require('./hidden');
+var loose = require('./loose');
+var pins = require('./pins');
+var matethreat = require('./matethreat');
+var checks = require('./checks');
 
 module.exports = {
 
@@ -26,10 +30,14 @@ module.exports = {
       fen: c.repairFen(fen),
       features: []
     };
-    puzzle = forkingSquares(puzzle);
-    puzzle = hiddenAttacks(puzzle);
 
-    //     console.log(JSON.stringify(puzzle,null,1));
+    puzzle = forks(puzzle);
+    puzzle = hidden(puzzle);
+    puzzle = loose(puzzle);
+    puzzle = pins(puzzle);
+    puzzle = matethreat(puzzle);
+    puzzle = checks(puzzle);
+    
     return puzzle.features;
   }
 };

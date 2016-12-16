@@ -10,13 +10,13 @@ function visualBoard(ctrl) {
 }
 
 module.exports = function(ctrl) {
-  return [
-    visualBoard(ctrl),
+  return m("div.all", [
+    m('div.board_left', features(ctrl)),
+    m('div.mainboard',visualBoard(ctrl)),
     m('div.underboard', [
       m('div.center', [
         fenbar(ctrl)
       ])
-    ]),
-    features(ctrl)
-  ];
+    ])
+  ]);
 };
