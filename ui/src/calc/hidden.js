@@ -40,7 +40,7 @@ function addAligned(fen, features) {
     });
 
     features.push({
-        description: "hidden attacks",
+        description: "hidden attacker",
         side: chess.turn(),
         targets: aligned
     });

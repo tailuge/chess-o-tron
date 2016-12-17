@@ -1,6 +1,7 @@
 .all {
     display: inline-block;
 }
+
 .mainboard {
     margin-left: 20%;
 }
@@ -8,8 +9,8 @@
 .featuresall {
     margin: 0 auto;
     width: 20%;
-    display: inline-block;
     float: left;
+    text-align: center;
 }
 
 .features {}
