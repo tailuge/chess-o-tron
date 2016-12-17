@@ -15,35 +15,47 @@ function addCheckingSquares(fen, features) {
     var moves = chess.moves({
         verbose: true
     });
-    var kinglocation = c.kingsSquare(fen, chess.turn() === 'w' ? 'b' : 'w');
+
     var mates = moves.filter(move => /\#/.test(move.san));
     var checks = moves.filter(move => /\+/.test(move.san));
     features.push({
         description: "checking squares",
         side: chess.turn(),
-        targets: checks.map(m => targetAndDiagram(m.from, m.to, kinglocation))
+        targets: checks.map(m => targetAndDiagram(m.from, m.to, checkingMoves(fen, m)))
     });
 
     features.push({
         description: "mating squares",
         side: chess.turn(),
-        targets: mates.map(m => targetAndDiagram(m.from, m.to, kinglocation))
+        targets: mates.map(m => targetAndDiagram(m.from, m.to, checkingMoves(fen, m)))
     });
 }
 
+function checkingMoves(fen, move) {
+    var chess = new Chess();
+    chess.load(fen);
+    chess.move(move);
+    chess.load(c.fenForOtherSide(chess.fen()));
+    var moves = chess.moves({
+        verbose: true
+    });
+    return moves.filter(m => m.captured && m.captured.toLowerCase() === 'k');
+}
 
 
-function targetAndDiagram(from, to, king) {
+function targetAndDiagram(from, to, checks) {
     return {
         target: to,
         diagram: [{
             orig: from,
             dest: to,
             brush: 'paleBlue'
-        }, {
-            orig: to,
-            dest: king,
-            brush: 'red'
-        }]
+        }].concat(checks.map(m => {
+            return {
+                orig: m.from,
+                dest: m.to,
+                brush: 'red'
+            };
+        }))
     };
 }

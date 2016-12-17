@@ -35,7 +35,7 @@ function enrichMoveWithForkCaptures(fen, move) {
 
     var sameSidesTurnFen = c.fenForOtherSide(chess.fen());
     var pieceMoves = c.movesOfPieceOn(sameSidesTurnFen, move.to);
-    var captures = pieceMoves.filter(capturesMajorPiece).map(m => m.to);
+    var captures = pieceMoves.filter(capturesMajorPiece);
 
     move.captures = captures;
     return move;
@@ -54,8 +54,8 @@ function diagram(move) {
     var forks = move.captures.map(m => {
         return {
             orig: move.to,
-            dest: m,
-            brush: 'red'
+            dest: m.to,
+            brush: m.captured === 'k' ? 'red' : 'blue'
         };
     });
     return main.concat(forks);

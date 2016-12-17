@@ -9,9 +9,20 @@ function visualBoard(ctrl) {
   ]));
 }
 
-function info() {
+function info(ctrl) {
   return [m('div.explanation', [
-    m('p', "Before choosing the right move you should first be aware of the tactical features in a position.")
+    m('p', "Before choosing the right move you should first be aware of the tactical features in a position."),
+    m('div.control.button', {
+      onclick: function() {
+        ctrl.nextFen();
+      }
+    }, 'Random Position ↻'),
+    m('div.control.button', {
+      onclick: function() {
+        ctrl.showAll();
+      }
+    }, 'KC mode'),
+
   ])];
 }
 module.exports = function(ctrl) {
@@ -20,7 +31,7 @@ module.exports = function(ctrl) {
       features(ctrl)
     ),
     m('div.lichess_game', [
-      visualBoard(ctrl), m('div.lichess_ground', info())
+      visualBoard(ctrl), m('div.lichess_ground', info(ctrl))
     ]),
     m('div.underboard', [
       m('div.center', [
