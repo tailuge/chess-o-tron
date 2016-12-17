@@ -3,6 +3,7 @@ var groundBuild = require('./ground');
 var generate = require('./calc/generate');
 var diagram = require('./calc/diagram');
 var fendata = require('./calc/fendata');
+var queryparam = require('./util/queryparam');
 
 module.exports = function(opts, i18n) {
 
@@ -27,13 +28,13 @@ module.exports = function(opts, i18n) {
   }
 
   function updateFen(value) {
-
     fen(value);
     ground.set({
       fen: fen(),
     });
     ground.setShapes([]);
     features(generate.extractFeatures(fen()));
+    queryparam.updateUrlWithState(fen());
   }
 
   function nextFen(dest) {

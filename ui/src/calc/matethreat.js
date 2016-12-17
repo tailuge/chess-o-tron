@@ -17,17 +17,15 @@ function addMateInOneThreats(fen, features) {
     var moves = chess.moves({
         verbose: true
     });
-    
+
     moves = moves.filter(m => canMateOnNextTurn(fen, m));
-    moves = moves.map(m => m.to);
-    
+
     features.push({
-        description: "mate in one threats",
+        description: "mate-in-1 threats",
         side: chess.turn(),
-        targets: moves.sort().filter(function(el, i, a) {
-            return i === a.indexOf(el);
-        })
+        targets: moves.map(m => targetAndDiagram(m))
     });
+
 }
 
 function canMateOnNextTurn(fen, move) {
@@ -42,6 +40,30 @@ function canMateOnNextTurn(fen, move) {
     var moves = chess.moves({
         verbose: true
     });
-    return moves.filter(m => /#/.test(m.san)).length > 0;
+
+    // stuff mating moves into move object for diagram
+    move.matingMoves = moves.filter(m => /#/.test(m.san));
+    return move.matingMoves.length > 0;
 }
 
+function targetAndDiagram(move) {
+    return {
+        target: move.to,
+        diagram: [{
+            orig: move.from,
+            dest: move.to,
+            brush: "paleGreen"
+        }].concat(move.matingMoves.map(m => {
+            return {
+                orig: m.from,
+                dest: m.to,
+                brush: "paleGreen"
+            };
+        })).concat(move.matingMoves.map(m => {
+            return {
+                orig: m.from,
+                brush: "paleGreen"
+            };
+        }))
+    };
+}
