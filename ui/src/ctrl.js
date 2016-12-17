@@ -1,11 +1,13 @@
 var m = require('mithril');
 var groundBuild = require('./ground');
-var f = require('./calc/generate');
+var generate = require('./calc/generate');
+var diagram = require('./calc/diagram');
+var fendata = require('./calc/fendata');
 
 module.exports = function(opts, i18n) {
 
   var fen = m.prop(opts.fen);
-  var features = m.prop(f.extractFeatures(fen()));
+  var features = m.prop(generate.extractFeatures(fen()));
   var ground;
 
   function showGround() {
@@ -13,26 +15,31 @@ module.exports = function(opts, i18n) {
   }
 
   function onSelect(dest) {
+    ground.setShapes([]);
     ground.set({
       fen: fen(),
     });
-    ground.setShapes(f.diagramForTarget(dest, features()));
+    ground.setShapes(diagram.diagramForTarget(dest, features()));
+  }
+
+  function showAll() {
+    ground.setShapes(diagram.allDiagrams(features()));
   }
 
   function updateFen(value) {
 
     fen(value);
-    features(f.extractFeatures(fen()));
     ground.set({
       fen: fen(),
     });
-    ground.setAutoShapes([]);
+    ground.setShapes([]);
+    features(generate.extractFeatures(fen()));
   }
 
   function nextFen(dest) {
-    console.log('next fen');
+    updateFen(fendata[Math.floor(Math.random() * fendata.length)]);
   }
-  
+
   showGround();
   m.redraw();
 
@@ -42,6 +49,7 @@ module.exports = function(opts, i18n) {
     features: features,
     updateFen: updateFen,
     onSelect: onSelect,
-    nextFen: nextFen
+    nextFen: nextFen,
+    showAll: showAll
   };
 };

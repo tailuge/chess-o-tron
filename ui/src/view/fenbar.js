@@ -7,7 +7,9 @@ module.exports = function(controller) {
       value: controller.fen(),
       oninput: m.withAttr('value', controller.updateFen)
     }),
-    m('div', {onclick:function(){}},'↻'),
+    m('div', {onclick:function(){controller.nextFen()}},'↻'),
+    m('div', {onclick:function(){controller.showAll()}},'kc'),
+    
     m('h3', ['info: ', m('span.text-warning', controller.fen())])
   ];
 };

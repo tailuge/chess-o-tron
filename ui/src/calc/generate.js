@@ -10,20 +10,7 @@ var checks = require('./checks');
 module.exports = {
 
   /**
-   * Find all diagrams associated with target square in the list of features.
-   */
-  diagramForTarget: function(target, features) {
-    var diagram = [];
-    features.forEach(f => f.targets.forEach(t => {
-      if (t.target === target) {
-        diagram = diagram.concat(t.diagram);
-      }
-    }));
-    return diagram;
-  },
-
-  /**
-   * Find all features in the position.
+   * Calculate all features in the position.
    */
   extractFeatures: function(fen) {
     var puzzle = {

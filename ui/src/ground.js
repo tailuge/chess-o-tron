@@ -9,7 +9,7 @@ module.exports = function(fen, onSelect) {
       duration: 500
     },
     movable: {
-      free: true,
+      free: false,
       color: 'white',
       premove: true,
       dests: [],
