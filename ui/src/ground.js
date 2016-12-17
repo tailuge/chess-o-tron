@@ -6,17 +6,19 @@ module.exports = function(fen, onSelect) {
     viewOnly: false,
     turnColor: 'white',
     animation: {
-      duration: 500
+      duration: 200
+    },
+    highlight: {
+      lastMove: false
     },
     movable: {
       free: false,
       color: 'white',
       premove: true,
       dests: [],
-      showDests:false,
+      showDests: false,
       events: {
-        after: function() {
-        }
+        after: function() {}
       }
     },
     drawable: {
