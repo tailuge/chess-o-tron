@@ -22,9 +22,12 @@ function info(ctrl) {
 module.exports = function(ctrl) {
   return [
     m("div.#site_header",
-      m('div.board_left',
+      m('div.board_left', [
+        m('h2',
+          m('a#site_title', 'feature',
+            m('span.extension', 'tron'))),
         features(ctrl)
-      )
+      ])
     ),
     m('div.#lichess',
       m('div.analyse.cg-512', [

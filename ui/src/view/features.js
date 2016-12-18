@@ -9,7 +9,7 @@ module.exports = function(controller) {
         controller.showAll();
       }
     }, [
-      m('p', 'Features'),
+      m('p', 'All'),
       m('div.features.black.button', {
         onclick: function() {
           controller.onFilterSelect('b', null, null);
