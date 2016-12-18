@@ -11,12 +11,22 @@ function visualBoard(ctrl) {
 
 function info(ctrl) {
   return [m('div.explanation', [
-    m('p', "Before choosing the right move you should first be aware of the tactical features in a position."),
-    m('div.control.button', {
+    m('p', 'To improve at tactics you first need to improve your vision of the tactical features present in the position.'),
+    m('p.author', '- liches.org streamer'),
+    m('br'),
+    m('br'),
+    m('ul.instructions', [
+      m('li.instructions', 'Paste your FEN position below.'),
+      m('li.instructions', 'Click on the identified features.'),
+      m('li.instructions', 'Copy the URL and share.')
+    ]),
+    m('br'),
+    m('br'),
+    m('div.button.center.action', {
       onclick: function() {
         ctrl.nextFen();
       }
-    }, 'Random Position ↻')
+    }, 'Random Position')
   ])];
 }
 module.exports = function(ctrl) {

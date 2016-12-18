@@ -29,6 +29,14 @@ function addCheckingSquares(fen, features) {
         side: chess.turn(),
         targets: mates.map(m => targetAndDiagram(m.from, m.to, checkingMoves(fen, m)))
     });
+    
+    if (mates.length > 0) {
+        features.forEach(f => {
+            if (f.description === "Mate-in-1 threats") {
+                f.targets = [];
+            }
+        });
+    }
 }
 
 function checkingMoves(fen, move) {
