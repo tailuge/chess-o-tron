@@ -17,7 +17,7 @@ function addPinsForCurrentPlayer(fen, features) {
     var pieces = c.piecesForColour(fen, chess.turn());
     var pinned = pieces.filter(square => c.isCheckAfterRemovingPieceAtSquare(fen, square));
     features.push({
-        description: "pinned pieces",
+        description: "Pinned pieces",
         side: chess.turn(),
         targets: pinned
     });

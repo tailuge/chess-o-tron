@@ -16,13 +16,7 @@ function info(ctrl) {
       onclick: function() {
         ctrl.nextFen();
       }
-    }, 'Random Position ↻'),
-    m('div.control.button', {
-      onclick: function() {
-        ctrl.showAll();
-      }
-    }, 'KC mode'),
-
+    }, 'Random Position ↻')
   ])];
 }
 module.exports = function(ctrl) {

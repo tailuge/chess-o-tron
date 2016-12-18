@@ -13,17 +13,21 @@
     text-align: center;
 }
 
-.features {}
+.features {
+    padding: 2px;
+    margin: 1px;
+    padding-top: 2px;
+}
 
 .feature {
-    margin: 3px;
-    padding: 1px;
-    border: 1px solid black;
+    margin: 1px;
+    padding: 0px;
+    padding-top: 2px;
     list-style-position: inside;
 }
 
 .star.selected {
-  color: #ffff00;
-  text-shadow: 0px 2px 8px #000000;
-  display: inline-block;
+    color: #ffff00;
+    text-shadow: 0px 2px 8px #000000;
+    display: inline-block;
 }

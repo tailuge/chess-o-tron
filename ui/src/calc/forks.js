@@ -21,11 +21,11 @@ function addForks(fen, features) {
     moves = moves.map(m => enrichMoveWithForkCaptures(fen, m));
     moves = moves.filter(m => m.captures.length >= 2);
 
-    addForksBy(moves, 'q', 'queen', chess.turn(), features);
-    addForksBy(moves, 'p', 'pawn', chess.turn(), features);
-    addForksBy(moves, 'r', 'rook', chess.turn(), features);
-    addForksBy(moves, 'b', 'bishop', chess.turn(), features);
-    addForksBy(moves, 'n', 'knight', chess.turn(), features);
+    addForksBy(moves, 'q', 'Queen', chess.turn(), features);
+    addForksBy(moves, 'p', 'Pawn', chess.turn(), features);
+    addForksBy(moves, 'r', 'Rook', chess.turn(), features);
+    addForksBy(moves, 'b', 'Bishop', chess.turn(), features);
+    addForksBy(moves, 'n', 'Knight', chess.turn(), features);
 }
 
 function enrichMoveWithForkCaptures(fen, move) {

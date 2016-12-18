@@ -1,16 +1,12 @@
 var m = require('mithril');
-
-var fullStar = '<span class="">★</span>';
-var emptyStar = '<span class="star">☆</span>';
+var stopevent = require('../util/stopevent');
 
 function makeStars(controller, feature) {
     return feature.targets.map(t => m('span.star', {
         title: t.target,
         onclick: function() {
             controller.onFilterSelect(feature.side, feature.description, t.target);
-            if (!e) var e = window.event;
-            e.cancelBubble = true;
-            if (e.stopPropagation) e.stopPropagation();
+            stopevent();
         }
     }, t.selected ? m('span.star.selected', '★') : m('span.star', '☆')));
 }
@@ -22,6 +18,7 @@ module.exports = function(controller, feature) {
     return m('li.feature.button', {
         onclick: function() {
             controller.onFilterSelect(feature.side, feature.description);
+            stopevent();
         }
     }, [
         m('div.name', feature.description),

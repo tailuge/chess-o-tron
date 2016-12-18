@@ -18,7 +18,7 @@ function addLoosePieces(fen, features) {
     var pieces = c.piecesForColour(fen, opponent);
     pieces = pieces.filter(square => !c.isCheckAfterPlacingKingAtSquare(fen, king, square));
     features.push({
-        description: "loose pieces",
+        description: "Loose pieces",
         side: opponent,
         targets: pieces.map(t => {
             return {

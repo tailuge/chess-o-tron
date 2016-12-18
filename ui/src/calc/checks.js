@@ -19,13 +19,13 @@ function addCheckingSquares(fen, features) {
     var mates = moves.filter(move => /\#/.test(move.san));
     var checks = moves.filter(move => /\+/.test(move.san));
     features.push({
-        description: "checking squares",
+        description: "Checking squares",
         side: chess.turn(),
         targets: checks.map(m => targetAndDiagram(m.from, m.to, checkingMoves(fen, m)))
     });
 
     features.push({
-        description: "mating squares",
+        description: "Mating squares",
         side: chess.turn(),
         targets: mates.map(m => targetAndDiagram(m.from, m.to, checkingMoves(fen, m)))
     });

@@ -21,7 +21,7 @@ function addMateInOneThreats(fen, features) {
     moves = moves.filter(m => canMateOnNextTurn(fen, m));
 
     features.push({
-        description: "mate-in-1 threats",
+        description: "Mate-in-1 threats",
         side: chess.turn(),
         targets: moves.map(m => targetAndDiagram(m))
     });

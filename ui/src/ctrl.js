@@ -49,6 +49,9 @@ module.exports = function(opts, i18n) {
 
   showGround();
   m.redraw();
+  if (opts.showAll) {
+    showAll();
+  }
 
   return {
     fen: fen,
