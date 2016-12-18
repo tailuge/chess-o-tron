@@ -1,7 +1,5 @@
 # chess-o-tron [![bitHound Overall Score](https://www.bithound.io/github/tailuge/chess-o-tron/badges/score.svg)](https://www.bithound.io/github/tailuge/chess-o-tron)
 
-[demo](https://tailuge.github.io/chess-o-tron/html/loose-piece-o-tron.html)
-
 [examples](https://tailuge.github.io/chess-o-tron/)
 
 ```
