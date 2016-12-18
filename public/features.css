@@ -21,3 +21,9 @@
     border: 1px solid black;
     list-style-position: inside;
 }
+
+.star.selected {
+  color: #ffff00;
+  text-shadow: 0px 2px 8px #000000;
+  display: inline-block;
+}
