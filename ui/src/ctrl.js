@@ -12,15 +12,19 @@ module.exports = function(opts, i18n) {
   var ground;
 
   function showGround() {
-    if (!ground) ground = groundBuild(fen(), onSelect);
+    if (!ground) ground = groundBuild(fen(), onSquareSelect);
   }
 
-  function onSelect(dest) {
+  function onSquareSelect(target) {
+    onFilterSelect(null,null,target);
+  }
+
+  function onFilterSelect(side, description, target) {
     ground.setShapes([]);
     ground.set({
       fen: fen(),
     });
-    ground.setShapes(diagram.diagramForTarget(dest, features()));
+    ground.setShapes(diagram.diagramForTarget(side, description, target, features()));
   }
 
   function showAll() {
@@ -49,7 +53,8 @@ module.exports = function(opts, i18n) {
     ground: ground,
     features: features,
     updateFen: updateFen,
-    onSelect: onSelect,
+    onFilterSelect: onFilterSelect,
+    onSquareSelect: onSquareSelect,
     nextFen: nextFen,
     showAll: showAll
   };
