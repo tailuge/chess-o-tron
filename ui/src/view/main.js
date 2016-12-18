@@ -4,9 +4,9 @@ var fenbar = require('./fenbar');
 var features = require('./features');
 
 function visualBoard(ctrl) {
-  return m('div.lichess_board_wrap', m('div.lichess_board', [
+  return m('div.lichess_board', m('div.lichess_board_wrap', m('div.lichess_board', [
     chessground.view(ctrl.ground)
-  ]));
+  ])));
 }
 
 function info(ctrl) {
@@ -20,17 +20,26 @@ function info(ctrl) {
   ])];
 }
 module.exports = function(ctrl) {
-  return m("div.all", [
-    m('div.board_left',
-      features(ctrl)
+  return [
+    m("div.#site_header",
+      m('div.board_left',
+        features(ctrl)
+      )
     ),
-    m('div.lichess_game', [
-      visualBoard(ctrl), m('div.lichess_ground', info(ctrl))
-    ]),
-    m('div.underboard', [
-      m('div.center', [
-        fenbar(ctrl)
+    m('div.#lichess',
+      m('div.analyse.cg-512', [
+        m('div',
+          m('div.lichess_game', [
+            visualBoard(ctrl),
+            m('div.lichess_ground', info(ctrl))
+          ])
+        ),
+        m('div.underboard', [
+          m('div.center', [
+            fenbar(ctrl)
+          ])
+        ])
       ])
-    ])
-  ]);
+    )
+  ];
 };

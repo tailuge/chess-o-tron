@@ -1,14 +1,7 @@
-.all {
-    display: inline-block;
-}
-
-.mainboard {
-    margin-left: 30%;
-}
 
 .featuresall {
+    width: 100%;
     margin: 0 auto;
-    width: 30%;
     float: left;
     text-align: center;
 }
