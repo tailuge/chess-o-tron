@@ -13,6 +13,7 @@ module.exports = {
       .forEach(f => f.targets.forEach(t => {
         if (!target || t.target === target) {
           diagram = diagram.concat(t.diagram);
+          t.selected = true;
         }
       }));
     return uniq(diagram);
@@ -22,8 +23,15 @@ module.exports = {
     var diagram = [];
     features.forEach(f => f.targets.forEach(t => {
       diagram = diagram.concat(t.diagram);
+      t.selected = true;
     }));
     return uniq(diagram);
+  },
+
+  clearDiagrams: function(features) {
+    features.forEach(f => f.targets.forEach(t => {
+      t.selected = false;
+    }));
   }
 
 

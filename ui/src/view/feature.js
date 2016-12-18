@@ -1,7 +1,7 @@
 var m = require('mithril');
 
-var emptyStar = '☆';
-var fullStar = '<span class="full">★</span>';
+var fullStar = '<span class="">★</span>';
+var emptyStar = '<span class="star">☆</span>';
 
 function makeStars(controller, feature) {
     return feature.targets.map(t => m('span.star', {
@@ -12,7 +12,7 @@ function makeStars(controller, feature) {
             e.cancelBubble = true;
             if (e.stopPropagation) e.stopPropagation();
         }
-    }, emptyStar));
+    }, t.selected ? m('span.star.selected', '★') : m('span.star', '☆')));
 }
 
 module.exports = function(controller, feature) {

@@ -17,9 +17,11 @@ module.exports = function(opts, i18n) {
 
   function onSquareSelect(target) {
     onFilterSelect(null,null,target);
+    m.redraw();
   }
 
   function onFilterSelect(side, description, target) {
+    diagram.clearDiagrams(features());
     ground.setShapes([]);
     ground.set({
       fen: fen(),
