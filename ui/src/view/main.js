@@ -12,7 +12,7 @@ function visualBoard(ctrl) {
 function info(ctrl) {
   return [m('div.explanation', [
     m('p', 'To improve at tactics you first need to improve your vision of the tactical features present in the position.'),
-    m('p.author', '- liches.org streamer'),
+    m('p.author', '- lichess.org streamer'),
     m('br'),
     m('br'),
     m('ul.instructions', [
