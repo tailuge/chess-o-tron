@@ -16,13 +16,15 @@ module.exports = {
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     },
 
-    updateUrlWithState: function(fen, showAll) {
+    updateUrlWithState: function(fen, side, description, target) {
         if (history.pushState) {
             var newurl = window.location.protocol + "//" +
                 window.location.host +
                 window.location.pathname +
                 '?fen=' + encodeURIComponent(fen) +
-                (showAll ? "&showAll=true" : "");
+                (side ? "&side=" + encodeURIComponent(side) : "") +
+                (description ? "&description=" + encodeURIComponent(description) : "") +
+                (target ? "&target=" + encodeURIComponent(target) : "");
             window.history.pushState({
                 path: newurl
             }, '', newurl);

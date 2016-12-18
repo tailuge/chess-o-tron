@@ -10,4 +10,9 @@ head -100 raw.puzzles | node checkingSquares.js | node absolutePin.js | node loo
 
 (node 4.2.4)
 
+```
+cd ui
+npm install
+gulp
+```
 

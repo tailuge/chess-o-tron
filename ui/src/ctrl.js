@@ -16,7 +16,7 @@ module.exports = function(opts, i18n) {
   }
 
   function onSquareSelect(target) {
-    onFilterSelect(null,null,target);
+    onFilterSelect(null, null, target);
     m.redraw();
   }
 
@@ -27,10 +27,12 @@ module.exports = function(opts, i18n) {
       fen: fen(),
     });
     ground.setShapes(diagram.diagramForTarget(side, description, target, features()));
+    queryparam.updateUrlWithState(fen(), side, description, target);
   }
 
   function showAll() {
     ground.setShapes(diagram.allDiagrams(features()));
+    queryparam.updateUrlWithState(fen(), null, null, "all");
   }
 
   function updateFen(value) {
@@ -40,7 +42,7 @@ module.exports = function(opts, i18n) {
     });
     ground.setShapes([]);
     features(generate.extractFeatures(fen()));
-    queryparam.updateUrlWithState(fen());
+    queryparam.updateUrlWithState(fen(), null, null, null);
   }
 
   function nextFen(dest) {
@@ -49,8 +51,9 @@ module.exports = function(opts, i18n) {
 
   showGround();
   m.redraw();
-  if (opts.showAll) {
-    showAll();
+  onFilterSelect(opts.side, opts.description, opts.target);
+  if (opts.target === 'all') {
+    showAll();    
   }
 
   return {
