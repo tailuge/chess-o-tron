@@ -2,16 +2,13 @@ var Chess = require('chess.js').Chess;
 var c = require('./chessutils');
 
 module.exports = function(puzzle) {
-    var chess = new Chess();
-    chess.load(puzzle.fen);
     addAligned(puzzle.fen, puzzle.features);
     addAligned(c.fenForOtherSide(puzzle.fen), puzzle.features);
     return puzzle;
 };
 
 function addAligned(fen, features) {
-    var chess = new Chess();
-    chess.load(fen);
+    var chess = new Chess(fen);
 
     var moves = chess.moves({
         verbose: true
@@ -27,12 +24,14 @@ function addAligned(fen, features) {
             opponentsPieces.forEach(to => {
                 if (c.canCapture(from, chess.get(from), to, chess.get(to))) {
                     var availableOnBoard = moves.filter(m => m.from === from && m.to === to);
-                    var revealingMoves = c.movesThatResultInCaptureThreat(fen, from, to);
-                    if (availableOnBoard.length === 0 && revealingMoves.length > 0) {
-                        aligned.push({
-                            target: from,
-                            diagram: diagram(from, to, revealingMoves)
-                        });
+                    if (availableOnBoard.length === 0) {
+                        var revealingMoves = c.movesThatResultInCaptureThreat(fen, from, to);
+                        if (revealingMoves.length > 0) {
+                            aligned.push({
+                                target: from,
+                                diagram: diagram(from, to, revealingMoves)
+                            });
+                        }
                     }
                 }
             });

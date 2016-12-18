@@ -13,7 +13,7 @@
     "gulp-uglify": "~2.0",
     "gulp-util": "~3.0",
     "vinyl-source-stream": "~1.1",
-    "watchify": "~3.7"
+    "watchify": "~3.8"
   },
   "dependencies": {
     "chess.js": "github:ornicar/chess.js#learn",

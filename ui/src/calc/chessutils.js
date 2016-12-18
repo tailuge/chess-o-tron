@@ -10,8 +10,7 @@ var allSquares = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'b1', 'b2', 'b
  * Place king at square and find out if it is in check.
  */
 function isCheckAfterPlacingKingAtSquare(fen, king, square) {
-    var chess = new Chess();
-    chess.load(fen);
+    var chess = new Chess(fen);
     chess.remove(square);
     chess.remove(king);
     chess.put({
@@ -22,15 +21,13 @@ function isCheckAfterPlacingKingAtSquare(fen, king, square) {
 }
 
 function isCheckAfterRemovingPieceAtSquare(fen, square) {
-    var chess = new Chess();
-    chess.load(fen);
+    var chess = new Chess(fen);
     chess.remove(square);
     return chess.in_check();
 }
 
 function movesThatResultInCaptureThreat(fen, from, to) {
-    var chess = new Chess();
-    chess.load(fen);
+    var chess = new Chess(fen);
     var moves = chess.moves({
         verbose: true
     });
@@ -41,8 +38,7 @@ function movesThatResultInCaptureThreat(fen, from, to) {
 }
 
 function doesMoveResultInCaptureThreat(move, fen, from, to) {
-    var chess = new Chess();
-    chess.load(fen);
+    var chess = new Chess(fen);
 
     //apply move of intermediary piece (state becomes other sides turn)
     chess.move(move);
@@ -79,8 +75,7 @@ function kingsSquare(fen, colour) {
 }
 
 function squaresOfPiece(fen, colour, pieceType) {
-    var chess = new Chess();
-    chess.load(fen);
+    var chess = new Chess(fen);
     return allSquares.find(square => {
         var r = chess.get(square);
         return r === null ? false : (r.color == colour && r.type.toLowerCase() === pieceType);
@@ -88,19 +83,18 @@ function squaresOfPiece(fen, colour, pieceType) {
 }
 
 function movesOfPieceOn(fen, square) {
-    var chess = new Chess();
-    chess.load(fen);
-    var moves = chess.moves({
-        verbose: true
+    var chess = new Chess(fen);
+    return chess.moves({
+        verbose: true,
+        square: square
     });
-    return moves.filter(move => move.from === square);
 }
+
 /**
  * Find position of all of one colours pieces excluding the king.
  */
 function piecesForColour(fen, colour) {
-    var chess = new Chess();
-    chess.load(fen);
+    var chess = new Chess(fen);
     return allSquares.filter(square => {
         var r = chess.get(square);
         if ((r === null) || (r.type === 'k')) {
@@ -111,8 +105,7 @@ function piecesForColour(fen, colour) {
 }
 
 function majorPiecesForColour(fen, colour) {
-    var chess = new Chess();
-    chess.load(fen);
+    var chess = new Chess(fen);
     return allSquares.filter(square => {
         var r = chess.get(square);
         if ((r === null) || (r.type === 'p')) {
@@ -191,8 +184,7 @@ function repairFen(fen) {
     if (/^[^ ]*$/.test(fen)) {
         return fen + " w - - 0 1";
     }
-
-    return fen.replace(/ w .*/, ' w - - 0 1').replace(/ b .*/, ' b - - 0 1')
+    return fen.replace(/ w .*/, ' w - - 0 1').replace(/ b .*/, ' b - - 0 1');
 }
 
 module.exports.allSquares = allSquares;

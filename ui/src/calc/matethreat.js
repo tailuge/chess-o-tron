@@ -29,8 +29,7 @@ function addMateInOneThreats(fen, features) {
 }
 
 function canMateOnNextTurn(fen, move) {
-    var chess = new Chess();
-    chess.load(fen);
+    var chess = new Chess(fen);
     chess.move(move);
     if (chess.in_check()) {
         return false;

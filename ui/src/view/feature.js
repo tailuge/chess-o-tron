@@ -6,7 +6,9 @@ var fullStar = '<span class="full">★</span>';
 function makeStars(controller, feature) {
     return feature.targets.map(t => m('span.star', {
         title: t.target,
-        onclick: function(){controller.onSelect(t.target)}
+        onclick: function() {
+            controller.onSelect(t.target);
+        }
     }, emptyStar));
 }
 
