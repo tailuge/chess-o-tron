@@ -4,9 +4,9 @@ var stopevent = require('../util/stopevent');
 function makeStars(controller, feature) {
     return feature.targets.map(t => m('span.star', {
         title: t.target,
-        onclick: function() {
+        onclick: function(event) {
             controller.onFilterSelect(feature.side, feature.description, t.target);
-            stopevent();
+            return stopevent(event);
         }
     }, t.selected ? m('span.star.selected', '★') : m('span.star', '☆')));
 }
@@ -16,9 +16,9 @@ module.exports = function(controller, feature) {
         return [];
     }
     return m('li.feature.button', {
-        onclick: function() {
+        onclick: function(event) {
             controller.onFilterSelect(feature.side, feature.description);
-            stopevent();
+            return stopevent(event);
         }
     }, [
         m('div.name', feature.description),

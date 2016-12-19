@@ -11,18 +11,18 @@ module.exports = function(controller) {
     }, [
       m('p', 'All'),
       m('div.features.black.button', {
-        onclick: function() {
+        onclick: function(event) {
           controller.onFilterSelect('b', null, null);
-          stopevent();
+          return stopevent(event);
         }
       }, [
         m('p', 'Black'),
         m('ul.features.black', controller.features().filter(f => f.side === 'b').map(f => feature(controller, f)))
       ]),
       m('div.features.white.button', {
-        onclick: function() {
+        onclick: function(event) {
           controller.onFilterSelect('w', null, null);
-          stopevent();
+          return stopevent(event);
         }
       }, [
         m('p', 'White'),
