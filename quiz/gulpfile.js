@@ -1,59 +1,41 @@
-var source = require('vinyl-source-stream');
 var gulp = require('gulp');
-var gutil = require('gulp-util');
-var watchify = require('watchify');
+//var sourcemaps = require('gulp-sourcemaps');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
+var watchify = require('watchify');
+var babel = require('babelify');
+var to5ify = require('6to5ify');
 var uglify = require('gulp-uglify');
-var streamify = require('gulp-streamify');
-const babel = require('gulp-babel');
 
-var sources = ['./src/main.js'];
-var destination = '../public/compiled/';
-var onError = function(error) {
-  gutil.log(gutil.colors.red(error.message));
-};
-var standalone = 'Quiz';
-
-gulp.task('prod', function() {
-  return browserify('./src/main.js', {
-    standalone: standalone
-  }).bundle()
-    .on('error', onError)
-    .pipe(source('app-quiz.min.js'))
-//    .pipe(babel({presets: ['es2015']}))
-//    .on('error', onError)
-//    .pipe(streamify(uglify()))
-//    .on('error', onError)
-    .pipe(gulp.dest(destination));
-});
-
-gulp.task('dev', function() {
-  return browserify('./src/main.js', {
-    standalone: standalone
-  }).bundle()
-    .on('error', onError)
-    .pipe(source('app-quiz.js'))
-    .pipe(gulp.dest(destination));
-});
-
-
-gulp.task('watch', function() {
-  var opts = watchify.args;
-  opts.debug = true;
-  opts.standalone = standalone;
-
-  var bundleStream = watchify(browserify(sources, opts))
-    .on('update', rebundle)
-    .on('log', gutil.log);
+function compile(watch) {
+  var bundler = watchify(browserify('./src/main.js', { debug: true }).transform(babel).transform(to5ify));
 
   function rebundle() {
-    return bundleStream.bundle()
-      .on('error', onError)
+    bundler.bundle()
+      .on('error', function(err) { console.error(err); this.emit('end'); })
       .pipe(source('app-quiz.js'))
-      .pipe(gulp.dest(destination));
+      .pipe(buffer())
+      .pipe(uglify())
+      .pipe(gulp.dest('../public/compiled/'));
   }
 
-  return rebundle();
-});
+  if (watch) {
+    bundler.on('update', function() {
+      console.log('-> bundling...');
+      rebundle();
+    });
+  }
+
+  rebundle();
+}
+
+function watch() {
+  return compile(true);
+};
+
+gulp.task('build', function() { return compile(); });
+gulp.task('watch', function() { return watch(); });
 
 gulp.task('default', ['watch']);
+
