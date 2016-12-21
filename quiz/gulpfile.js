@@ -3,20 +3,27 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var watchify = require('watchify');
 var browserify = require('browserify');
+var uglify = require('gulp-uglify');
+var streamify = require('gulp-streamify');
+const babel = require('gulp-babel');
 
 var sources = ['./src/main.js'];
 var destination = '../public/compiled/';
 var onError = function(error) {
   gutil.log(gutil.colors.red(error.message));
 };
-var standalone = 'Trainer';
+var standalone = 'Quiz';
 
 gulp.task('prod', function() {
   return browserify('./src/main.js', {
     standalone: standalone
   }).bundle()
     .on('error', onError)
-    .pipe(source('app.min.js'))
+    .pipe(source('app-quiz.min.js'))
+//    .pipe(babel({presets: ['es2015']}))
+//    .on('error', onError)
+//    .pipe(streamify(uglify()))
+//    .on('error', onError)
     .pipe(gulp.dest(destination));
 });
 
@@ -25,18 +32,10 @@ gulp.task('dev', function() {
     standalone: standalone
   }).bundle()
     .on('error', onError)
-    .pipe(source('app.js'))
-    .pipe(gulp.dest(destination));
-});
-
-gulp.task('dev-quiz', function() {
-  return browserify('./src/quiz.js', {
-    standalone: standalone
-  }).bundle()
-    .on('error', onError)
     .pipe(source('app-quiz.js'))
     .pipe(gulp.dest(destination));
 });
+
 
 gulp.task('watch', function() {
   var opts = watchify.args;
@@ -50,25 +49,6 @@ gulp.task('watch', function() {
   function rebundle() {
     return bundleStream.bundle()
       .on('error', onError)
-      .pipe(source('app.js'))
-      .pipe(gulp.dest(destination));
-  }
-
-  return rebundle();
-});
-
-gulp.task('watch-quiz', function() {
-  var opts = watchify.args;
-  opts.debug = true;
-  opts.standalone = standalone;
-
-  var bundleStream = watchify(browserify(['./src/quiz.js'], opts))
-    .on('update', rebundle)
-    .on('log', gutil.log);
-
-  function rebundle() {
-    return bundleStream.bundle()
-      .on('error', onError)
       .pipe(source('app-quiz.js'))
       .pipe(gulp.dest(destination));
   }
@@ -76,4 +56,4 @@ gulp.task('watch-quiz', function() {
   return rebundle();
 });
 
-gulp.task('default', ['watch-quiz']);
+gulp.task('default', ['watch']);
