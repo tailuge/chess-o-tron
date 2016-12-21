@@ -29,6 +29,15 @@ gulp.task('dev', function() {
     .pipe(gulp.dest(destination));
 });
 
+gulp.task('dev-quiz', function() {
+  return browserify('./src/quiz.js', {
+    standalone: standalone
+  }).bundle()
+    .on('error', onError)
+    .pipe(source('app-quiz.js'))
+    .pipe(gulp.dest(destination));
+});
+
 gulp.task('watch', function() {
   var opts = watchify.args;
   opts.debug = true;
@@ -48,4 +57,23 @@ gulp.task('watch', function() {
   return rebundle();
 });
 
-gulp.task('default', ['watch']);
+gulp.task('watch-quiz', function() {
+  var opts = watchify.args;
+  opts.debug = true;
+  opts.standalone = standalone;
+
+  var bundleStream = watchify(browserify(['./src/quiz.js'], opts))
+    .on('update', rebundle)
+    .on('log', gutil.log);
+
+  function rebundle() {
+    return bundleStream.bundle()
+      .on('error', onError)
+      .pipe(source('app-quiz.js'))
+      .pipe(gulp.dest(destination));
+  }
+
+  return rebundle();
+});
+
+gulp.task('default', ['watch-quiz']);
