@@ -6,19 +6,14 @@
   "directories": {
     "example": "examples"
   },
-  "devDependencies": {
-    "6to5ify": "^4.1.1",
-    "babel-preset-es2015": "^6.18.0",
-    "babelify": "^7.3.0",
-    "browserify": "~13.0",
-    "gulp": "~3.9",
-    "gulp-babel": "^6.1.2",
+   "devDependencies": {
+    "browserify": "~13.1",
+    "gulp": "~3.9.1",
     "gulp-streamify": "~1.0",
     "gulp-uglify": "~2.0",
     "gulp-util": "~3.0",
-    "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "~1.1",
-    "watchify": "~3.7"
+    "watchify": "~3.8"
   },
   "dependencies": {
     "chess.js": "github:ornicar/chess.js#learn",
