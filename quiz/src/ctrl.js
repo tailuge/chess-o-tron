@@ -10,6 +10,10 @@ module.exports = function(opts, i18n) {
   var fen = m.prop(opts.fen);
   var features = m.prop(generate.extractFeatures(fen()));
   var ground;
+  var score = m.prop(0);
+  var bonus = m.prop("");
+  var time = m.prop(60.0);
+  var selection = m.prop("Knight forks");
 
   function showGround() {
     if (!ground) ground = groundBuild(fen(), onSquareSelect);
@@ -53,7 +57,7 @@ module.exports = function(opts, i18n) {
   m.redraw();
   onFilterSelect(opts.side, opts.description, opts.target);
   if (opts.target === 'all') {
-    showAll();    
+    showAll();
   }
 
   return {
@@ -64,6 +68,10 @@ module.exports = function(opts, i18n) {
     onFilterSelect: onFilterSelect,
     onSquareSelect: onSquareSelect,
     nextFen: nextFen,
-    showAll: showAll
+    showAll: showAll,
+    score: score,
+    bonus: bonus,
+    time: time,
+    selection: selection
   };
 };

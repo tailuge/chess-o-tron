@@ -2,6 +2,9 @@ var m = require('mithril');
 var chessground = require('chessground');
 var fenbar = require('./fenbar');
 var features = require('./features');
+var selection = require('./selection');
+var score = require('./score');
+var timer = require('./timer');
 
 function visualBoard(ctrl) {
   return m('div.lichess_board', m('div.lichess_board_wrap', m('div.lichess_board', [
@@ -11,24 +14,34 @@ function visualBoard(ctrl) {
 
 function info(ctrl) {
   return [m('div.explanation', [
-    m('p', 'To improve at tactics you first need to improve your vision of the tactical features present in the position.'),
-    m('p.author', '- lichess.org streamer'),
+    m('p', 'Increase your tactical awareness by spotting all features in a category as fast as you can (regardless of quality of move)'),
     m('br'),
     m('br'),
     m('ul.instructions', [
-      m('li.instructions', 'Paste your FEN position below.'),
-      m('li.instructions', 'Click on the identified features.'),
-      m('li.instructions', 'Copy the URL and share.')
+      m('li.instructions', 'Select your category to begin.'),
+      m('li.instructions', 'Click on the correct squares.'),
+      m('li.instructions', 'Combo bonus for 3 in 1 second.'),
+      m('li.instructions', 'Time extension for every 10 correct.')
     ]),
+    m('br'),
+    m('br'),
+    selection(ctrl),
     m('br'),
     m('br'),
     m('div.button.center.action', {
       onclick: function() {
         ctrl.nextFen();
       }
-    }, 'Random Position')
+    }, 'Begin'),
+    m('br'),
+    m('br'),
+    score(ctrl),
+    m('br'),
+    m('br'),
+    timer(ctrl)    
   ])];
 }
+
 module.exports = function(ctrl) {
   return [
     m("div.#site_header",
