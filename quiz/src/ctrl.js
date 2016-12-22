@@ -14,13 +14,46 @@ module.exports = function(opts, i18n) {
   var bonus = m.prop("");
   var time = m.prop(60.0);
   var selection = m.prop("Knight forks");
+  var correct = m.prop([]);
+  var incorrect = m.prop([]);
+
+  function newGame() {
+    score(0);
+    bonus("");
+    time(60);
+    correct([]);
+    incorrect([]);
+  }
 
   function showGround() {
     if (!ground) ground = groundBuild(fen(), onSquareSelect);
   }
 
   function onSquareSelect(target) {
-    onFilterSelect(null, null, target);
+    console.log(incorrect());
+    var found = false;
+    features()
+      .forEach(f => {
+        f.targets.forEach(t => {
+          if (t.target === target) {
+            found = true;
+          }
+        });
+      });
+
+    if (found) {
+      correct().push(target);
+    }
+    else {
+      incorrect().push(target);
+    }
+    console.log(incorrect());
+    ground.set({
+      fen: fen(),
+    });
+    var clickedDiagram = diagram.clickedSquares(correct(), incorrect());
+    console.log(JSON.stringify(clickedDiagram));
+    ground.setShapes(clickedDiagram);
     m.redraw();
   }
 
@@ -30,7 +63,7 @@ module.exports = function(opts, i18n) {
     ground.set({
       fen: fen(),
     });
-    ground.setShapes(diagram.diagramForTarget(side, description, target, features()));
+    //    ground.setShapes(diagram.diagramForTarget(side, description, target, features()));
     queryparam.updateUrlWithState(fen(), side, description, target);
   }
 
@@ -55,10 +88,6 @@ module.exports = function(opts, i18n) {
 
   showGround();
   m.redraw();
-  onFilterSelect(opts.side, opts.description, opts.target);
-  if (opts.target === 'all') {
-    showAll();
-  }
 
   return {
     fen: fen,

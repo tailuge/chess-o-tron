@@ -32,6 +32,23 @@ module.exports = {
     features.forEach(f => f.targets.forEach(t => {
       t.selected = false;
     }));
+  },
+
+  clickedSquares: function(correct, incorrect) {
+    var diagram = [];
+    correct.forEach(target => {
+      diagram.push({
+        orig: target,
+        brush: 'green'
+      });
+    });
+    incorrect.forEach(target => {
+      diagram.push({
+        orig: target,
+        brush: 'red'
+      });
+    });
+    return diagram;
   }
 
 
