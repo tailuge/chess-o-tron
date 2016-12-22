@@ -24,7 +24,50 @@ module.exports = {
     puzzle = pins(puzzle);
     puzzle = matethreat(puzzle);
     puzzle = checks(puzzle);
-    
+
     return puzzle.features;
+  },
+
+  /**
+   * Calculate single features in the position.
+   */
+  extractSingleFeature: function(featureDescription, fen) {
+    var puzzle = {
+      fen: c.repairFen(fen),
+      features: []
+    };
+
+    if (featureDescription === "Queen forks") {
+      puzzle = forks(puzzle,'q');
+    }
+    if (featureDescription === "Rook forks") {
+      puzzle = forks(puzzle,'r');
+    }
+    if (featureDescription === "Bishop forks") {
+      puzzle = forks(puzzle,'b');
+    }
+    if (featureDescription === "Knight forks") {
+      puzzle = forks(puzzle,'n');
+    }
+    if (featureDescription === "Pawn forks") {
+      puzzle = forks(puzzle,'p');
+    }
+
+    return puzzle.features;
+  },
+
+  featureFound: function(features, target) {
+    var found = false;
+    features
+      .forEach(f => {
+        f.targets.forEach(t => {
+          if (t.target === target) {
+            found = true;
+          }
+        });
+      });
+    return found;
   }
+
+
 };

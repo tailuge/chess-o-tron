@@ -3,15 +3,15 @@ var c = require('./chessutils');
 
 
 
-module.exports = function(puzzle) {
+module.exports = function(puzzle, forkType) {
     var chess = new Chess();
     chess.load(puzzle.fen);
-    addForks(puzzle.fen, puzzle.features);
-    addForks(c.fenForOtherSide(puzzle.fen), puzzle.features);
+    addForks(puzzle.fen, puzzle.features, forkType);
+    addForks(c.fenForOtherSide(puzzle.fen), puzzle.features, forkType);
     return puzzle;
 };
 
-function addForks(fen, features) {
+function addForks(fen, features, forkType) {
     var chess = new Chess();
     chess.load(fen);
     var moves = chess.moves({
@@ -21,11 +21,21 @@ function addForks(fen, features) {
     moves = moves.map(m => enrichMoveWithForkCaptures(fen, m));
     moves = moves.filter(m => m.captures.length >= 2);
 
-    addForksBy(moves, 'q', 'Queen', chess.turn(), features);
-    addForksBy(moves, 'p', 'Pawn', chess.turn(), features);
-    addForksBy(moves, 'r', 'Rook', chess.turn(), features);
-    addForksBy(moves, 'b', 'Bishop', chess.turn(), features);
-    addForksBy(moves, 'n', 'Knight', chess.turn(), features);
+    if (!forkType || forkType == 'q') {
+        addForksBy(moves, 'q', 'Queen', chess.turn(), features);
+    }
+    if (!forkType || forkType == 'p') {
+        addForksBy(moves, 'p', 'Pawn', chess.turn(), features);
+    }
+    if (!forkType || forkType == 'r') {
+        addForksBy(moves, 'r', 'Rook', chess.turn(), features);
+    }
+    if (!forkType || forkType == 'b') {
+        addForksBy(moves, 'b', 'Bishop', chess.turn(), features);
+    }
+    if (!forkType || forkType == 'n') {
+        addForksBy(moves, 'n', 'Knight', chess.turn(), features);
+    }
 }
 
 function enrichMoveWithForkCaptures(fen, move) {

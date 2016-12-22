@@ -8,15 +8,19 @@ var queryparam = require('../../explorer/src/util/queryparam');
 module.exports = function(opts, i18n) {
 
   var fen = m.prop(opts.fen);
-  var features = m.prop(generate.extractFeatures(fen()));
+  var selection = m.prop("Knight forks");
+  var features = m.prop(generate.extractSingleFeature(selection(),fen()));
   var ground;
   var score = m.prop(0);
   var bonus = m.prop("");
   var time = m.prop(60.0);
-  var selection = m.prop("Knight forks");
   var correct = m.prop([]);
   var incorrect = m.prop([]);
-
+  
+  function showGround() {
+    if (!ground) ground = groundBuild(fen(), onSquareSelect);
+  }
+  
   function newGame() {
     score(0);
     bonus("");
@@ -25,34 +29,26 @@ module.exports = function(opts, i18n) {
     incorrect([]);
   }
 
-  function showGround() {
-    if (!ground) ground = groundBuild(fen(), onSquareSelect);
-  }
+
 
   function onSquareSelect(target) {
-    console.log(incorrect());
-    var found = false;
-    features()
-      .forEach(f => {
-        f.targets.forEach(t => {
-          if (t.target === target) {
-            found = true;
-          }
-        });
-      });
-
-    if (found) {
+    if (correct().includes(target) || incorrect().includes(target)) {
+      target = '';    
+    }
+    else
+    if (generate.featureFound(features(), target)) {
       correct().push(target);
+      score(score() + 1);
     }
     else {
       incorrect().push(target);
+      score(score() - 1);
     }
-    console.log(incorrect());
+
     ground.set({
       fen: fen(),
     });
-    var clickedDiagram = diagram.clickedSquares(correct(), incorrect());
-    console.log(JSON.stringify(clickedDiagram));
+    var clickedDiagram = diagram.clickedSquares(features(), correct(), incorrect(), target);
     ground.setShapes(clickedDiagram);
     m.redraw();
   }
@@ -63,13 +59,11 @@ module.exports = function(opts, i18n) {
     ground.set({
       fen: fen(),
     });
-    //    ground.setShapes(diagram.diagramForTarget(side, description, target, features()));
     queryparam.updateUrlWithState(fen(), side, description, target);
   }
 
   function showAll() {
     ground.setShapes(diagram.allDiagrams(features()));
-    queryparam.updateUrlWithState(fen(), null, null, "all");
   }
 
   function updateFen(value) {
@@ -79,7 +73,6 @@ module.exports = function(opts, i18n) {
     });
     ground.setShapes([]);
     features(generate.extractFeatures(fen()));
-    queryparam.updateUrlWithState(fen(), null, null, null);
   }
 
   function nextFen(dest) {
