@@ -57,12 +57,25 @@ module.exports = {
   },
 
   featureFound: function(features, target) {
-    var found = false;
+    var found = 0;
     features
       .forEach(f => {
         f.targets.forEach(t => {
           if (t.target === target) {
-            found = true;
+            found++;
+          }
+        });
+      });
+    return found;
+  },
+
+  allFeaturesFound: function(features) {
+    var found = true;
+    features
+      .forEach(f => {
+        f.targets.forEach(t => {
+          if (!t.selected) {
+            found = false;
           }
         });
       });

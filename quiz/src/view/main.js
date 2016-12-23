@@ -30,7 +30,7 @@ function info(ctrl) {
     m('br'),
     m('div.button.center.action', {
       onclick: function() {
-        ctrl.nextFen();
+        ctrl.newGame();
       }
     }, 'Begin'),
     m('br'),
@@ -38,7 +38,7 @@ function info(ctrl) {
     score(ctrl),
     m('br'),
     m('br'),
-    timer(ctrl)    
+    timer(ctrl)
   ])];
 }
 
