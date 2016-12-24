@@ -32,6 +32,7 @@ module.exports = function(opts, i18n) {
     incorrect([]);
     startTime = Date.now();
     timerId = setInterval(onTick, 200);
+    nextFen();
   }
 
   function onTick() {
@@ -133,6 +134,7 @@ module.exports = function(opts, i18n) {
     bonus: bonus,
     time: time,
     selection: selection,
-    newGame: newGame
+    newGame: newGame,
+    descriptions: generate.featureMap.map(f=>f.description)
   };
 };

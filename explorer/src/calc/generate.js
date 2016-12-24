@@ -1,11 +1,32 @@
 var Chess = require('chess.js').Chess;
 var c = require('./chessutils');
 var forks = require('./forks');
+var knightforkfens = require('./fens/knightforks');
 var hidden = require('./hidden');
 var loose = require('./loose');
 var pins = require('./pins');
 var matethreat = require('./matethreat');
 var checks = require('./checks');
+
+/**
+ * Feature map 
+ */
+var featureMap = [{
+    description: "Knight forks",
+    data: knightforkfens,
+    extract: function(puzzle) {
+      return forks(puzzle, 'n');
+    }
+  }, {
+    description: "Queen forks",
+    data: knightforkfens,
+    extract: function(puzzle) {
+      return forks(puzzle, 'q');
+    }
+  },
+
+
+];
 
 module.exports = {
 
@@ -28,6 +49,9 @@ module.exports = {
     return puzzle.features;
   },
 
+
+  featureMap: featureMap,
+
   /**
    * Calculate single features in the position.
    */
@@ -37,21 +61,11 @@ module.exports = {
       features: []
     };
 
-    if (featureDescription === "Queen forks") {
-      puzzle = forks(puzzle,'q');
-    }
-    if (featureDescription === "Rook forks") {
-      puzzle = forks(puzzle,'r');
-    }
-    if (featureDescription === "Bishop forks") {
-      puzzle = forks(puzzle,'b');
-    }
-    if (featureDescription === "Knight forks") {
-      puzzle = forks(puzzle,'n');
-    }
-    if (featureDescription === "Pawn forks") {
-      puzzle = forks(puzzle,'p');
-    }
+    featureMap.forEach(f => {
+       if (featureDescription === f.description) {
+        puzzle = f.extract(puzzle);
+      }
+    });
 
     return puzzle.features;
   },
