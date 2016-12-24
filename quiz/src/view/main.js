@@ -26,17 +26,7 @@ function info(ctrl) {
     m('br'),
     selection(ctrl),
     m('br'),
-    m('br'),
-    m('div.button.center.action', {
-      onclick: function() {
-        ctrl.newGame();
-      }
-    }, 'Begin'),
-    m('br'),
-    m('br'),
     score(ctrl),
-    m('br'),
-    m('br'),
     timer(ctrl)
   ])];
 }
