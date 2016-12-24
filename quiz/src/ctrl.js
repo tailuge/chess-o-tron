@@ -47,7 +47,7 @@ module.exports = function(opts, i18n) {
 
   function onSquareSelect(target) {
     if (correct().includes(target) || incorrect().includes(target)) {
-      target = '';
+      target = 'none';
     }
     else {
       var found = generate.featureFound(features(), target);

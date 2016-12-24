@@ -24,6 +24,31 @@
     display: inline-block;
 }
 
+.star.found {
+    color: #ffff00;
+    text-shadow: 0px 2px 8px #000000;
+    display: inline-block;
+    font-size: 250%;
+    font-weight: lighter;
+}
+
+.star.white {
+    color: #999999;
+    text-shadow: 0px 2px 8px #000000;
+    display: inline-block;
+    font-size: 250%;
+    font-weight: lighter;
+    height: 20;
+}
+
+.star.black {
+    color: #000000;
+    text-shadow: 1px 1px 6px #cccccc;
+    display: inline-block;
+    font-size: 250%;
+    font-weight: lighter;
+}
+
 .instructions {
     list-style: inside disc;
 }

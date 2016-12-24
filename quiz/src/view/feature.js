@@ -1,26 +1,24 @@
 var m = require('mithril');
-var stopevent = require('../../../explorer/src/util/stopevent');
+
+function breakLines(item, index) {
+    if (index > 0 && index % 6 == 0) {
+        return [m('br'),item];
+    }
+    return item;
+}
 
 function makeStars(controller, feature) {
-    return feature.targets.map(t => m('span.star', {
-        title: t.target,
-        onclick: function(event) {
-            controller.onFilterSelect(feature.side, feature.description, t.target);
-            return stopevent(event);
-        }
-    }, t.selected ? m('span.star.selected', '★') : m('span.star', '☆')));
+    return feature.targets.map((t,i) => m('span.star',
+        t.selected ? m('span.star.found', '★') :
+        feature.side === 'w' ? m('span.star.white', '☆') : m('span.star.black', '☆')))
+        .map(breakLines);
 }
 
 module.exports = function(controller, feature) {
     if (feature.targets.length === 0) {
         return [];
     }
-    return m('li.feature.button', {
-        onclick: function(event) {
-            controller.onFilterSelect(feature.side, feature.description);
-            return stopevent(event);
-        }
-    }, [
+    return m('li.feature', [
         m('div.name', feature.description),
         m('div.stars', makeStars(controller, feature))
     ]);
