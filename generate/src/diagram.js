@@ -1,4 +1,4 @@
-var uniq = require('../util/uniq');
+var uniq = require('./util/uniq');
 
 /**
  * Find all diagrams associated with target square in the list of features.

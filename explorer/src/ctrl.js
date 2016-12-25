@@ -1,8 +1,8 @@
 var m = require('mithril');
 var groundBuild = require('./ground');
-var generate = require('./calc/generate');
-var diagram = require('./calc/diagram');
-var fendata = require('./calc/fendata');
+var generate = require('../../generate/src/generate');
+var diagram = require('../../generate/src/diagram');
+var fendata = require('../../generate/src/fendata');
 var queryparam = require('./util/queryparam');
 
 module.exports = function(opts, i18n) {
