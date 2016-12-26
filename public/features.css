@@ -78,3 +78,47 @@
     color: #666;
     margin-left: 30px;
 }
+
+.progress {
+    white-space: pre;
+    display: inline-block;
+    min-height: 1px;
+    border-radius: 4px;
+    background-color: #0f0;
+    color: #666;
+    margin: 1px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    box-shadow: inset 0px 1px 0px 0px #f5978e;
+    background: linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
+    border: 1px solid #d02718;
+}
+
+.progress.target.white {
+    box-shadow: inset 0px 1px 0px 0px #f5978e;
+    background: linear-gradient(to bottom, #ccc 5%, #999 100%);
+    border: 1px solid #aaa;
+}
+
+.progress.target.black {
+    background: linear-gradient(to bottom, #555 5%, #333 100%);
+    border: 1px solid #444;
+}
+
+.progress.pending {
+    background: linear-gradient(to bottom, #111 5%, #333 100%);
+}
+
+
+/*
+.line1 {
+    background-color: #003;
+    opacity: 0.5;
+}
+
+.line2 {
+    background-color: #300;
+    opacity: 0.5;
+}
+*/

@@ -4,12 +4,19 @@ var generate = require('../../generate/src/generate');
 var diagram = require('../../generate/src/diagram');
 var fendata = require('../../generate/src/fendata');
 var queryparam = require('../../explorer/src/util/queryparam');
+var gamestate = require('./gamestate');
 
 module.exports = function(opts, i18n) {
+
 
   var fen = m.prop(opts.fen);
   var selection = m.prop("Knight forks");
   var features = m.prop(generate.extractSingleFeature(selection(), fen()));
+  
+  var state = new gamestate(1);
+  state.addTargets(features());
+
+
   var ground;
   var score = m.prop(0);
   var bonus = m.prop("");
@@ -124,6 +131,7 @@ module.exports = function(opts, i18n) {
   return {
     fen: fen,
     ground: ground,
+    state: state,
     features: features,
     updateFen: updateFen,
     onFilterSelect: onFilterSelect,

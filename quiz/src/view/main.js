@@ -1,6 +1,6 @@
 var m = require('mithril');
 var chessground = require('chessground');
-var features = require('./features');
+var progress = require('./progress');
 var selection = require('./selection');
 var score = require('./score');
 var timer = require('./timer');
@@ -42,7 +42,7 @@ module.exports = function(ctrl) {
               }
             }, 'feature',
             m('span.extension', 'tron'))),
-        features(ctrl)
+        progress(ctrl)
       ])
     ),
     m('div.#lichess',
