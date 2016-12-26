@@ -28,6 +28,5 @@ function progressItem(item) {
 }
 
 module.exports = function(controller) {
-    console.log(JSON.stringify(controller.state));
     return controller.state.getState().map(progressItem);
 };

@@ -1,9 +1,8 @@
 module.exports = class gamestate {
 
   constructor(total) {
-    this.completed = [];
-    this.targets = [];
-    this.pending = [];
+    this.total = total;
+    this.known = [];
   }
 
   addTargets(features) {
@@ -11,13 +10,22 @@ module.exports = class gamestate {
       f.targets.forEach(t => {
         t.side = f.side;
         t.bonus = " ";
-        this.targets.push(t);
+        this.known.push(t);
       });
     });
   }
 
+  markTarget(target) {
+    this.known.forEach(t => {
+      if ((!t.complete) && (t.target === target)) {
+        t.complete = true;
+        t.bonus = "+100";
+      }
+    });
+  }
+
   getState() {
-    var example = [{
+    var result = [{
       complete: true,
       bonus: "wave 2x"
     }, {
@@ -29,19 +37,13 @@ module.exports = class gamestate {
     }, {
       complete: true,
       bonus: " +100"
-    }, {
-      side: 'w'
-    }, {
-      side: 'w'
-    }, {
-      side: 'b'
-    }, {
-      side: 'w'
-    }, {
-      side: 'b'
-    }, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+    }].concat(this.known);
 
-    return example;
+    while(result.length < this.total) {
+      result.push({});
+    }
+    
+    return result;
   }
 
 };

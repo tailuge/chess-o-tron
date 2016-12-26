@@ -12,8 +12,8 @@ module.exports = function(opts, i18n) {
   var fen = m.prop(opts.fen);
   var selection = m.prop("Knight forks");
   var features = m.prop(generate.extractSingleFeature(selection(), fen()));
-  
-  var state = new gamestate(1);
+
+  var state = new gamestate(40);
   state.addTargets(features());
 
 
@@ -60,10 +60,11 @@ module.exports = function(opts, i18n) {
     else {
       var found = generate.featureFound(features(), target);
       if (found > 0) {
+        state.markTarget(target);
         correct().push(target);
         if (Date.now() - lastCorrectTime < 1000) {
           bonus("+" + found * 2 + "  combo !");
-          score(score() + found*2);
+          score(score() + found * 2);
         }
         else {
           bonus("+" + found);
@@ -118,6 +119,7 @@ module.exports = function(opts, i18n) {
       // this should be changed for prod release.
       return nextFen();
     }
+    state.addTargets(features());
     m.redraw();
   }
 
@@ -143,6 +145,6 @@ module.exports = function(opts, i18n) {
     time: time,
     selection: selection,
     newGame: newGame,
-    descriptions: generate.featureMap.map(f=>f.description)
+    descriptions: generate.featureMap.map(f => f.description)
   };
 };
