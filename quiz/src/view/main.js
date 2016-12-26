@@ -3,7 +3,7 @@ var chessground = require('chessground');
 var progress = require('./progress');
 var selection = require('./selection');
 var score = require('./score');
-var timer = require('./timer');
+var breakbar = require('./breakbar');
 
 function visualBoard(ctrl) {
   return m('div.lichess_board', m('div.lichess_board_wrap', m('div.lichess_board', [
@@ -19,15 +19,14 @@ function info(ctrl) {
     m('ul.instructions', [
       m('li.instructions', 'Select your category to begin.'),
       m('li.instructions', 'Click on the correct squares.'),
-      m('li.instructions', 'Combo bonus for 3 in 1 second.'),
-      m('li.instructions', 'Time extension for every 10 correct.')
+      m('li.instructions', 'Break by matching colours.'),
+      m('li.instructions', 'Break by clicking quickly.')
     ]),
     m('br'),
     m('br'),
     selection(ctrl),
     m('br'),
-    score(ctrl),
-    timer(ctrl)
+    score(ctrl)
   ])];
 }
 
@@ -35,7 +34,7 @@ module.exports = function(ctrl) {
   return [
     m("div.#site_header",
       m('div.board_left', [
-        m('h2',
+        m('h2.center',
           m('a#site_title', {
               onclick: function() {
                 window.open("./index.html?fen=" + encodeURI(ctrl.fen()));

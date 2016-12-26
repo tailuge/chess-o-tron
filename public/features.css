@@ -84,30 +84,42 @@
     display: inline-block;
     min-height: 1px;
     border-radius: 4px;
-    background-color: #0f0;
-    color: #666;
     margin: 1px;
     width: 40px;
     height: 40px;
     text-align: center;
-    box-shadow: inset 0px 1px 0px 0px #f5978e;
-    background: linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
-    border: 1px solid #d02718;
+    box-shadow: inset 0px 1px 0px 0px #caefab;
+    background: linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+    background-color: #77d42a;
+    border: 1px solid #268a16;
+    color: #306108;
+    font-family: Arial;
+    font-size: 11px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #aade7c;
+    transition: all 0.5s ease;
+}
+
+.progress:hover {
+    transform: scale(1.1);
 }
 
 .progress.target.white {
-    box-shadow: inset 0px 1px 0px 0px #f5978e;
+    box-shadow: inset 0px 1px 0px 0px #fff;
     background: linear-gradient(to bottom, #ccc 5%, #999 100%);
     border: 1px solid #aaa;
 }
 
 .progress.target.black {
-    background: linear-gradient(to bottom, #555 5%, #333 100%);
+    box-shadow: inset 0px 1px 0px 0px #eee;
+    background: linear-gradient(to bottom, #222 5%, #000 100%);
     border: 1px solid #444;
 }
 
 .progress.pending {
-    background: linear-gradient(to bottom, #111 5%, #333 100%);
+    box-shadow: inset 0px 1px 0px 0px #333;
+    background: none;
+    border: 1px solid #222;
 }
 
 
