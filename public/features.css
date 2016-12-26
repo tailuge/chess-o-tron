@@ -124,13 +124,13 @@
 
 .breakbar 
 {
-    background-color: #222;
+    background-color: #444;
     padding:3px;
     vertical-align: middle;
 }
 .breakbar.indicator 
 {
-    background-color: #ff0;
+    background-color: #cc0;
 }
 /*
 .line1 {
