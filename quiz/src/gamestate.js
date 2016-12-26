@@ -25,19 +25,7 @@ module.exports = class gamestate {
   }
 
   getState() {
-    var result = [{
-      complete: true,
-      bonus: "wave 2x"
-    }, {
-      complete: true,
-      bonus: " +100"
-    }, {
-      complete: true,
-      bonus: " +100"
-    }, {
-      complete: true,
-      bonus: " +100"
-    }].concat(this.known);
+    var result = [].concat(this.known);
 
     while(result.length < this.total) {
       result.push({});
