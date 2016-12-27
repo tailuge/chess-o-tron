@@ -122,16 +122,18 @@
     border: 1px solid #222;
 }
 
-.breakbar 
-{
+.breakbar {
     background-color: #444;
-    padding:3px;
+    padding: 3px;
     vertical-align: middle;
 }
-.breakbar.indicator 
-{
+
+.breakbar.indicator {
+    transition: all 0.5s ease;
     background-color: #cc0;
 }
+
+
 /*
 .line1 {
     background-color: #003;

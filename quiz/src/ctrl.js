@@ -21,11 +21,13 @@ module.exports = function(opts, i18n) {
   var score = m.prop(0);
   var bonus = m.prop("");
   var time = m.prop(60.0);
+  var breaklevel = m.prop(60.0);
   var correct = m.prop([]);
   var incorrect = m.prop([]);
   var timerId;
   var startTime;
   var lastCorrectTime;
+  setInterval(onTick, 200);
 
   function showGround() {
     if (!ground) ground = groundBuild(fen(), onSquareSelect);
@@ -43,12 +45,9 @@ module.exports = function(opts, i18n) {
   }
 
   function onTick() {
-    var elapsed = Date.now() - startTime;
-    time(60 - (elapsed / 1000));
-
-    if (time() < 0) {
-      clearInterval(timerId);
-      time(0);
+    breaklevel(breaklevel() * 0.99);
+    if (breaklevel() < 0) {
+      breaklevel(0);
     }
     m.redraw();
   }
@@ -61,6 +60,7 @@ module.exports = function(opts, i18n) {
       var found = generate.featureFound(features(), target);
       if (found > 0) {
         state.markTarget(target);
+        breaklevel(breaklevel() + 25)
         correct().push(target);
         if (Date.now() - lastCorrectTime < 1000) {
           bonus("+" + found * 2 + "  combo !");
@@ -76,6 +76,7 @@ module.exports = function(opts, i18n) {
         incorrect().push(target);
         score(score() - 1);
         bonus("-1");
+        breaklevel(breaklevel()-10)
       }
     }
     ground.set({
@@ -143,6 +144,7 @@ module.exports = function(opts, i18n) {
     score: score,
     bonus: bonus,
     time: time,
+    breaklevel: breaklevel,
     selection: selection,
     newGame: newGame,
     descriptions: generate.featureMap.map(f => f.description)
