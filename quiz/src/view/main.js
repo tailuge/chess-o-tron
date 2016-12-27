@@ -18,9 +18,11 @@ function info(ctrl) {
     m('br'),
     m('ul.instructions', [
  //     m('li.instructions', 'Select your category to begin.'),
-      m('li.instructions', 'Click on the correct squares.'),
+      m('li.instructions', 'Find all knight forking squares.'),
 //      m('li.instructions', 'Break by matching colours.'),
-      m('li.instructions', 'Break by clicking quickly.')
+      m('li.instructions', 'Break bonus by clicking quickly.'),
+      m('li.instructions', 'Post your high score.')
+
     ]),
     m('br'),
     m('br'),

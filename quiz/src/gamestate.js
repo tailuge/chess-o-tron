@@ -20,9 +20,9 @@ module.exports = class gamestate {
     // newTargets = this.combineLikeTargets(newTargets);
 
     // shuffle
-    newTargets.sort(function() {
-      return Math.round(Math.random()) - 0.5;
-    });
+  //  newTargets.sort(function() {
+    //  return Math.round(Math.random()) - 0.5;
+  //  });
 
     this.known = this.known.concat(newTargets);
   }
