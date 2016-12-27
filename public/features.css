@@ -107,12 +107,15 @@
 }
 
 .progress.target.white {
+    text-shadow: 0px 1px 0px #fff;
     box-shadow: inset 0px 1px 0px 0px #fff;
     background: linear-gradient(to bottom, #ddd 5%, #aaa 100%);
     border: 1px solid #888;
 }
 
 .progress.target.black {
+    color: #aaa;
+    text-shadow: 0px 1px 0px #555;
     box-shadow: inset 0px 1px 0px 0px #eee;
     background: linear-gradient(to bottom, #222 5%, #000 100%);
     border: 1px solid #444;
@@ -124,21 +127,16 @@
     border: 1px solid #444;
 }
 
+.progress.complete.bonus {
+    box-shadow: inset 0px 2px 0px 0px #eee;
+    background: linear-gradient(to bottom, #fd0 5%, #b60 100%);
+    border: 1px solid #654;
+}
+
 .progress.pending {
     box-shadow: inset 0px 1px 0px 0px #333;
     background: none;
     border: 1px solid #222;
-}
-
-.breakbar {
-    background-color: #444;
-    padding: 3px;
-    vertical-align: middle;
-}
-
-.breakbar.indicator {
-    transition: all 0.5s ease;
-    background-color: #cc0;
 }
 
 .progress-marker {
@@ -146,4 +144,32 @@
     font-weight: bold;
 }
 
+.breakbar {
+    background-color: #444;
+    padding: 1px;
+    vertical-align: middle;
+}
 
+.breakarea {
+    top: 0;
+    left: 0;
+    float: right;
+    background-color: #555;
+    width: 33%;
+}
+
+.breakbarindicator {
+    position: absolute;
+    margin-top: 1px;
+    z-index: 10;
+    float: left;
+    height: 15px;
+    transition: all 0.5s ease;
+    background-color: #2a2;
+    opacity: 0.5;
+}
+
+.breakbarindicator.gold {
+    background-color: #dc1;
+    opacity: 0.9;
+}

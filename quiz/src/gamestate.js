@@ -53,10 +53,13 @@ module.exports = class gamestate {
    * If any target is matched for a given side, the first incomplete item
    * should be marked. 
    */
-  markTarget(target) {
+  markTarget(target, breaklevel) {
     var matching = this.known.find(c => !c.complete && c.target === target);
     if (!matching) {
-      return;
+      return {
+        breaklevel: breaklevel / 2,
+        delta: 0
+      };
     }
 
     var matchingIndex = this.known.findIndex(c => !c.complete && c.target === target);
@@ -66,7 +69,17 @@ module.exports = class gamestate {
     this.known[firstIndexForSide] = matching;
 
     matching.complete = true;
-    matching.bonus = "+100";
+    matching.bonus = Math.ceil(breaklevel / 10) * 10;
+    if (breaklevel > 66) {
+      matching.bonus = 100;
+    }
+
+    breaklevel += matchingIndex == firstIndexForSide ? 25 : 20;
+    breaklevel = breaklevel > 100 ? 100 : breaklevel;
+    return {
+      breaklevel: breaklevel,
+      delta: matching.bonus
+    };
   }
 
   getState() {

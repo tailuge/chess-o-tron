@@ -21,13 +21,12 @@ module.exports = function(opts, i18n) {
   var score = m.prop(0);
   var bonus = m.prop("");
   var time = m.prop(60.0);
-  var breaklevel = m.prop(60.0);
+  var breaklevel = m.prop(80.0);
   var correct = m.prop([]);
   var incorrect = m.prop([]);
   var timerId;
-  var startTime;
-  var lastCorrectTime;
-  setInterval(onTick, 200);
+
+  timerId = setInterval(onTick, 200);
 
   function showGround() {
     if (!ground) ground = groundBuild(fen(), onSquareSelect);
@@ -39,7 +38,6 @@ module.exports = function(opts, i18n) {
     time(60);
     correct([]);
     incorrect([]);
-    startTime = Date.now();
     timerId = setInterval(onTick, 200);
     nextFen();
   }
@@ -59,21 +57,10 @@ module.exports = function(opts, i18n) {
     else {
       var found = generate.featureFound(features(), target);
       if (found > 0) {
-        state.markTarget(target);
-        breaklevel(breaklevel() + 25);
-        if (breaklevel()>100) {
-          breaklevel(100);
-        }
+        var breakandscore = state.markTarget(target,breaklevel());
+        breaklevel(breakandscore.breaklevel);
+        score(score() + breakandscore.delta);
         correct().push(target);
-        if (Date.now() - lastCorrectTime < 1000) {
-          bonus("+" + found * 2 + "  combo !");
-          score(score() + found * 2);
-        }
-        else {
-          bonus("+" + found);
-          score(score() + found);
-        }
-        lastCorrectTime = Date.now();
       }
       else {
         incorrect().push(target);
@@ -146,7 +133,6 @@ module.exports = function(opts, i18n) {
     showAll: showAll,
     score: score,
     bonus: bonus,
-    time: time,
     breaklevel: breaklevel,
     selection: selection,
     newGame: newGame,
