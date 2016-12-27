@@ -86,18 +86,20 @@
     border-radius: 4px;
     margin: 1px;
     width: 40px;
-    height: 40px;
+    height: 32px;
     text-align: center;
     box-shadow: inset 0px 1px 0px 0px #caefab;
     background: linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
     background-color: #77d42a;
     border: 1px solid #268a16;
-    color: #306108;
+    color: #444;
     font-family: Arial;
     font-size: 11px;
     text-decoration: none;
-    text-shadow: 0px 1px 0px #aade7c;
+    text-shadow: 0px 1px 0px #ccc;
     transition: all 0.5s ease;
+    padding-top: 4px;
+    padding-bottom: 0px;
 }
 
 .progress:hover {
@@ -106,13 +108,19 @@
 
 .progress.target.white {
     box-shadow: inset 0px 1px 0px 0px #fff;
-    background: linear-gradient(to bottom, #ccc 5%, #999 100%);
+    background: linear-gradient(to bottom, #ddd 5%, #aaa 100%);
     border: 1px solid #888;
 }
 
 .progress.target.black {
     box-shadow: inset 0px 1px 0px 0px #eee;
     background: linear-gradient(to bottom, #222 5%, #000 100%);
+    border: 1px solid #444;
+}
+
+.progress.target.blackandwhite {
+    box-shadow: inset 0px 1px 0px 0px #eee;
+    background: linear-gradient(to bottom, #777 5%, #222 100%);
     border: 1px solid #444;
 }
 
@@ -133,15 +141,9 @@
     background-color: #cc0;
 }
 
-
-/*
-.line1 {
-    background-color: #003;
-    opacity: 0.5;
+.progress-marker {
+    height: 16px;
+    font-weight: bold;
 }
 
-.line2 {
-    background-color: #300;
-    opacity: 0.5;
-}
-*/
+

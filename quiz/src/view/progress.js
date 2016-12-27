@@ -1,27 +1,31 @@
 var m = require('mithril');
 
-function twoDivs(text) {
-    if (text) {
-        return [
-        m('div.line1',(text + "  ").split(" ")[0]+ " "),
-        m('div.line2',(text + "  ").split(" ")[1]+" "),
-        ];
-    }
-    return [m('div'," "),m('div'," ")];
+function twoDivs(marker, bonus) {
+    return [
+        m('div.progress-marker', marker ? marker+" " : " "),
+        m('div.progress-bonus', bonus ? bonus+" " : " "),
+    ];
 }
 
 function progressItem(item) {
 
     if (item.complete) {
-        return m("div.progress.complete",twoDivs(item.bonus)); 
+        return m("div.progress.complete", {
+            onclick: function() {
+                window.open(item.link);
+            }
+        }, twoDivs(item.marker, item.bonus));
     }
 
     if (item.side) {
         if (item.side === 'w') {
-            return m("div.progress.target.white", twoDivs());
+            return m("div.progress.target.white", twoDivs(item.marker, item.bonus));
+        }
+        else if (item.side === 'b') {
+            return m("div.progress.target.black", twoDivs(item.marker, item.bonus));
         }
         else {
-            return m("div.progress.target.black", twoDivs());
+            return m("div.progress.target.blackandwhite", twoDivs(item.marker, item.bonus));
         }
     }
     return m("div.progress.pending", twoDivs());

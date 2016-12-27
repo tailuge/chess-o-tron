@@ -79,7 +79,8 @@ function addForksBy(moves, piece, pieceEnglish, side, features) {
         targets: bypiece.map(m => {
             return {
                 target: m.to,
-                diagram: diagram(m)
+                diagram: diagram(m),
+                marker: '♆'
             };
         })
     });

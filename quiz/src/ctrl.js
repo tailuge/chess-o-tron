@@ -14,7 +14,7 @@ module.exports = function(opts, i18n) {
   var features = m.prop(generate.extractSingleFeature(selection(), fen()));
 
   var state = new gamestate(40);
-  state.addTargets(features());
+  state.addTargets(features(),fen());
 
 
   var ground;
@@ -60,7 +60,10 @@ module.exports = function(opts, i18n) {
       var found = generate.featureFound(features(), target);
       if (found > 0) {
         state.markTarget(target);
-        breaklevel(breaklevel() + 25)
+        breaklevel(breaklevel() + 25);
+        if (breaklevel()>100) {
+          breaklevel(100);
+        }
         correct().push(target);
         if (Date.now() - lastCorrectTime < 1000) {
           bonus("+" + found * 2 + "  combo !");
@@ -76,7 +79,7 @@ module.exports = function(opts, i18n) {
         incorrect().push(target);
         score(score() - 1);
         bonus("-1");
-        breaklevel(breaklevel()-10)
+        breaklevel(breaklevel()-10);
       }
     }
     ground.set({
@@ -120,7 +123,7 @@ module.exports = function(opts, i18n) {
       // this should be changed for prod release.
       return nextFen();
     }
-    state.addTargets(features());
+    state.addTargets(features(),fen());
     m.redraw();
   }
 
