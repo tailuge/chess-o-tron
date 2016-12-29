@@ -5,19 +5,24 @@
 ```
 git clone https://github.com/tailuge/chess-o-tron.git
 cd chess-o-tron/generate
-head -100 raw.puzzles | node checkingSquares.js | node absolutePin.js | node loosePieces.js 
+npm install
+cd src
+# filter raw fens for those containing more than 1 knight fork:
+head -n 500 ../data/raw.puzzles | node filterForFeature.js "Knight forks" 1 | tee ./fens/knightforks.js
 ```
 
-(node 4.2.4)
+(node 4.2.4 and above)
 
 ```
 cd explorer
 npm install
+gulp prod
 gulp
 ```
 
 ```
 cd quiz
 npm install
+gulp prod
 gulp
 ```
