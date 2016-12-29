@@ -1,7 +1,6 @@
 var m = require('mithril');
 var chessground = require('chessground');
 var progress = require('./progress');
-var selection = require('./selection');
 var score = require('./score');
 var breakbar = require('./breakbar');
 
@@ -17,16 +16,12 @@ function info(ctrl) {
     m('br'),
     m('br'),
     m('ul.instructions', [
- //     m('li.instructions', 'Select your category to begin.'),
       m('li.instructions', 'Find all knight forking squares.'),
-//      m('li.instructions', 'Break by matching colours.'),
       m('li.instructions', 'Break bonus by clicking quickly.'),
       m('li.instructions', 'Post your high score.')
-
     ]),
     m('br'),
     m('br'),
-//    selection(ctrl),
   ])];
 }
 

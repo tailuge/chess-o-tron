@@ -2,20 +2,17 @@ var m = require('mithril');
 var groundBuild = require('./ground');
 var generate = require('../../generate/src/generate');
 var diagram = require('../../generate/src/diagram');
-var fendata = require('../../generate/src/fendata');
 var queryparam = require('../../explorer/src/util/queryparam');
 var gamestate = require('./gamestate');
 
 module.exports = function(opts, i18n) {
 
-
-  var fen = m.prop(opts.fen);
   var selection = m.prop("Knight forks");
+  var fen = m.prop(opts.fen ? opts.fen : generate.randomFenForFeature(selection()));
   var features = m.prop(generate.extractSingleFeature(selection(), fen()));
 
   var state = new gamestate(40);
-  state.addTargets(features(),fen());
-
+  state.addTargets(features(), fen());
 
   var ground;
   var score = m.prop(0);
@@ -24,9 +21,8 @@ module.exports = function(opts, i18n) {
   var breaklevel = m.prop(80.0);
   var correct = m.prop([]);
   var incorrect = m.prop([]);
-  var timerId;
 
-  timerId = setInterval(onTick, 200);
+  setInterval(onTick, 200);
 
   function showGround() {
     if (!ground) ground = groundBuild(fen(), onSquareSelect);
@@ -38,7 +34,7 @@ module.exports = function(opts, i18n) {
     time(60);
     correct([]);
     incorrect([]);
-    timerId = setInterval(onTick, 200);
+    setInterval(onTick, 200);
     nextFen();
   }
 
@@ -57,7 +53,7 @@ module.exports = function(opts, i18n) {
     else {
       var found = generate.featureFound(features(), target);
       if (found > 0) {
-        var breakandscore = state.markTarget(target,breaklevel());
+        var breakandscore = state.markTarget(target, breaklevel());
         breaklevel(breakandscore.breaklevel);
         score(score() + breakandscore.delta);
         correct().push(target);
@@ -66,7 +62,7 @@ module.exports = function(opts, i18n) {
         incorrect().push(target);
         score(score() - 1);
         bonus("-1");
-        breaklevel(breaklevel()-10);
+        breaklevel(breaklevel() - 10);
       }
     }
     ground.set({
@@ -110,12 +106,12 @@ module.exports = function(opts, i18n) {
       // this should be changed for prod release.
       return nextFen();
     }
-    state.addTargets(features(),fen());
+    state.addTargets(features(), fen());
     m.redraw();
   }
 
   function nextFen() {
-    updateFen(fendata[Math.floor(Math.random() * fendata.length)]);
+    updateFen(generate.randomFenForFeature(selection()));
   }
 
   showGround();

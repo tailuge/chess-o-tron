@@ -94,6 +94,11 @@ module.exports = {
         });
       });
     return found;
+  },
+  
+  randomFenForFeature: function(featureDescription) {
+    var fens = featureMap.find(f => f.description === featureDescription).data;
+    return fens[Math.floor(Math.random() * fens.length)];
   }
 
 

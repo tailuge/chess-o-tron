@@ -89,7 +89,7 @@
     height: 32px;
     text-align: center;
     box-shadow: inset 0px 1px 0px 0px #caefab;
-    background: linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+    background: linear-gradient(to bottom, #77d42a 5%, #6ca811 100%);
     background-color: #77d42a;
     border: 1px solid #268a16;
     color: #444;
@@ -118,12 +118,6 @@
     text-shadow: 0px 1px 0px #555;
     box-shadow: inset 0px 1px 0px 0px #eee;
     background: linear-gradient(to bottom, #222 5%, #000 100%);
-    border: 1px solid #444;
-}
-
-.progress.target.blackandwhite {
-    box-shadow: inset 0px 1px 0px 0px #eee;
-    background: linear-gradient(to bottom, #777 5%, #222 100%);
     border: 1px solid #444;
 }
 

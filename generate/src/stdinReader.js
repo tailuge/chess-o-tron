@@ -1,10 +1,13 @@
 /**
- * Read from stdin and apply puzzle generator to each line
- * 
- * cat raw.puzzles | node absolutePin.js | node loosePieces.js | node checkingSquares.js | sed 's/$/,/' > enriched.js
+ * Read from stdin and filter lines that have given feature.
  * 
  */
+
+var c = require('./chessutils');
+
 function handle(callback) {
+
+    process.stdin.resume();
 
     var readline = require('readline');
     var rl = readline.createInterface({
@@ -13,27 +16,24 @@ function handle(callback) {
         terminal: false
     });
 
-    rl.on('close', function() {});
+    console.log("module.exports = [");
+
+    rl.on('close', function() {
+        console.log("];");
+    });
 
     rl.on('line', function(line) {
-        var puzzle;
-        try {
-            puzzle = JSON.parse(line);
-        }
-        catch (e) {
-            if (/.*\/.*\/.*\/.*/.test(line)) {
-                // if line is a fen, convert to puzzle
-                puzzle = {
-                    fen: line,
-                    features: []
-                };
-            } else {
-                // skip non fen lines
-                return;
+        if (/.*\/.*\/.*\/.*/.test(line)) {
+            // if line is a fen filter using callback
+            var fen = c.repairFen(line);
+            if (callback(fen)) {
+                console.log('"' + fen + '",');
             }
         }
-        puzzle.fen = puzzle.fen.replace(/0$/, "2");
-        console.log(JSON.stringify(callback(puzzle)));
+        else {
+            // skip non fen lines
+            return;
+        }
     });
 
 }
