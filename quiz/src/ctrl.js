@@ -2,47 +2,57 @@ var m = require('mithril');
 var groundBuild = require('./ground');
 var generate = require('../../generate/src/generate');
 var diagram = require('../../generate/src/diagram');
-var queryparam = require('../../explorer/src/util/queryparam');
 var gamestate = require('./gamestate');
 
 module.exports = function(opts, i18n) {
 
+  var gameTotal = 40;
   var selection = m.prop("Knight forks");
   var fen = m.prop(opts.fen ? opts.fen : generate.randomFenForFeature(selection()));
   var features = m.prop(generate.extractSingleFeature(selection(), fen()));
 
-  var state = new gamestate(40);
-  state.addTargets(features(), fen());
+  var state = new gamestate(gameTotal);
 
   var ground;
-  var score = m.prop(0);
-  var bonus = m.prop("");
-  var time = m.prop(60.0);
-  var breaklevel = m.prop(80.0);
+  var score = m.prop();
+  var displayscore = m.prop();
+  var breaklevel = m.prop();
   var correct = m.prop([]);
   var incorrect = m.prop([]);
-
-  setInterval(onTick, 200);
+  var timerId;
 
   function showGround() {
     if (!ground) ground = groundBuild(fen(), onSquareSelect);
   }
 
+
   function newGame() {
     score(0);
-    bonus("");
-    time(60);
+    displayscore(0);
+    breaklevel(99);
+    state.reset();
     correct([]);
     incorrect([]);
-    setInterval(onTick, 200);
     nextFen();
+    if (!timerId) {
+      timerId = setInterval(onTick, 200);
+    }
   }
 
   function onTick() {
-    breaklevel(breaklevel() * 0.99);
+    if (!state.gameOver) {
+      breaklevel(breaklevel() * 0.99);
+    }
     if (breaklevel() < 0) {
       breaklevel(0);
     }
+    if (displayscore() < score()) {
+      displayscore(displayscore() + 10);
+    }
+    if (displayscore() > score()) {
+      displayscore(score());
+    }
+
     m.redraw();
   }
 
@@ -61,7 +71,6 @@ module.exports = function(opts, i18n) {
       else {
         incorrect().push(target);
         score(score() - 1);
-        bonus("-1");
         breaklevel(breaklevel() - 10);
       }
     }
@@ -72,23 +81,19 @@ module.exports = function(opts, i18n) {
     ground.setShapes(clickedDiagram);
     m.redraw();
     if (generate.allFeaturesFound(features())) {
-      setTimeout(function() {
-        nextFen();
-      }, 500);
+      if (state.gameComplete()) {
+        gameOver();
+      }
+      else {
+        setTimeout(function() {
+          nextFen();
+        }, 500);
+      }
     }
   }
 
-  function onFilterSelect(side, description, target) {
-    diagram.clearDiagrams(features());
-    ground.setShapes([]);
-    ground.set({
-      fen: fen(),
-    });
-    queryparam.updateUrlWithState(fen(), side, description, target);
-  }
-
-  function showAll() {
-    ground.setShapes(diagram.allDiagrams(features()));
+  function gameOver() {
+    m.redraw();
   }
 
   function updateFen(value) {
@@ -102,8 +107,6 @@ module.exports = function(opts, i18n) {
     incorrect([]);
     features(generate.extractSingleFeature(selection(), fen()));
     if (generate.allFeaturesFound(features())) {
-      // not all puzzles will have desired feature
-      // this should be changed for prod release.
       return nextFen();
     }
     state.addTargets(features(), fen());
@@ -115,6 +118,7 @@ module.exports = function(opts, i18n) {
   }
 
   showGround();
+  newGame();
   m.redraw();
 
   return {
@@ -123,12 +127,10 @@ module.exports = function(opts, i18n) {
     state: state,
     features: features,
     updateFen: updateFen,
-    onFilterSelect: onFilterSelect,
     onSquareSelect: onSquareSelect,
     nextFen: nextFen,
-    showAll: showAll,
     score: score,
-    bonus: bonus,
+    displayscore: displayscore,
     breaklevel: breaklevel,
     selection: selection,
     newGame: newGame,

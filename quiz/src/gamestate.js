@@ -3,6 +3,12 @@ module.exports = class gamestate {
   constructor(total) {
     this.total = total;
     this.known = [];
+    this.gameOver = false;
+  }
+
+  reset() {
+    this.known = [];
+    this.gameOver = false;
   }
 
   addTargets(features, fen) {
@@ -16,13 +22,6 @@ module.exports = class gamestate {
         newTargets.push(t);
       });
     });
-
-    // newTargets = this.combineLikeTargets(newTargets);
-
-    // shuffle
-  //  newTargets.sort(function() {
-    //  return Math.round(Math.random()) - 0.5;
-  //  });
 
     this.known = this.known.concat(newTargets);
   }
@@ -39,7 +38,6 @@ module.exports = class gamestate {
         combined.push(t);
       }
       else {
-        //previous.marker = previous.marker + "*";
         previous.diagram = previous.diagram.concat(t.diagram).slice();
         if (previous.side !== t.side) {
           previous.side = "bw";
@@ -92,4 +90,9 @@ module.exports = class gamestate {
     return result;
   }
 
+  gameComplete() {
+    var completed = this.known.map(t => t.complete ? 1 : 0).reduce((a, b) => a + b);
+    this.gameOver = completed >= this.total;
+    return this.gameOver;
+  }
 };

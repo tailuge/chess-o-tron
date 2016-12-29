@@ -18,15 +18,11 @@ function progressItem(item) {
     }
 
     if (item.side) {
-        if (item.side === 'w') {
-            return m("div.progress.target.white", twoDivs(item.marker, item.bonus));
-        }
-        else if (item.side === 'b') {
-            return m("div.progress.target.black", twoDivs(item.marker, item.bonus));
-        }
-        else {
-            return m("div.progress.target.blackandwhite", twoDivs(item.marker, item.bonus));
-        }
+        return m("div.progress.target" + (item.side === 'w' ? ".white" : ".black"), {
+            onclick: function() {
+                window.open(item.link);
+            }
+        }, twoDivs(item.marker, item.bonus));
     }
     return m("div.progress.pending", twoDivs());
 }

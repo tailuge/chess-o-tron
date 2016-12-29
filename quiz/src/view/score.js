@@ -12,6 +12,6 @@ function convertToPieces(i) {
 
 module.exports = function(controller) {
   return [
-    m('div.score', "score: " + convertToPieces(controller.score()))
+    m('div.score' + (controller.state.gameOver ? '.final' : ''), "score: " + (controller.displayscore()))
   ];
 };

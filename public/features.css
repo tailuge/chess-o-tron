@@ -89,7 +89,7 @@
     height: 32px;
     text-align: center;
     box-shadow: inset 0px 1px 0px 0px #caefab;
-    background: linear-gradient(to bottom, #77d42a 5%, #6ca811 100%);
+    background: linear-gradient(to bottom, #9d4 5%, #791 100%);
     background-color: #77d42a;
     border: 1px solid #268a16;
     color: #444;
@@ -104,6 +104,7 @@
 
 .progress:hover {
     transform: scale(1.1);
+    cursor: pointer;
 }
 
 .progress.target.white {
@@ -128,6 +129,7 @@
 }
 
 .progress.pending {
+    cursor: default;
     box-shadow: inset 0px 1px 0px 0px #333;
     background: none;
     border: 1px solid #222;
@@ -166,4 +168,24 @@
 .breakbarindicator.gold {
     background-color: #dc1;
     opacity: 0.9;
+}
+
+.center {
+    padding-left: 8px;
+}
+
+.score {
+    transition: all 0.5s ease;
+    font-size: large;
+}
+
+.score.final {
+    transition: all 1.5s ease;
+    transform: scale(2.0);
+    font-size: large;
+    color: #ff2;
+}
+
+.newgame {
+    text-align: center;
 }
