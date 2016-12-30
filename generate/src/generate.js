@@ -2,6 +2,10 @@ var Chess = require('chess.js').Chess;
 var c = require('./chessutils');
 var forks = require('./forks');
 var knightforkfens = require('./fens/knightforks');
+var queenforkfens = require('./fens/queenforks');
+var pawnforkfens = require('./fens/pawnforks');
+var rookforkfens = require('./fens/rookforks');
+var bishopforkfens = require('./fens/bishopforks');
 var hidden = require('./hidden');
 var loose = require('./loose');
 var pins = require('./pins');
@@ -19,9 +23,27 @@ var featureMap = [{
     }
   }, {
     description: "Queen forks",
-    data: knightforkfens,
+    data: queenforkfens,
     extract: function(puzzle) {
       return forks(puzzle, 'q');
+    }
+  }, {
+    description: "Pawn forks",
+    data: pawnforkfens,
+    extract: function(puzzle) {
+      return forks(puzzle, 'p');
+    }
+  }, {
+    description: "Rook forks",
+    data: rookforkfens,
+    extract: function(puzzle) {
+      return forks(puzzle, 'r');
+    }
+  }, {
+    description: "Bishop forks",
+    data: bishopforkfens,
+    extract: function(puzzle) {
+      return forks(puzzle, 'b');
     }
   },
 
