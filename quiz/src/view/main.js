@@ -12,11 +12,11 @@ function visualBoard(ctrl) {
 
 function info(ctrl) {
   return [m('div.explanation', [
-    m('p', 'Increase your tactical awareness by spotting all knight forks of pieces excluding pawns as fast as you can (regardless of quality of move)'),
+    m('p', 'Increase your tactical awareness by spotting all forks of pieces excluding pawns as fast as you can (regardless of quality of move)'),
     m('br'),
     m('br'),
     m('ul.instructions', [
-      m('li.instructions', 'Find all knight forking squares.'),
+      m('li.instructions', 'Find all forking squares.'),
       m('li.instructions', 'Break bonus by clicking quickly.'),
       m('li.instructions', 'Post your high score on ', m("a.hiscore.external[href='https://en.lichess.org/forum/game-analysis/forking-hell-challenge']", {
         style: {
