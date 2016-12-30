@@ -72,12 +72,39 @@ module.exports = class gamestate {
       }
     });
 
+    this.orderByCompleted();
+
     breaklevel = breaklevel > 100 ? 100 : breaklevel;
 
     return {
       breaklevel: (total === 0) ? breaklevel * 0.9 : breaklevel,
       delta: total
     };
+  }
+
+  orderByCompleted() {
+    while (this.swapIncorrectOrdered()) {}
+  }
+
+  swapIncorrectOrdered() {
+    var index = this.known.findIndex((t, i) => {
+//      console.log("i=" + i);
+      if (i === this.known.length - 1) {
+        return false;
+      }
+//      console.log("[i].complete=" + t.complete + " [i+1]=" + this.known[i + 1].complete);
+      return !t.complete && this.known[i + 1].complete;
+    });
+
+//    console.log(index);
+
+    if (index >= 0) {
+      var tmp = this.known[index];
+      this.known[index] = this.known[index + 1];
+      this.known[index + 1] = tmp;
+      return true;
+    }
+    return false;
   }
 
   getState() {

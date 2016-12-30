@@ -93,8 +93,9 @@
     background-color: #77d42a;
     border: 1px solid #268a16;
     color: #444;
-    font-family: Arial;
-    font-size: 11px;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima;
+    font-size: 12px;
+    font-weight:lighter;
     text-decoration: none;
     text-shadow: 0px 1px 0px #ccc;
     transition: all 0.5s ease;
@@ -115,8 +116,8 @@
 }
 
 .progress.target.black {
-    color: #aaa;
-    text-shadow: 0px 1px 0px #555;
+    color: #bbb;
+    text-shadow: 0px 1px 0px #111;
     box-shadow: inset 0px 1px 0px 0px #eee;
     background: linear-gradient(to bottom, #222 5%, #000 100%);
     border: 1px solid #444;
@@ -188,4 +189,5 @@
 
 .newgame {
     text-align: center;
+    margin-bottom: 4px;
 }

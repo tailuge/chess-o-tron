@@ -8,7 +8,7 @@ module.exports = function(opts, i18n) {
 
   var betweenFens = false;
   var gameTotal = 40;
-  var selection = m.prop("Knight forks");
+  var selection = m.prop(opts.mode);
   var fen = m.prop(opts.fen ? opts.fen : generate.randomFenForFeature(selection()));
   var features = m.prop(generate.extractSingleFeature(selection(), fen()));
 
@@ -85,7 +85,6 @@ module.exports = function(opts, i18n) {
     ground.setShapes(clickedDiagram);
     m.redraw();
     if (generate.allFeaturesFound(features())) {
-      console.log("all features found");
       if (state.gameComplete()) {
         gameOver();
       }

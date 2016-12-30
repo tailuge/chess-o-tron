@@ -28,9 +28,16 @@ function info(ctrl) {
     m('br'),
     m('div.button.newgame', {
       onclick: function() {
+        ctrl.selection("Knight forks");
         ctrl.newGame();
       }
-    }, 'New knight fork game')
+    }, 'New knight fork game'),
+    m('div.button.newgame', {
+      onclick: function() {
+        ctrl.selection("Queen forks");
+        ctrl.newGame();
+      }
+    }, 'New queen fork game')
   ])];
 }
 
