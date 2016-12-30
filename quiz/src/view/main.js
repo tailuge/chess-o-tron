@@ -12,7 +12,7 @@ function visualBoard(ctrl) {
 
 function info(ctrl) {
   return [m('div.explanation', [
-    m('p', 'Increase your tactical awareness by spotting all knight forks as fast as you can (regardless of quality of move)'),
+    m('p', 'Increase your tactical awareness by spotting all knight forks of pieces excluding pawns as fast as you can (regardless of quality of move)'),
     m('br'),
     m('br'),
     m('ul.instructions', [
@@ -30,7 +30,7 @@ function info(ctrl) {
       onclick: function() {
         ctrl.newGame();
       }
-    }, 'new game')
+    }, 'New knight fork game')
   ])];
 }
 

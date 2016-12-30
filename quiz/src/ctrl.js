@@ -6,6 +6,7 @@ var gamestate = require('./gamestate');
 
 module.exports = function(opts, i18n) {
 
+  var betweenFens = false;
   var gameTotal = 40;
   var selection = m.prop("Knight forks");
   var fen = m.prop(opts.fen ? opts.fen : generate.randomFenForFeature(selection()));
@@ -57,6 +58,9 @@ module.exports = function(opts, i18n) {
   }
 
   function onSquareSelect(target) {
+    if (betweenFens) {
+      return;
+    }
     if (correct().includes(target) || incorrect().includes(target)) {
       target = 'none';
     }
@@ -81,11 +85,15 @@ module.exports = function(opts, i18n) {
     ground.setShapes(clickedDiagram);
     m.redraw();
     if (generate.allFeaturesFound(features())) {
+      console.log("all features found");
       if (state.gameComplete()) {
         gameOver();
       }
       else {
+        // since this will take 0.5 seconds to fire we must block all other events until it is run.
+        betweenFens = true;
         setTimeout(function() {
+          betweenFens = false;
           nextFen();
         }, 500);
       }
