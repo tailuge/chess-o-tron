@@ -22,7 +22,14 @@ function info(ctrl) {
     ]),
     m('br'),
     m('br'),
-    m('div.button.center.action', {
+    m('div.button.newgame', {
+      onclick: function() {
+        window.open('./quiz.html');
+      }
+    }, 'Trainer'),
+    m('br'),
+    m('br'),
+    m('div.button.newgame', {
       onclick: function() {
         ctrl.nextFen();
       }
