@@ -1,10 +1,6 @@
 var Chess = require('chess.js').Chess;
 var c = require('./chessutils');
 
-// issues: https://preview.c9users.io/tailuge/cheese/git/chess-o-tron/public/index.html?fen=r6r%2F1p2pp1k%2Fp1b2q1p%2F4pP2%2F6QR%2F3B2P1%2FP1P2K2%2F7R%20w%20-%20-%200%201&target=f5
-// should be a fork on f5 but queen is pinned to own king and cannot capture anythig but the pinning bishop.
-// resolved by replacing king with pawn whil assessing captures.
-
 var forkMap = [];
 forkMap['n'] = {
     pieceEnglish: 'Knight',
@@ -87,8 +83,19 @@ function enrichMoveWithForkCaptures(fen, move) {
     var pieceMoves = c.movesOfPieceOn(sameSidesTurnFen, move.to);
     var captures = pieceMoves.filter(capturesMajorPiece);
 
-    move.captures = captures;
+    move.captures = uniqTo(captures);
     return move;
+}
+
+function uniqTo(moves) {
+    var dests = [];
+    return moves.filter(m => {
+        if (dests.indexOf(m.to) != -1) {
+            return false;
+        }
+        dests.push(m.to);
+        return true;
+    });
 }
 
 function capturesMajorPiece(move) {

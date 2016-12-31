@@ -37,7 +37,13 @@ function info(ctrl) {
         ctrl.selection("Queen forks");
         ctrl.newGame();
       }
-    }, 'New queen fork game')
+    }, 'New queen fork game'),
+    m('div.button.newgame', {
+      onclick: function() {
+        ctrl.selection("Pawn forks");
+        ctrl.newGame();
+      }
+    }, 'New pawn fork game')
   ])];
 }
 
