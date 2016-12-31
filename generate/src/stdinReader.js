@@ -1,9 +1,12 @@
 /**
  * Read from stdin and filter lines that have given feature.
+ * Takes FENs and PGNs. For PGNs will stop searching after feature first detected.
  * 
  */
 
+var Chess = require('chess.js').Chess;
 var c = require('./chessutils');
+
 
 function handle(callback) {
 
@@ -30,9 +33,32 @@ function handle(callback) {
                 console.log('"' + fen + '",');
             }
         }
-        else {
-            // skip non fen lines
-            return;
+        else if (/1.*2.*3.*4.*5.*6.*7.*8.*9.*10.*11.*/.test(line)) {
+            var chess = new Chess();
+            if (chess.load_pgn(line)) {
+                var game = new Chess();
+                var fens = [];
+                chess.history().forEach(move => {
+                    game.move(move, {
+                        sloppy: true
+                    });
+
+                    // skip opening moves
+                    if (game.history().length < 8) {
+                        return;
+                    }
+
+                    // skip positions in check
+                    if (!game.in_check()) {
+                        fens.push(game.fen());
+                    }
+                });
+
+                var first = fens.find(f => callback(f));
+                if (first) {
+                    console.log('"' + first + '",');
+                }
+            }
         }
     });
 

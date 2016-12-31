@@ -120,6 +120,9 @@ function diagram(move) {
 
 function addForksBy(moves, piece, side, features) {
     var bypiece = moves.filter(m => m.piece === piece);
+    if (piece === 'p') {
+        bypiece = bypiece.filter(m => !m.promotion);
+    }
     features.push({
         description: forkMap[piece].pieceEnglish + " forks",
         side: side,
