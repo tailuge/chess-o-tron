@@ -21,15 +21,15 @@ function addCheckingSquares(fen, features) {
     features.push({
         description: "Checking squares",
         side: chess.turn(),
-        targets: checks.map(m => targetAndDiagram(m.from, m.to, checkingMoves(fen, m)))
+        targets: checks.map(m => targetAndDiagram(m.from, m.to, checkingMoves(fen, m), '♔+'))
     });
 
     features.push({
         description: "Mating squares",
         side: chess.turn(),
-        targets: mates.map(m => targetAndDiagram(m.from, m.to, checkingMoves(fen, m)))
+        targets: mates.map(m => targetAndDiagram(m.from, m.to, checkingMoves(fen, m), '♔#'))
     });
-    
+
     if (mates.length > 0) {
         features.forEach(f => {
             if (f.description === "Mate-in-1 threats") {
@@ -51,9 +51,10 @@ function checkingMoves(fen, move) {
 }
 
 
-function targetAndDiagram(from, to, checks) {
+function targetAndDiagram(from, to, checks, marker) {
     return {
         target: to,
+        marker: marker,
         diagram: [{
             orig: from,
             dest: to,

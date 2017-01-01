@@ -51,7 +51,13 @@ var featureMap = [{
     extract: function(puzzle) {
       return loose(puzzle);
     }
-  },
+  }, {
+    description: "Checking squares",
+    data: knightforkfens,
+    extract: function(puzzle) {
+      return checks(puzzle);
+    }
+  }
 
 
 ];
