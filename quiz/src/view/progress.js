@@ -2,7 +2,7 @@ var m = require('mithril');
 
 function twoDivs(marker, bonus) {
     return [
-        m('div.progress-marker', marker ? marker + " " : " "),
+        m('div.progress-marker', marker ? marker  : " "),
         m('div.progress-bonus', bonus ? bonus + " " : " "),
     ];
 }

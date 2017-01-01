@@ -45,6 +45,12 @@ var featureMap = [{
     extract: function(puzzle) {
       return forks(puzzle, 'b');
     }
+  }, {
+    description: "Loose pieces",
+    data: knightforkfens,
+    extract: function(puzzle) {
+      return loose(puzzle);
+    }
   },
 
 
@@ -121,7 +127,6 @@ module.exports = {
   randomFenForFeature: function(featureDescription) {
     var fens = featureMap.find(f => f.description === featureDescription).data;
     return fens[Math.floor(Math.random() * fens.length)];
-  }
-
+  },
 
 };

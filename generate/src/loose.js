@@ -23,6 +23,7 @@ function addLoosePieces(fen, features) {
         targets: pieces.map(t => {
             return {
                 target: t,
+                marker: '⨀',
                 diagram: [{
                     orig: t,
                     brush: 'yellow'

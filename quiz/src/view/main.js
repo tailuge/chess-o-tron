@@ -3,6 +3,7 @@ var chessground = require('chessground');
 var progress = require('./progress');
 var score = require('./score');
 var breakbar = require('./breakbar');
+var generate = require('../../../generate/src/generate');
 
 function visualBoard(ctrl) {
   return m('div.lichess_board', m('div.lichess_board_wrap', m('div.lichess_board', [
@@ -12,39 +13,35 @@ function visualBoard(ctrl) {
 
 function info(ctrl) {
   return [m('div.explanation', [
-    m('p', 'Increase your tactical awareness by spotting all forks of pieces excluding pawns as fast as you can (regardless of quality of move)'),
+      m('p.center', {
+        style: {
+          textAlign: 'center'
+        }
+      }, 'Training mode'),
+      m('br'),
+      m('br'),
+      generate.featureMap.map(f => {
+        return m('div.button.newgame', {
+          onclick: function() {
+            ctrl.selection(f.description);
+            ctrl.newGame();
+          }
+        }, f.description);
+      }),
+    ]),
     m('br'),
     m('br'),
-    m('ul.instructions', [
-      m('li.instructions', 'Find all forking squares.'),
-      m('li.instructions', 'Break bonus by clicking quickly.'),
-      m('li.instructions', 'Post your high score on ', m("a.hiscore.external[href='https://en.lichess.org/forum/game-analysis/forking-hell-challenge']", {
+    m('p.center', {
+        style: {
+          textAlign: 'center'
+        }
+      }, 'Post your high scores on ',
+      m("a.hiscore.external[href='https://en.lichess.org/forum/game-analysis/forking-hell-challenge']", {
         style: {
           color: "#55a"
         }
       }, 'lichess.'))
-    ]),
-    m('br'),
-    m('br'),
-    m('div.button.newgame', {
-      onclick: function() {
-        ctrl.selection("Knight forks");
-        ctrl.newGame();
-      }
-    }, 'New knight fork game'),
-    m('div.button.newgame', {
-      onclick: function() {
-        ctrl.selection("Queen forks");
-        ctrl.newGame();
-      }
-    }, 'New queen fork game'),
-    m('div.button.newgame', {
-      onclick: function() {
-        ctrl.selection("Pawn forks");
-        ctrl.newGame();
-      }
-    }, 'New pawn fork game')
-  ])];
+  ];
 }
 
 module.exports = function(ctrl) {
@@ -58,6 +55,7 @@ module.exports = function(ctrl) {
               }
             }, 'feature',
             m('span.extension', 'tron'))),
+            m('br'),
         progress(ctrl)
       ])
     ),
