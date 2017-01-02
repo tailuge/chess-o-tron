@@ -20,31 +20,39 @@ function isCheckAfterPlacingKingAtSquare(fen, king, square) {
     return chess.in_check();
 }
 
-function isCheckAfterRemovingPieceAtSquare(fen, square) {
-    var chess = new Chess(fen);
-    chess.remove(square);
-    return chess.in_check();
-}
 
-function movesThatResultInCaptureThreat(fen, from, to) {
+function movesThatResultInCaptureThreat(fen, from, to, sameSide) {
     var chess = new Chess(fen);
+
+    if (!sameSide) {
+        //null move for player to allow opponent a move
+        chess.load(fenForOtherSide(chess.fen()));
+        fen = chess.fen();
+
+    }
     var moves = chess.moves({
         verbose: true
     });
     var squaresBetween = between(from, to);
+
     // do any of the moves reveal the desired capture 
     return moves.filter(move => squaresBetween.indexOf(move.from) !== -1)
-        .filter(m => doesMoveResultInCaptureThreat(m, fen, from, to));
+        .filter(m => doesMoveResultInCaptureThreat(m, fen, from, to, sameSide));
 }
 
-function doesMoveResultInCaptureThreat(move, fen, from, to) {
+function doesMoveResultInCaptureThreat(move, fen, from, to, sameSide) {
     var chess = new Chess(fen);
 
     //apply move of intermediary piece (state becomes other sides turn)
     chess.move(move);
 
-    //null move for opponent to regain the move for original side
-    chess.load(fenForOtherSide(chess.fen()));
+    //console.log(chess.ascii());
+    //console.log(chess.turn());
+
+    if (sameSide) {
+        //null move for opponent to regain the move for original side
+        chess.load(fenForOtherSide(chess.fen()));
+    }
 
     //get legal moves
     var moves = chess.moves({
@@ -133,41 +141,6 @@ function canCapture(from, fromPiece, to, toPiece) {
     return moves.length > 0;
 }
 
-/**
- * Convert PGN to list of FENs.
- */
-function pgnToFens(pgn) {
-    var gameMoves = pgn.replace(/([0-9]+\.\s)/gm, '').trim();
-    var moveArray = gameMoves.split(' ').filter(function(n) {
-        return n;
-    });
-
-    var fens = [];
-    var chess = new Chess();
-    moveArray.forEach(move => {
-        chess.move(move, {
-            sloppy: true
-        });
-
-        // skip opening moves
-        if (chess.history().length < 8) {
-            return;
-        }
-
-        // skip positions in check
-        if (chess.in_check()) {
-            return;
-        }
-
-        // skip black moves
-        if (chess.turn() === 'b') {
-            return;
-        }
-        fens.push(chess.fen());
-    });
-    return fens;
-}
-
 function between(from, to) {
     var result = [];
     var n = from;
@@ -188,14 +161,14 @@ function repairFen(fen) {
 }
 
 module.exports.allSquares = allSquares;
-module.exports.pgnToFens = pgnToFens;
 module.exports.kingsSquare = kingsSquare;
 module.exports.piecesForColour = piecesForColour;
 module.exports.isCheckAfterPlacingKingAtSquare = isCheckAfterPlacingKingAtSquare;
 module.exports.fenForOtherSide = fenForOtherSide;
-module.exports.isCheckAfterRemovingPieceAtSquare = isCheckAfterRemovingPieceAtSquare;
+
 module.exports.movesThatResultInCaptureThreat = movesThatResultInCaptureThreat;
 module.exports.movesOfPieceOn = movesOfPieceOn;
 module.exports.majorPiecesForColour = majorPiecesForColour;
 module.exports.canCapture = canCapture;
+module.exports.between = between;
 module.exports.repairFen = repairFen;

@@ -11,7 +11,7 @@
  * 
  * Filter raw data to just those containing 2 or more knight fork
  * cd generate/src
- * head -n 500 ../data/raw.puzzles | node filterForFeature.js "Knight forks" 1 | tee ./fens/knightforks.js
+ * head -n 500 ../data/puzzle.fens | node filterForFeature.js "Knight forks" 1 | tee ./fens/knightforks.js
  */
 
 var stdinReader = require('./stdinReader');

@@ -6,9 +6,10 @@ var queenforkfens = require('./fens/queenforks');
 var pawnforkfens = require('./fens/pawnforks');
 var rookforkfens = require('./fens/rookforks');
 var bishopforkfens = require('./fens/bishopforks');
+var pinfens = require('./fens/pins');
+var pin = require('./pins');
 var hidden = require('./hidden');
 var loose = require('./loose');
-var pins = require('./pins');
 var matethreat = require('./matethreat');
 var checks = require('./checks');
 
@@ -57,6 +58,18 @@ var featureMap = [{
     extract: function(puzzle) {
       return checks(puzzle);
     }
+  }, {
+    description: "Hidden attackers",
+    data: knightforkfens,
+    extract: function(puzzle) {
+      return hidden(puzzle);
+    }
+  }, {
+    description: "Pins and Skewers",
+    data: pinfens,
+    extract: function(puzzle) {
+      return pin(puzzle);
+    }
   }
 
 
@@ -76,7 +89,7 @@ module.exports = {
     puzzle = forks(puzzle);
     puzzle = hidden(puzzle);
     puzzle = loose(puzzle);
-    puzzle = pins(puzzle);
+    puzzle = pin(puzzle);
     puzzle = matethreat(puzzle);
     puzzle = checks(puzzle);
 

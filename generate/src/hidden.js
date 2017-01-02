@@ -2,12 +2,12 @@ var Chess = require('chess.js').Chess;
 var c = require('./chessutils');
 
 module.exports = function(puzzle) {
-    addAligned(puzzle.fen, puzzle.features);
-    addAligned(c.fenForOtherSide(puzzle.fen), puzzle.features);
+    inspectAligned(puzzle.fen, puzzle.features);
+    inspectAligned(c.fenForOtherSide(puzzle.fen), puzzle.features);
     return puzzle;
 };
 
-function addAligned(fen, features) {
+function inspectAligned(fen, features) {
     var chess = new Chess(fen);
 
     var moves = chess.moves({
@@ -17,7 +17,7 @@ function addAligned(fen, features) {
     var pieces = c.majorPiecesForColour(fen, chess.turn());
     var opponentsPieces = c.majorPiecesForColour(fen, chess.turn() == 'w' ? 'b' : 'w');
 
-    var aligned = [];
+    var potentialCaptures = [];
     pieces.forEach(from => {
         var type = chess.get(from).type;
         if ((type !== 'k') && (type !== 'n')) {
@@ -25,15 +25,29 @@ function addAligned(fen, features) {
                 if (c.canCapture(from, chess.get(from), to, chess.get(to))) {
                     var availableOnBoard = moves.filter(m => m.from === from && m.to === to);
                     if (availableOnBoard.length === 0) {
-                        var revealingMoves = c.movesThatResultInCaptureThreat(fen, from, to);
-                        if (revealingMoves.length > 0) {
-                            aligned.push({
-                                target: from,
-                                diagram: diagram(from, to, revealingMoves)
-                            });
-                        }
+                        potentialCaptures.push({
+                            attacker: from,
+                            attacked: to
+                        });
                     }
                 }
+            });
+        }
+    });
+
+    addHiddenAttackers(fen, features, potentialCaptures);
+}
+
+function addHiddenAttackers(fen, features, potentialCaptures) {
+    var chess = new Chess(fen);
+    var targets = [];
+    potentialCaptures.forEach(pair => {
+        var revealingMoves = c.movesThatResultInCaptureThreat(fen, pair.attacker, pair.attacked, true);
+        if (revealingMoves.length > 0) {
+            targets.push({
+                target: pair.attacker,
+                marker: '⥇',
+                diagram: diagram(pair.attacker, pair.attacked, revealingMoves)
             });
         }
     });
@@ -41,10 +55,11 @@ function addAligned(fen, features) {
     features.push({
         description: "Hidden attacker",
         side: chess.turn(),
-        targets: aligned
+        targets: targets
     });
 
 }
+
 
 function diagram(from, to, revealingMoves) {
     var main = [{
