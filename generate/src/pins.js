@@ -91,22 +91,27 @@ function addAbsolutePinTargetForCurrentPlayer(fen, targets) {
     if (pinnedSquares.length === 0) {
         return;
     }
+    pinnedSquares.forEach(p => {
+        var kingCapture = checkAfterRemovingPieceAtSquare(fen, p);
 
-    var kingCapture = checkAfterRemovingPieceAtSquare(fen, pinnedSquares[0]);
+        targets.push({
+            target: p,
+            marker: '📌+',
+            diagram: [{
+                orig: kingCapture.from,
+                dest: kingCapture.to,
+                brush: 'red'
+            }, {
+                orig: p,
+                brush: 'red'
+            }]
+        });
 
-    targets.push({
-        target: pinnedSquares[0],
-        marker: '📌+',
-        diagram: [{
-            orig: kingCapture.from,
-            dest: kingCapture.to,
-            brush: 'red'
-        }, {
-            orig: pinnedSquares[0],
-            brush: 'red'
-        }]
     });
 }
+
+// 5k2/8/7q/8/8/8/6RP/5rNK b - -
+// produces 2 checks, both need capturing, currently picks first
 
 function checkAfterRemovingPieceAtSquare(fen, square) {
     var chess = new Chess(fen);
