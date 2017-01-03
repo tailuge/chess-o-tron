@@ -35,91 +35,62 @@ function inspectAligned(fen, features) {
         }
     });
 
-    addPins(fen, features, potentialCaptures);
+    addGeometricPins(fen, features, potentialCaptures);
 }
 
-function addPins(fen, features, potentialCaptures) {
+// pins are found if there is 1 piece in between a capture of the opponents colour.
+
+function addGeometricPins(fen, features, potentialCaptures) {
     var chess = new Chess(fen);
     var targets = [];
     potentialCaptures.forEach(pair => {
-        var revealingMoves = c.movesThatResultInCaptureThreat(fen, pair.attacker, pair.attacked, false);
-        if (revealingMoves.length > 0) {
-            targets.push({
-                target: revealingMoves[0].from,
-                marker: marker(fen, revealingMoves[0].from, pair.attacked),
-                diagram: diagram(pair.attacker, pair.attacked, revealingMoves)
-            });
-        }
+        pair.piecesBetween = c.between(pair.attacker, pair.attacked).map(square => {
+            return {
+                square: square,
+                piece: chess.get(square)
+            };
+        }).filter(item => item.piece);
     });
 
-    addAbsolutePinTargetForCurrentPlayer(c.fenForOtherSide(fen), targets);
+    var otherSide = chess.turn() === 'w' ? 'b' : 'w';
+
+    potentialCaptures = potentialCaptures.filter(pair => pair.piecesBetween.length === 1);
+    potentialCaptures = potentialCaptures.filter(pair => pair.piecesBetween[0].piece.color === otherSide);
+    potentialCaptures.forEach(pair => {
+        targets.push({
+            target: pair.piecesBetween[0].square,
+            marker: marker(fen, pair.piecesBetween[0].square, pair.attacked),
+            diagram: diagram(pair.attacker, pair.attacked, pair.piecesBetween[0].square)
+        });
+
+    });
 
     features.push({
         description: "Pins and Skewers",
         side: chess.turn() === 'w' ? 'b' : 'w',
         targets: targets
     });
+
 }
 
 function marker(fen, pinned, attacked) {
     var chess = new Chess(fen);
     var p = chess.get(pinned).type;
     var a = chess.get(attacked).type;
+    var checkModifier = a === 'k' ? '+' : '';
     if ((p === 'q') || (p === 'r' && (a === 'b' || a === 'n'))) {
-        return '🍢';
+        return '🍢' + checkModifier;
     }
-    return '📌';
+    return '📌' + checkModifier;
 }
 
-function diagram(from, to, revealingMoves) {
+function diagram(from, to, middle) {
     return [{
         orig: from,
         dest: to,
         brush: 'red'
     }, {
-        orig: revealingMoves[0].from,
+        orig: middle,
         brush: 'red'
     }];
-}
-
-
-function addAbsolutePinTargetForCurrentPlayer(fen, targets) {
-    var chess = new Chess();
-    chess.load(fen);
-    var pieces = c.piecesForColour(fen, chess.turn());
-    var pinnedSquares = pieces.filter(square => checkAfterRemovingPieceAtSquare(fen, square));
-    if (pinnedSquares.length === 0) {
-        return;
-    }
-    pinnedSquares.forEach(p => {
-        var kingCapture = checkAfterRemovingPieceAtSquare(fen, p);
-
-        targets.push({
-            target: p,
-            marker: '📌+',
-            diagram: [{
-                orig: kingCapture.from,
-                dest: kingCapture.to,
-                brush: 'red'
-            }, {
-                orig: p,
-                brush: 'red'
-            }]
-        });
-
-    });
-}
-
-// 5k2/8/7q/8/8/8/6RP/5rNK b - -
-// produces 2 checks, both need capturing, currently picks first
-
-function checkAfterRemovingPieceAtSquare(fen, square) {
-    var chess = new Chess(fen);
-    chess.remove(square);
-    if (chess.in_check()) {
-        chess.load(c.fenForOtherSide(chess.fen()));
-        return chess.moves({
-            verbose: true
-        }).filter(m => m.captured).filter(m => m.captured == 'k')[0];
-    }
 }
