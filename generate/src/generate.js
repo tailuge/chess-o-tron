@@ -10,6 +10,7 @@ var pinfens = require('./fens/pins');
 var pin = require('./pins');
 var hidden = require('./hidden');
 var loose = require('./loose');
+var immobile = require('./immobile');
 var matethreat = require('./matethreat');
 var checks = require('./checks');
 
@@ -70,6 +71,12 @@ var featureMap = [{
     extract: function(puzzle) {
       return pin(puzzle);
     }
+  }, {
+    description: "Low mobility pieces",
+    data: knightforkfens,
+    extract: function(puzzle) {
+      return immobile(puzzle);
+    }
   }
 
 
@@ -92,6 +99,7 @@ module.exports = {
     puzzle = pin(puzzle);
     puzzle = matethreat(puzzle);
     puzzle = checks(puzzle);
+    puzzle = immobile(puzzle);
 
     return puzzle.features;
   },
