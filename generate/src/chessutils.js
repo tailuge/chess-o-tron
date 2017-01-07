@@ -112,6 +112,14 @@ function piecesForColour(fen, colour) {
     });
 }
 
+function allPiecesForColour(fen, colour) {
+    var chess = new Chess(fen);
+    return allSquares.filter(square => {
+        var r = chess.get(square);
+        return r && r.color == colour;
+    });
+}
+
 function majorPiecesForColour(fen, colour) {
     var chess = new Chess(fen);
     return allSquares.filter(square => {
@@ -163,6 +171,7 @@ function repairFen(fen) {
 module.exports.allSquares = allSquares;
 module.exports.kingsSquare = kingsSquare;
 module.exports.piecesForColour = piecesForColour;
+module.exports.allPiecesForColour = allPiecesForColour;
 module.exports.isCheckAfterPlacingKingAtSquare = isCheckAfterPlacingKingAtSquare;
 module.exports.fenForOtherSide = fenForOtherSide;
 
