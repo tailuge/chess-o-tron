@@ -38,7 +38,7 @@ function addLowMobility(fen, features) {
         targets: pieces.map(t => {
             return {
                 target: t.square,
-                marker: '⏸',
+                marker: '⧀',
                 diagram: [{
                     orig: t.square,
                     brush: 'yellow'

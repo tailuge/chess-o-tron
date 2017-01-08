@@ -13,7 +13,7 @@ module.exports = function(opts, i18n) {
   var features = m.prop(generate.extractSingleFeature(selection(), fen()));
 
   var state = new gamestate(gameTotal);
-
+  var randomFeature;
   var ground;
   var score = m.prop();
   var displayscore = m.prop();
@@ -112,7 +112,10 @@ module.exports = function(opts, i18n) {
     ground.setShapes([]);
     correct([]);
     incorrect([]);
-    features(generate.extractSingleFeature(selection(), fen()));
+    
+    var feature = selection() === 'Mixed' ? randomFeature : selection();
+
+    features(generate.extractSingleFeature(feature, fen()));
     if (generate.allFeaturesFound(features())) {
       return nextFen();
     }
@@ -121,7 +124,9 @@ module.exports = function(opts, i18n) {
   }
 
   function nextFen() {
-    updateFen(generate.randomFenForFeature(selection()));
+    randomFeature = generate.randomFeature();
+    var feature = selection() === 'Mixed' ? randomFeature : selection();
+    updateFen(generate.randomFenForFeature(feature));
   }
 
   showGround();

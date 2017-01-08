@@ -77,6 +77,10 @@ var featureMap = [{
     extract: function(puzzle) {
       return immobile(puzzle);
     }
+  }, {
+    description: "Mixed",
+    data: null,
+    extract: null
   }
 
 
@@ -149,6 +153,10 @@ module.exports = {
         });
       });
     return found;
+  },
+  
+  randomFeature: function() {
+    return featureMap[Math.floor(Math.random() * (featureMap.length - 1))].description;
   },
   
   randomFenForFeature: function(featureDescription) {
