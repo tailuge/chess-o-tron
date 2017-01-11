@@ -13,6 +13,8 @@ function visualBoard(ctrl) {
 
 function info(ctrl) {
   return [m('div.explanation', [
+      m('br'),
+      m('br'),
       m('p.center', {
         style: {
           textAlign: 'center'
@@ -22,6 +24,7 @@ function info(ctrl) {
       m('br'),
       generate.featureMap.map(f => {
         return m('div.button.newgame', {
+          title: f.fullDescription,
           onclick: function() {
             ctrl.selection(f.description);
             ctrl.newGame();
@@ -40,7 +43,15 @@ function info(ctrl) {
         style: {
           color: "#55a"
         }
-      }, 'lichess.'))
+      }, 'lichess.')),
+    m('br'),
+    m('br'),
+    m('p.center',m('div.button.newgame', {
+      onclick: function() {
+        ctrl.blindfold();
+      }
+    }, 'Blindfold bonus'))
+
   ];
 }
 
@@ -55,7 +66,7 @@ module.exports = function(ctrl) {
               }
             }, 'feature',
             m('span.extension', 'tron'))),
-            m('br'),
+        m('br'),
         progress(ctrl)
       ])
     ),

@@ -10,6 +10,7 @@ module.exports = function(opts, i18n) {
   var gameTotal = 40;
   var selection = m.prop(opts.mode);
   var fen = m.prop(opts.fen ? opts.fen : generate.randomFenForFeature(selection()));
+  var fenForBoard = fen();
   var features = m.prop(generate.extractSingleFeature(selection(), fen()));
 
   var state = new gamestate(gameTotal);
@@ -23,7 +24,7 @@ module.exports = function(opts, i18n) {
   var timerId;
 
   function showGround() {
-    if (!ground) ground = groundBuild(fen(), onSquareSelect);
+    if (!ground) ground = groundBuild(fenForBoard, onSquareSelect);
   }
 
 
@@ -79,7 +80,7 @@ module.exports = function(opts, i18n) {
       }
     }
     ground.set({
-      fen: fen(),
+      fen: fenForBoard,
     });
     var clickedDiagram = diagram.clickedSquares(features(), correct(), incorrect(), target);
     ground.setShapes(clickedDiagram);
@@ -106,13 +107,14 @@ module.exports = function(opts, i18n) {
   function updateFen(value) {
     diagram.clearDiagrams(features());
     fen(value);
+    fenForBoard = fen();
     ground.set({
-      fen: fen(),
+      fen: fenForBoard,
     });
     ground.setShapes([]);
     correct([]);
     incorrect([]);
-    
+
     var feature = selection() === 'Mixed' ? randomFeature : selection();
 
     features(generate.extractSingleFeature(feature, fen()));
@@ -127,6 +129,20 @@ module.exports = function(opts, i18n) {
     randomFeature = generate.randomFeature();
     var feature = selection() === 'Mixed' ? randomFeature : selection();
     updateFen(generate.randomFenForFeature(feature));
+  }
+
+  function blindfold() {
+    if (fenForBoard === '8/8/8/8/8/8/8/8') {
+      fenForBoard = fen();
+    }
+    else {
+      fenForBoard = '8/8/8/8/8/8/8/8';
+      breaklevel(99);
+    }
+    ground.set({
+      fen: fenForBoard,
+    });
+    m.redraw();
   }
 
   showGround();
@@ -146,6 +162,7 @@ module.exports = function(opts, i18n) {
     breaklevel: breaklevel,
     selection: selection,
     newGame: newGame,
+    blindfold: blindfold,
     descriptions: generate.featureMap.map(f => f.description)
   };
 };

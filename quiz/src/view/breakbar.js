@@ -10,5 +10,6 @@ module.exports = function(controller) {
       }),
       m('div.breakarea', 'break'),
     ])
+
   ];
 };
