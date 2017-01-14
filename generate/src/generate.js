@@ -1,4 +1,3 @@
-var Chess = require('chess.js').Chess;
 var c = require('./chessutils');
 var forks = require('./forks');
 var knightforkfens = require('./fens/knightforks');
