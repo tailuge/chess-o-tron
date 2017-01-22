@@ -191,3 +191,17 @@
     text-align: center;
     margin-bottom: 4px;
 }
+
+
+
+
+
+.rhythm {
+    position: absolute;
+    margin-top: 1px;
+    z-index: 10;
+    float: left;
+    height: 15px;
+    background-color: #2a2;
+    opacity: 0.5;
+}
