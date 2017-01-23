@@ -17,7 +17,8 @@ module.exports = function(opts, i18n) {
   var ground;
   var score = m.prop();
   var displayscore = m.prop();
-  var breaklevel = m.prop();
+  var beatbonus = m.prop();
+  var offbeatbonus = m.prop();
   var correct = m.prop([]);
   var incorrect = m.prop([]);
   var timerId;
@@ -39,14 +40,19 @@ module.exports = function(opts, i18n) {
     }
   }
 
+
   function onTick() {
 
     var t = new Date().getTime() / 1000;
     var radians = t * 2 * Math.PI;
-    var bpm = 30;
+    var bpm = 26.5;
     var bps = bpm / 60;
     var beat = Math.sin(radians * bps);
-    breaklevel(50 + beat * 50);
+    beatbonus(50 + beat * 50);
+
+    var phase = Math.PI;
+    var offbeat = Math.sin((radians * bps) + phase);
+    offbeatbonus(50 + offbeat * 50);
 
     m.redraw();
   }
@@ -135,7 +141,8 @@ module.exports = function(opts, i18n) {
     nextFen: nextFen,
     score: score,
     displayscore: displayscore,
-    breaklevel: breaklevel,
+    beatbonus: beatbonus,
+    offbeatbonus: offbeatbonus,
     selection: selection,
     newGame: newGame,
     blindfold: blindfold,

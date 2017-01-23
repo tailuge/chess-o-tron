@@ -18,18 +18,9 @@ function info(ctrl) {
         style: {
           textAlign: 'center'
         }
-      }, 'Training mode'),
+      }, 'Use the beat Luke'),
       m('br'),
-      m('br'),
-      generate.featureMap.map(f => {
-        return m('div.button.newgame', {
-          title: f.fullDescription,
-          onclick: function() {
-            ctrl.selection(f.description);
-            ctrl.newGame();
-          }
-        }, f.description);
-      }),
+      m('br')
     ]),
     m('br'),
     m('br'),
@@ -63,10 +54,18 @@ module.exports = function(ctrl) {
               onclick: function() {
                 window.open("./index.html?fen=" + encodeURI(ctrl.fen()));
               }
-            }, 'feature',
+            }, 'rhythmo',
             m('span.extension', 'tron'))),
-        m('br')
-        
+        m('br'),
+        m('iframe', {
+          id:"ytplayer",
+          type:"text/html",
+          width: 256,
+          height:144,
+          src: "https://www.youtube.com/embed/RoqllL8Vl6o?enablejsapi=1&autoplay=1",
+          frameborder: 0
+        })
+
       ])
     ),
     m('div.#lichess',

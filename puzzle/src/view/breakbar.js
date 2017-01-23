@@ -5,11 +5,20 @@ module.exports = function(controller) {
     m('div.breakbar', [
       m('div.rhythm', {
         style: {
-          width: controller.breaklevel() + "%"
+          width: controller.beatbonus() * 0.999 + "%"
         }
       }),
-      m('div.breakarea', 'break'),
+      m('div.breakarea', 'pick perfect'),
+    ]),
+    m('div.breakbar', [
+      m('div.rhythm', {
+        style: {
+          width: controller.offbeatbonus() * 0.999 + "%"
+        }
+      }),
+      m('div.breakarea', 'drop perfect'),
     ])
+
 
   ];
 };
