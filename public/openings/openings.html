@@ -13,69 +13,33 @@
 </style>
 
 <body>
+	<html>
+	Player:<input type="text" id="player" name="player" value="tailuge" /> Pages:
+	<input type="text" name="pages" id="pages" value="1" /> Filter:
+	<input type="text" name="filter" id="filter" value="" />
+	<input type="radio" name="colour" id="colour" value="white" checked> White
+	<input type="radio" name="colour" value="black"> Black
+	<input type="submit" value="Search" onclick="search()">
+	<input type="submit" value="About" onclick="window.open('https://tailuge.github.io/chess-o-tron/','_blank');">
+	<div id="graph"></div>
+
+	</html>
 	<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-	<script src="trie.js"></script>
-	<script src="d3.js"></script>
+	<script src="trie-calc.js"></script>
+	<script src="trie-d3.js"></script>
+	<script src="trie-data.js"></script>
 	<script>
-		/* globals d3: false $: false */
-
-		console.log("fetching");
-		fetchLichessData('tailuge', [], 1, function(allgames) {
-			var colour = 'white';
-			var player = 'tailuge';
-			var gamesWithStandardVariant = allgames.filter(x => x.variant === 'standard');
-			var gamesByPlayer = gamesWithStandardVariant.filter(x => {
-				var id = colour === "white" ? x.players.white.userId : x.players.black.userId;
-				return id && id.toUpperCase() == player.toUpperCase();
-			});
-			var gamesWithRegEx = gamesByPlayer.filter(x => x.moves.match("^...........*"));
-			var games = gamesWithRegEx.map(x => {
-				var url = x.url.replace('white', colour).replace('black', colour);
-				var score = '{0.5,0.5}';
-				if (x.winner) {
-					score = x.winner === 'white' ? '{1,0}' : '{0,1}';
-				}
-				return "start " + x.moves.split(" ").slice(0, 20).join(" ") + "..." + url + score;
-			});
-
-			console.log(JSON.stringify(games));
-			console.log("calculating games: " + games.length);
-
-			var nodes = trimArms(gamesToNodes(games));
-			var d3Links = nodesToLinks(nodes);
-			backPropagateScores(nodes);
-			var d3Nodes = nodes.map(d3Node);
-
-			console.log("nodes produced: " + nodes.length);
-
-			var data = {
-				"directed": true,
-				"multigraph": true,
-				"graph": [],
-				"nodes": d3Nodes,
-				"links": d3Links
-			};
-
-			console.log("drawing");
-
-			draw(data);
-		});
-
-
-
-		function fetchLichessData(player, accumulated, page, callback) {
-			console.log("Fetching data for player:" + player);
-			$.ajax({
-				url: "https://en.lichess.org/api/user/" + player + "/games?nb=100&with_analysis=1&with_moves=1&with_opening=1&page=" + page,
-				dataType: 'json',
-				cache: false,
-				success: function(data) {
-					callback(accumulated.concat(data.currentPageResults));
-				}.bind(this),
-				error: function(xhr, status, err) {
-					console.error(this.props.url, status, err.toString());
-				}.bind(this)
+		/* globals fetchLichessData processData*/
+		function search() {
+			var player = document.getElementById("player").value;
+			var pages = document.getElementById("pages").value;
+			var filter = document.getElementById("filter").value;
+			var colour = document.getElementById('colour').checked ? 'white' : 'black';
+			console.log("Search:" + player + " " + pages + " " + JSON.stringify(colour));
+			fetchLichessData(player, [], pages, function(data) {
+				processData(data, player, colour, filter);
 			});
 		}
 	</script>
+</body>

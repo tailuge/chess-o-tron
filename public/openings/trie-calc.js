@@ -77,7 +77,7 @@ function combine(ancestor, leafnode, nodes) {
 
 function trimArms(nodes) {
     var leaves = nodes.filter(leaf);
-    var result = nodes.filter(x => true);
+    var result = nodes.slice();
     var reduced = false;
     leaves.forEach(x => {
         if (directDecendants(prefix(x), nodes).length == 1) {
@@ -102,7 +102,9 @@ function propagateScoreToRoot(node, nodes, wins, losses) {
         nodes[index] = ancestor[0].replace(/{.*}$|$/, sumWL);
         propagateScoreToRoot(nodes[index], nodes, wins, losses);
     }
+
 }
+
 
 function winsAndLosses(node) {
     var r = node.match(/{([0-9.]+),([0-9.]+)}/);

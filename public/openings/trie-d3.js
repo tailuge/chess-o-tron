@@ -41,7 +41,6 @@ var force = d3.layout.force()
 	.size([w, h]);
 
 var default_node_color = "#ccc";
-//var default_node_color = "rgb(3,190,100)";
 var default_link_color = "#888";
 var nominal_base_node_size = 8;
 var nominal_text_size = 10;
@@ -51,13 +50,21 @@ var max_stroke = 4.5;
 var max_base_node_size = 36;
 var min_zoom = 0.1;
 var max_zoom = 7;
-var svg = d3.select("body").append("svg");
+d3.select("svg").remove();
+var svg = d3.select("#graph").append("svg");
 var zoom = d3.behavior.zoom().scaleExtent([min_zoom, max_zoom]);
 var g = svg.append("g");
 svg.style("cursor", "move");
 
 
 function draw(graph) {
+
+	// reset svg element
+	d3.select("svg").remove();
+	svg = d3.select("#graph").append("svg");
+	zoom = d3.behavior.zoom().scaleExtent([min_zoom, max_zoom]);
+	g = svg.append("g");
+	svg.style("cursor", "move");
 
 	var linkedByIndex = {};
 	graph.links.forEach(function(d) {
