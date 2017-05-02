@@ -12,7 +12,7 @@ module.exports = function(fen, onSelect) {
       lastMove: false
     },
     movable: {
-      free: false,
+      free: true,
       color: 'white',
       premove: true,
       dests: [],
@@ -28,8 +28,8 @@ module.exports = function(fen, onSelect) {
       move: function(orig, dest, capturedPiece) {
         onSelect(dest);
       },
-      select: function(key) {
-        onSelect(key);
+      select: function(originSquare) {
+        onSelect(originSquare);
       }
     }
   });

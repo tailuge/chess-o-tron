@@ -48,7 +48,7 @@ module.exports = function(opts, i18n) {
   }
 
   function onSquareSelect(target) {
-
+console.log(target);
   }
 
 

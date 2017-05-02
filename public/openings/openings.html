@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+	body {
+		overflow: hidden;
+		margin: 0;
+	}
+	
+	text {
+		font-family: sans-serif;
+		pointer-events: none;
+	}
+</style>
+
+<body>
+	<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+	<script src="trie.js"></script>
+	<script src="d3.js"></script>
+	<script>
+		/* globals d3: false $: false */
+
+		console.log("fetching");
+		fetchLichessData('tailuge', [], 1, function(allgames) {
+			var colour = 'white';
+			var player = 'tailuge';
+			var gamesWithStandardVariant = allgames.filter(x => x.variant === 'standard');
+			var gamesByPlayer = gamesWithStandardVariant.filter(x => {
+				var id = colour === "white" ? x.players.white.userId : x.players.black.userId;
+				return id && id.toUpperCase() == player.toUpperCase();
+			});
+			var gamesWithRegEx = gamesByPlayer.filter(x => x.moves.match("^...........*"));
+			var games = gamesWithRegEx.map(x => {
+				var url = x.url.replace('white', colour).replace('black', colour);
+				var score = '{0.5,0.5}';
+				if (x.winner) {
+					score = x.winner === 'white' ? '{1,0}' : '{0,1}';
+				}
+				return "start " + x.moves.split(" ").slice(0, 20).join(" ") + "..." + url + score;
+			});
+
+			console.log(JSON.stringify(games));
+			console.log("calculating games: " + games.length);
+
+			var nodes = trimArms(gamesToNodes(games));
+			var d3Links = nodesToLinks(nodes);
+			backPropagateScores(nodes);
+			var d3Nodes = nodes.map(d3Node);
+
+			console.log("nodes produced: " + nodes.length);
+
+			var data = {
+				"directed": true,
+				"multigraph": true,
+				"graph": [],
+				"nodes": d3Nodes,
+				"links": d3Links
+			};
+
+			console.log("drawing");
+
+			draw(data);
+		});
+
+
+
+		function fetchLichessData(player, accumulated, page, callback) {
+			console.log("Fetching data for player:" + player);
+			$.ajax({
+				url: "https://en.lichess.org/api/user/" + player + "/games?nb=100&with_analysis=1&with_moves=1&with_opening=1&page=" + page,
+				dataType: 'json',
+				cache: false,
+				success: function(data) {
+					callback(accumulated.concat(data.currentPageResults));
+				}.bind(this),
+				error: function(xhr, status, err) {
+					console.error(this.props.url, status, err.toString());
+				}.bind(this)
+			});
+		}
+	</script>
