@@ -1,13 +1,20 @@
 /* globals d3: false $: false */
 
-function fetchLichessData(player, accumulated, page, callback) {
+function fetchLichessData(player, accumulated, pages, callback) {
 	console.log("Fetching data for player:" + player);
+	
 	$.ajax({
-		url: "https://en.lichess.org/api/user/" + player + "/games?nb=100&with_analysis=1&with_moves=1&with_opening=1&page=" + page,
+		url: "https://en.lichess.org/api/user/" + player + "/games?nb=100&with_analysis=1&with_moves=1&with_opening=1&page=" + pages.shift(),
 		dataType: 'json',
 		cache: false,
 		success: function(data) {
-			callback(accumulated.concat(data.currentPageResults));
+			var all = accumulated.concat(data.currentPageResults);
+			console.log("Total games:"+all.length);
+			if (pages.length > 0) {
+				setTimeout(1500,fetchLichessData(player,all,pages,callback));				
+			} else {
+			callback(all);
+			}
 		}.bind(this),
 		error: function(xhr, status, err) {
 			console.error(this.props.url, status, err.toString());
@@ -22,7 +29,7 @@ function processData(allgames,player,colour,filter) {
 		return id && id.toUpperCase() == player.toUpperCase();
 	});
 	var regExp = new RegExp("^"+filter+".*$")
-	var gamesWithRegEx = gamesByPlayer.filter(x => x.moves.match(regExp));
+	var gamesWithRegEx = gamesByPlayer.filter(x => x.moves.length>8 && x.moves.match(regExp));
 	var games = gamesWithRegEx.map(x => {
 		var url = x.url.replace('white', colour).replace('black', colour);
 		var score = '{0.5,0.5}';
@@ -32,7 +39,7 @@ function processData(allgames,player,colour,filter) {
 		return "start " + x.moves.split(" ").slice(0, 20).join(" ") + "..." + url + score;
 	});
 
-	console.log(JSON.stringify(games));
+//	console.log(JSON.stringify(games));
 	console.log("calculating games: " + games.length);
 
 	var nodes = gamesToNodes(games)

@@ -292,8 +292,10 @@ function draw(graph) {
 	//window.focus();
 	d3.select(window).on("resize", resize).on("keydown", keydown);
 
-	force.on("tick", function() {
+	force.on("tick", function(e) {
 
+		//var k = 6 * e.alpha;
+		
 		node.attr("transform", function(d) {
 			return "translate(" + d.x + "," + d.y + ")";
 		});
@@ -301,7 +303,9 @@ function draw(graph) {
 			return "translate(" + d.x + "," + d.y + ")";
 		});
 
-		link.attr("x1", function(d) {
+		link
+		//.each(function(d) { d.source.y -= k, d.target.y += k; })
+			.attr("x1", function(d) {
 				return d.source.x;
 			})
 			.attr("y1", function(d) {

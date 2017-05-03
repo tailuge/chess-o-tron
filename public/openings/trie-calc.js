@@ -52,7 +52,7 @@ function d3Node(text) {
     }
     return {
         "size": 5,
-        "score": score,
+        "score": 0.5,
         "id": halfmoves[halfmoves.length - 1].replace(/{.*}/, ''),
         "type": (halfmoves.length % 2 == 0) ? "circle" : "circle"
     };

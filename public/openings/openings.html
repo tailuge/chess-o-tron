@@ -37,7 +37,7 @@
 			var filter = document.getElementById("filter").value;
 			var colour = document.getElementById('colour').checked ? 'white' : 'black';
 			console.log("Search:" + player + " " + pages + " " + JSON.stringify(colour));
-			fetchLichessData(player, [], pages, function(data) {
+			fetchLichessData(player, [], pages.split(","), function(data) {
 				processData(data, player, colour, filter);
 			});
 		}
