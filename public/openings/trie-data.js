@@ -1,4 +1,4 @@
-/* globals d3: false $: false gamesToNodes trimArms nodesToLinks backPropagateScores textToNode*/
+/* globals d3: false $: false gamesToNodes trimArms nodesToLinks backPropagateScores textToNode buildEvalDictionary draw*/
 
 function status(text) {
 	console.log(text);
@@ -19,6 +19,8 @@ function fetchLichessData(player, accumulated, pages, callback) {
 				setTimeout(1500, fetchLichessData(player, all, pages, callback));
 			}
 			else {
+				console.log(JSON.stringify(all[0].analysis));
+				console.log(JSON.stringify(all[0].moves));
 				callback(all);
 			}
 		}.bind(this),
@@ -48,7 +50,12 @@ function processData(allgames, player, colour, filter) {
 	//	console.log(JSON.stringify(games));
 	status("calculating games: " + games.length);
 
-	var nodes = gamesToNodes(games)
+	var evalDictionary = {};
+	gamesWithRegEx.filter(x=>x.analysis).forEach(g => {
+		buildEvalDictionary(g.analysis,g.moves,evalDictionary);
+	});
+
+	var nodes = gamesToNodes(games);
 	status("trim arms");
 	nodes = trimArms(nodes);
 	status("generate links");
@@ -56,7 +63,7 @@ function processData(allgames, player, colour, filter) {
 	status("propagate scores");
 	backPropagateScores(nodes);
 
-	var d3Nodes = nodes.map(textToNode);
+	var d3Nodes = nodes.map(t => textToNode(t,evalDictionary));
 
 	status("nodes produced: " + nodes.length);
 
@@ -67,8 +74,6 @@ function processData(allgames, player, colour, filter) {
 		"nodes": d3Nodes,
 		"links": d3Links
 	};
-
-	//status("");
 
 	draw(data);
 }

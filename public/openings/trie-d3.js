@@ -134,7 +134,7 @@ function draw(graph) {
 
 	.attr("d", d3.svg.symbol()
 		.size(function(d) {
-			return Math.PI * Math.pow(size(d.size) , 2);
+			return Math.PI * Math.pow(size(d.size) , 1.7);
 		})
 		.type(function(d) {
 			return d.type;

@@ -36,10 +36,19 @@ function movesToNodes(moves) {
     return nodelist;
 }
 
-function textToNode(text) {
+function textToNode(text,evalDictionary) {
     var halfmoves = text.split(" ");
     var WL = winsAndLosses(text);
     var score = WL[0] / (WL[0] + WL[1]);
+    var movestem = halfmoves.slice(1,halfmoves.length).join(' ').replace(/{.*}/,'');
+    var ceval = evalDictionary[movestem];
+    var limit = 200;
+    if (ceval) {
+        if (ceval > limit) { ceval = limit; }
+        if (ceval < -limit) { ceval = -limit; }
+        ceval = ceval/limit;
+        ceval = ceval/2 + 0.5;
+    }
     if (text.match(/start{/)) {
         return {
             "size": 10,
@@ -60,7 +69,7 @@ function textToNode(text) {
     }
     return {
         "size": 2,
-        "score": 0.5,
+        "score": ceval?ceval:0.5,
         "id": halfmoves[halfmoves.length - 1].replace(/{.*}/, ''),
         "type": (halfmoves.length % 2 == 0) ? "circle" : "circle"
     };
@@ -129,4 +138,13 @@ function backPropagateScores(nodes) {
 
 function escapeRegExp(string) {
     return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+}
+
+function buildEvalDictionary(analysis,moves,evalDictionary) {
+    var m = moves.split(' ');
+    analysis.forEach((e,i) => {
+        if (typeof e.eval !== 'undefined') {
+            evalDictionary[m.slice(0,i+1).join(' ')] = e.eval;
+        }
+    });    
 }
