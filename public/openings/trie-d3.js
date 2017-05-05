@@ -42,7 +42,7 @@ var force = d3.layout.force()
 
 var default_node_color = "#ccc";
 var default_link_color = "#888";
-var nominal_base_node_size = 8;
+var nominal_base_node_size = 2;
 var nominal_text_size = 10;
 var max_text_size = 24;
 var nominal_stroke = 1.5;
@@ -134,7 +134,7 @@ function draw(graph) {
 
 	.attr("d", d3.svg.symbol()
 		.size(function(d) {
-			return Math.PI * Math.pow(size(d.size) || nominal_base_node_size, 2);
+			return Math.PI * Math.pow(size(d.size) , 2);
 		})
 		.type(function(d) {
 			return d.type;

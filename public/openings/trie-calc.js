@@ -36,10 +36,18 @@ function movesToNodes(moves) {
     return nodelist;
 }
 
-function d3Node(text) {
+function textToNode(text) {
     var halfmoves = text.split(" ");
     var WL = winsAndLosses(text);
     var score = WL[0] / (WL[0] + WL[1]);
+    if (text.match(/start{/)) {
+        return {
+            "size": 10,
+            "score": 0.5,
+            "id": "Start",
+            "type": "diamond"
+        };
+    }
     if (text.match(/\.\.\./)) {
         return {
             "size": 1,
@@ -51,7 +59,7 @@ function d3Node(text) {
 
     }
     return {
-        "size": 5,
+        "size": 2,
         "score": 0.5,
         "id": halfmoves[halfmoves.length - 1].replace(/{.*}/, ''),
         "type": (halfmoves.length % 2 == 0) ? "circle" : "circle"
