@@ -36,7 +36,7 @@ var size = d3.scale.pow().exponent(1)
 
 var force = d3.layout.force()
 	.linkDistance(10)
-	.charge(-200)
+	.charge(-150)
 	.size([w, h]);
 
 var default_node_color = "#ccc";
@@ -71,23 +71,21 @@ function draw(graph) {
 		return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
 	}
 
-	function hasConnections(a) {
-		for (var property in linkedByIndex) {
-			var s = property.split(",");
-			if ((s[0] == a.index || s[1] == a.index) && linkedByIndex[property]) return true;
-		}
-		return false;
-	}
-
 	force
 		.nodes(graph.nodes)
 		.links(graph.links)
 		.alpha(100000.1)
-		//		.theta(1)
-		//		.gravity(0.1)
-		//       .charge(-200)
-		//       .friction(.9)
 		.start();
+
+	setTimeout(function() {
+		force.gravity(0.2).friction(0.98).start();
+	}, 4000);
+	setTimeout(function() {
+		force.gravity(0.01).friction(0.95).start();
+	}, 8000);
+	setTimeout(function() {
+		force.gravity(0.1).friction(0.9).start();
+	}, 12000);
 
 	var link = g.selectAll(".link")
 		.data(graph.links)
@@ -141,8 +139,20 @@ function draw(graph) {
 		}))
 
 	.style(tocolor, function(d) {
-			if (isNumber(d.score) && d.score >= 0) return color(d.score);
-			else return default_node_color;
+			var colourWithScore = document.getElementById('nodecolour').checked;
+
+			if (d.url) {
+				colourWithScore = true;
+			}
+
+			if (colourWithScore) {
+				if (isNumber(d.score) && d.score >= 0) return color(d.score);
+				else return default_node_color;
+			}
+			else {
+				if (isNumber(d.eval) && d.eval >= 0) return color(d.eval);
+				else return default_node_color;
+			}
 		})
 		//.attr("r", function(d) { return size(d.size)||nominal_base_node_size; })
 		.style("stroke-width", nominal_stroke)
@@ -293,7 +303,7 @@ function draw(graph) {
 
 	force.on("tick", function(e) {
 
-//		var k = 6 * e.alpha;
+		//		var k = 6 * e.alpha;
 
 		node.attr("transform", function(d) {
 			return "translate(" + d.x + "," + d.y + ")";
@@ -338,43 +348,13 @@ function draw(graph) {
 
 }
 
-function vis_by_type(type) {
-	switch (type) {
-		case "circle":
-			return keyc;
-		case "square":
-			return keys;
-		case "triangle-up":
-			return keyt;
-		case "diamond":
-			return keyr;
-		case "cross":
-			return keyx;
-		case "triangle-down":
-			return keyd;
-		default:
-			return true;
-	}
-}
-
-function vis_by_node_score(score) {
-	if (isNumber(score)) {
-		if (score >= 0.666) return keyh;
-		else if (score >= 0.333) return keym;
-		else if (score >= 0) return keyl;
-	}
-	return true;
-}
-
-function vis_by_link_score(score) {
-	if (isNumber(score)) {
-		if (score >= 0.666) return key3;
-		else if (score >= 0.333) return key2;
-		else if (score >= 0) return key1;
-	}
-	return true;
-}
-
 function isNumber(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function reheat() {
+	force.gravity(0.01).friction(0.95).start();
+	setTimeout(function() {
+		force.gravity(0.1).friction(0.9).start();
+	}, 3000);
 }

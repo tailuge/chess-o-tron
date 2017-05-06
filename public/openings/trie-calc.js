@@ -70,7 +70,8 @@ function textToNode(text,evalDictionary) {
     var size = 60-(halfmoves.length * 6);
     return {
         "size": (size < -1)?-1:size,
-        "score": ceval?ceval:0.5,
+        "score": score,
+        "eval": ceval?ceval:0.5,
         "id": halfmoves[halfmoves.length - 1].replace(/{.*}/, ''),
         "type": "circle"
     };
