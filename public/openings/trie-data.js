@@ -5,8 +5,10 @@ function status(text) {
 	document.getElementById("status").innerHTML = text;
 }
 
+
 function fetchLichessData(player, accumulated, pages, callback) {
-	status("Fetching data for player:" + player);
+
+	status("Fetching data for player: " + player + " page: " + pages[0]);
 
 	$.ajax({
 		url: "https://en.lichess.org/api/user/" + player + "/games?nb=100&with_analysis=1&with_moves=1&with_opening=1&page=" + pages.shift(),
@@ -14,14 +16,18 @@ function fetchLichessData(player, accumulated, pages, callback) {
 		cache: false,
 		success: function(data) {
 			var all = accumulated.concat(data.currentPageResults);
-			status("Total games:" + all.length);
 			if (pages.length > 0) {
-				setTimeout(1500, fetchLichessData(player, all, pages, callback));
+				setTimeout(function() {
+					fetchLichessData(player, all, pages, callback);
+				}, 1500);
 			}
 			else {
 				console.log(JSON.stringify(all[0].analysis));
 				console.log(JSON.stringify(all[0].moves));
-				callback(all);
+				status("Calculating");
+				setTimeout(function() {
+					callback(all);
+				}, 100);
 			}
 		}.bind(this),
 		error: function(xhr, status, err) {
@@ -38,21 +44,32 @@ function processData(allgames, player, colour, filter) {
 	});
 	var regExp = new RegExp("^" + filter + ".*$")
 	var gamesWithRegEx = gamesByPlayer.filter(x => x.moves.length > 8 && x.moves.match(regExp));
-	var games = gamesWithRegEx.map(x => {
+	var depth = 18;
+	var occurs = [];
+	var uniqPrefixGames = gamesWithRegEx.filter(x => {
+		var prefix = x.moves.split(' ').slice(0, depth).join(' ');
+		if (occurs.indexOf(prefix) < 0) {
+			occurs.push(prefix);
+			return true;
+		}
+		occurs.push(prefix);
+		return false;
+	});
+	var games = uniqPrefixGames.map(x => {
 		var url = x.url.replace('white', colour).replace('black', colour);
 		var score = '{0.5,0.5}';
 		if (x.winner) {
 			score = x.winner === colour ? '{1,0}' : '{0,1}';
 		}
-		return "start " + x.moves.split(" ").slice(0, 20).join(" ") + "..." + url + score;
+		return "start " + x.moves.split(" ").slice(0, depth).join(" ") + "..." + url + score;
 	});
 
 	//	console.log(JSON.stringify(games));
 	status("calculating games: " + games.length);
 
 	var evalDictionary = {};
-	gamesWithRegEx.filter(x=>x.analysis).forEach(g => {
-		buildEvalDictionary(g.analysis,g.moves,evalDictionary);
+	gamesWithRegEx.filter(x => x.analysis).forEach(g => {
+		buildEvalDictionary(g.analysis, g.moves, evalDictionary);
 	});
 
 	var nodes = gamesToNodes(games);
@@ -63,9 +80,9 @@ function processData(allgames, player, colour, filter) {
 	status("propagate scores");
 	backPropagateScores(nodes);
 
-	var d3Nodes = nodes.map(t => textToNode(t,evalDictionary));
+	var d3Nodes = nodes.map(t => textToNode(t, evalDictionary));
 
-	status("nodes produced: " + nodes.length);
+	status("Produced " + nodes.length + " nodes from " + games.length + " games");
 
 	var data = {
 		"directed": true,

@@ -86,6 +86,7 @@ function draw(graph) {
 	force
 		.nodes(graph.nodes)
 		.links(graph.links)
+		.alpha(0.01)
 		.start();
 
 	var link = g.selectAll(".link")
@@ -134,7 +135,7 @@ function draw(graph) {
 
 	.attr("d", d3.svg.symbol()
 		.size(function(d) {
-			return Math.PI * Math.pow(size(d.size) , 1.7);
+			return Math.PI * Math.pow(size(d.size) , 2);
 		})
 		.type(function(d) {
 			return d.type;

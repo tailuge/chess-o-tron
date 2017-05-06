@@ -18,26 +18,47 @@
 	<input type="text" name="pages" id="pages" value="1" /> Filter:
 	<input type="text" name="filter" id="filter" value="" />
 	<input type="radio" name="colour" id="colour" value="white" checked> White
-	<input type="radio" name="colour" value="black"> Black
+	<input type="radio" name="colour" id="colourOther" value="black"> Black
 	<input type="submit" value="Search" onclick="search()">
 	<input type="submit" value="About" onclick="window.open('https://tailuge.github.io/chess-o-tron/','_blank');">
-	<div id="status"></div>
+	<div id="status" style="font-size: 10px;"></div>
 	<div id="graph"></div>
 
 	</html>
 	<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+	<script src="util.js"></script>
+	<script>
+		/* globals getParameterByName*/
+
+		mapParam('player');
+		mapParam('pages');
+		mapParam('filter');
+		var colour = getParameterByName('colour');
+		if (colour) {
+			document.getElementById('colour').checked = (colour === 'white');
+			document.getElementById('colourOther').checked = (colour === 'black');
+		}
+
+		function mapParam(parameter) {
+			var value = getParameterByName(parameter);
+			if (value) {
+				document.getElementById(parameter).value = value;
+			}
+		}
+	</script>
 	<script src="trie-calc.js"></script>
 	<script src="trie-d3.js"></script>
 	<script src="trie-data.js"></script>
 	<script>
-		/* globals fetchLichessData processData*/
+		/* globals fetchLichessData processData updateUrlWithState*/
+
 		function search() {
 			var player = document.getElementById("player").value;
 			var pages = document.getElementById("pages").value;
 			var filter = document.getElementById("filter").value;
 			var colour = document.getElementById('colour').checked ? 'white' : 'black';
-			console.log("Search:" + player + " " + pages + " " + JSON.stringify(colour));
+			updateUrlWithState(player, pages, filter, colour);
 			fetchLichessData(player, [], pages.split(","), function(data) {
 				processData(data, player, colour, filter);
 			});

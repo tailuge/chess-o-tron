@@ -42,7 +42,7 @@ function textToNode(text,evalDictionary) {
     var score = WL[0] / (WL[0] + WL[1]);
     var movestem = halfmoves.slice(1,halfmoves.length).join(' ').replace(/{.*}/,'');
     var ceval = evalDictionary[movestem];
-    var limit = 200;
+    var limit = 150;
     if (ceval) {
         if (ceval > limit) { ceval = limit; }
         if (ceval < -limit) { ceval = -limit; }
@@ -68,10 +68,10 @@ function textToNode(text,evalDictionary) {
 
     }
     return {
-        "size": 2,
+        "size": 60-(halfmoves.length * 6),
         "score": ceval?ceval:0.5,
         "id": halfmoves[halfmoves.length - 1].replace(/{.*}/, ''),
-        "type": (halfmoves.length % 2 == 0) ? "circle" : "circle"
+        "type": "circle"
     };
 }
 
