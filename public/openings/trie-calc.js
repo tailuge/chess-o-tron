@@ -51,7 +51,7 @@ function textToNode(text,evalDictionary) {
     }
     if (text.match(/start{/)) {
         return {
-            "size": 10,
+            "size": 5,
             "score": 0.5,
             "id": "Start",
             "type": "diamond"
@@ -61,14 +61,15 @@ function textToNode(text,evalDictionary) {
         return {
             "size": 1,
             "score": score,
-            "id": text.replace(/.* ([^ ,]+),.*/, '$1'),
+            "id": text.replace(/.* ([^ ,]+),.*/, '$1').replace(/\.\.\..*/,''),
             "url": text.replace(/.*\.\.\.(.*){.*/, '$1'),
             "type": "cross"
         };
 
     }
+    var size = 60-(halfmoves.length * 6);
     return {
-        "size": 60-(halfmoves.length * 6),
+        "size": (size < -1)?-1:size,
         "score": ceval?ceval:0.5,
         "id": halfmoves[halfmoves.length - 1].replace(/{.*}/, ''),
         "type": "circle"

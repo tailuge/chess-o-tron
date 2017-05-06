@@ -14,12 +14,12 @@
 
 <body>
 	<html>
-	Player:<input type="text" id="player" name="player" value="tailuge" /> Pages:
-	<input type="text" name="pages" id="pages" value="1" /> Filter:
-	<input type="text" name="filter" id="filter" value="" />
+	Player:<input type="text" id="player" name="player" value="tailuge" onkeydown="pressEnter(event)" /> Pages:
+	<input type="text" name="pages" id="pages" value="1" onkeydown="pressEnter(event)" /> Filter:
+	<input type="text" name="filter" id="filter" value="" onkeydown="pressEnter(event)" />
 	<input type="radio" name="colour" id="colour" value="white" checked> White
 	<input type="radio" name="colour" id="colourOther" value="black"> Black
-	<input type="submit" value="Search" onclick="search()">
+	<input type="submit" id="Search" value="Search" onclick="search()">
 	<input type="submit" value="About" onclick="window.open('https://tailuge.github.io/chess-o-tron/','_blank');">
 	<div id="status" style="font-size: 10px;"></div>
 	<div id="graph"></div>
@@ -28,7 +28,11 @@
 	<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
 	<script src="util.js"></script>
+	<script src="trie-calc.js"></script>
+	<script src="trie-d3.js"></script>
+	<script src="trie-data.js"></script>
 	<script>
+		/* globals fetchLichessData processData updateUrlWithState*/
 		/* globals getParameterByName*/
 
 		mapParam('player');
@@ -38,6 +42,7 @@
 		if (colour) {
 			document.getElementById('colour').checked = (colour === 'white');
 			document.getElementById('colourOther').checked = (colour === 'black');
+			search();
 		}
 
 		function mapParam(parameter) {
@@ -46,12 +51,6 @@
 				document.getElementById(parameter).value = value;
 			}
 		}
-	</script>
-	<script src="trie-calc.js"></script>
-	<script src="trie-d3.js"></script>
-	<script src="trie-data.js"></script>
-	<script>
-		/* globals fetchLichessData processData updateUrlWithState*/
 
 		function search() {
 			var player = document.getElementById("player").value;
@@ -62,6 +61,12 @@
 			fetchLichessData(player, [], pages.split(","), function(data) {
 				processData(data, player, colour, filter);
 			});
+		}
+
+		function pressEnter(event) {
+			if (event.keyCode == 13) {
+				document.getElementById('Search').click();
+			}
 		}
 	</script>
 </body>

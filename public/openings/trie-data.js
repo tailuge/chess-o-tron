@@ -42,20 +42,10 @@ function processData(allgames, player, colour, filter) {
 		var id = colour === "white" ? x.players.white.userId : x.players.black.userId;
 		return id && id.toUpperCase() == player.toUpperCase();
 	});
-	var regExp = new RegExp("^" + filter + ".*$")
+	var regExp = new RegExp("^" + filter + ".*$");
 	var gamesWithRegEx = gamesByPlayer.filter(x => x.moves.length > 8 && x.moves.match(regExp));
 	var depth = 18;
-	var occurs = [];
-	var uniqPrefixGames = gamesWithRegEx.filter(x => {
-		var prefix = x.moves.split(' ').slice(0, depth).join(' ');
-		if (occurs.indexOf(prefix) < 0) {
-			occurs.push(prefix);
-			return true;
-		}
-		occurs.push(prefix);
-		return false;
-	});
-	
+	var uniqPrefixGames = gamesWithRegEx;
 	var games = uniqPrefixGames.map(x => {
 		var url = x.url.replace('white', colour).replace('black', colour);
 		var score = '{0.5,0.5}';

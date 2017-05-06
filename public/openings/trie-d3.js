@@ -293,7 +293,7 @@ function draw(graph) {
 
 	force.on("tick", function(e) {
 
-		//var k = 6 * e.alpha;
+//		var k = 6 * e.alpha;
 
 		node.attr("transform", function(d) {
 			return "translate(" + d.x + "," + d.y + ")";
