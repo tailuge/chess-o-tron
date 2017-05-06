@@ -3,7 +3,6 @@
 var w = window.innerWidth;
 var h = window.innerHeight;
 
-
 var keyc = true,
 	keys = true,
 	keyt = true,
@@ -58,10 +57,7 @@ svg.style("cursor", "move");
 
 
 function draw(graph) {
-
-	// reset svg element
-	d3.select("svg").remove();
-	svg = d3.select("#graph").append("svg");
+	svg.selectAll('*').remove();
 	zoom = d3.behavior.zoom().scaleExtent([min_zoom, max_zoom]);
 	g = svg.append("g");
 	svg.style("cursor", "move");
@@ -86,7 +82,11 @@ function draw(graph) {
 	force
 		.nodes(graph.nodes)
 		.links(graph.links)
-		.alpha(0.01)
+		.alpha(100000.1)
+		//		.theta(1)
+		//		.gravity(0.1)
+		//       .charge(-200)
+		//       .friction(.9)
 		.start();
 
 	var link = g.selectAll(".link")
@@ -104,8 +104,7 @@ function draw(graph) {
 		.data(graph.nodes)
 		.enter().append("g")
 		.attr("class", "node")
-
-	.call(force.drag);
+		.call(force.drag);
 
 
 	node.on("dblclick.zoom", function(d) {
@@ -135,7 +134,7 @@ function draw(graph) {
 
 	.attr("d", d3.svg.symbol()
 		.size(function(d) {
-			return Math.PI * Math.pow(size(d.size) , 2);
+			return Math.PI * Math.pow(size(d.size), 2);
 		})
 		.type(function(d) {
 			return d.type;
@@ -175,7 +174,6 @@ function draw(graph) {
 		.on("mousedown", function(d) {
 
 			if (d.url) {
-				console.log(JSON.stringify(d));
 				setTimeout(function() {
 					window.open(d.url, '_blank');
 				}, 200);
@@ -291,12 +289,12 @@ function draw(graph) {
 
 	resize();
 	//window.focus();
-	d3.select(window).on("resize", resize).on("keydown", keydown);
+	d3.select(window).on("resize", resize);
 
 	force.on("tick", function(e) {
 
 		//var k = 6 * e.alpha;
-		
+
 		node.attr("transform", function(d) {
 			return "translate(" + d.x + "," + d.y + ")";
 		});
@@ -337,77 +335,6 @@ function draw(graph) {
 		h = height;
 	}
 
-	function keydown() {
-		if (d3.event.keyCode == 32) {
-			force.stop();
-		}
-		else if (d3.event.keyCode >= 48 && d3.event.keyCode <= 90 && !d3.event.ctrlKey && !d3.event.altKey && !d3.event.metaKey) {
-			switch (String.fromCharCode(d3.event.keyCode)) {
-				case "C":
-					keyc = !keyc;
-					break;
-				case "S":
-					keys = !keys;
-					break;
-				case "T":
-					keyt = !keyt;
-					break;
-				case "R":
-					keyr = !keyr;
-					break;
-				case "X":
-					keyx = !keyx;
-					break;
-				case "D":
-					keyd = !keyd;
-					break;
-				case "L":
-					keyl = !keyl;
-					break;
-				case "M":
-					keym = !keym;
-					break;
-				case "H":
-					keyh = !keyh;
-					break;
-				case "1":
-					key1 = !key1;
-					break;
-				case "2":
-					key2 = !key2;
-					break;
-				case "3":
-					key3 = !key3;
-					break;
-				case "0":
-					key0 = !key0;
-					break;
-			}
-
-			link.style("display", function(d) {
-				var flag = vis_by_type(d.source.type) && vis_by_type(d.target.type) && vis_by_node_score(d.source.score) && vis_by_node_score(d.target.score) && vis_by_link_score(d.score);
-				linkedByIndex[d.source.index + "," + d.target.index] = flag;
-				return flag ? "inline" : "none";
-			});
-			node.style("display", function(d) {
-				return (key0 || hasConnections(d)) && vis_by_type(d.type) && vis_by_node_score(d.score) ? "inline" : "none";
-			});
-			text.style("display", function(d) {
-				return (key0 || hasConnections(d)) && vis_by_type(d.type) && vis_by_node_score(d.score) ? "inline" : "none";
-			});
-
-			if (highlight_node !== null) {
-				if ((key0 || hasConnections(highlight_node)) && vis_by_type(highlight_node.type) && vis_by_node_score(highlight_node.score)) {
-					if (focus_node !== null) set_focus(focus_node);
-					set_highlight(highlight_node);
-				}
-				else {
-					exit_highlight();
-				}
-			}
-
-		}
-	}
 
 }
 

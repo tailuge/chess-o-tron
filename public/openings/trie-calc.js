@@ -140,11 +140,11 @@ function escapeRegExp(string) {
     return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
 }
 
-function buildEvalDictionary(analysis,moves,evalDictionary) {
+function buildEvalDictionary(analysis,moves,colour,evalDictionary) {
     var m = moves.split(' ');
     analysis.forEach((e,i) => {
         if (typeof e.eval !== 'undefined') {
-            evalDictionary[m.slice(0,i+1).join(' ')] = e.eval;
+            evalDictionary[m.slice(0,i+1).join(' ')] = (colour==='white')?e.eval:-e.eval;
         }
     });    
 }

@@ -55,6 +55,7 @@ function processData(allgames, player, colour, filter) {
 		occurs.push(prefix);
 		return false;
 	});
+	
 	var games = uniqPrefixGames.map(x => {
 		var url = x.url.replace('white', colour).replace('black', colour);
 		var score = '{0.5,0.5}';
@@ -69,7 +70,7 @@ function processData(allgames, player, colour, filter) {
 
 	var evalDictionary = {};
 	gamesWithRegEx.filter(x => x.analysis).forEach(g => {
-		buildEvalDictionary(g.analysis, g.moves, evalDictionary);
+		buildEvalDictionary(g.analysis, g.moves, colour, evalDictionary);
 	});
 
 	var nodes = gamesToNodes(games);
