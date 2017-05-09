@@ -21,10 +21,14 @@
 	<input type="radio" name="colour" id="colourOther" value="black"> Black
 	<input type="radio" name="nodecolour" id="nodecolour" value="Win/Lose" checked> Win/Lose
 	<input type="radio" name="nodecolour" id="nodecolourOther" value="Eval"> Eval
+	<input type="checkbox" id="trim" checked> Trim
 	<input type="submit" id="Search" value="Search" onclick="search()">
-	<input type="submit" value="Reheat" onclick="reheat()">
+	<input type="submit" value="Compact" onclick="compact()">
+	<input type="submit" value="Extend" onclick="extend()">
 	<input type="submit" value="About" onclick="window.open('https://tailuge.github.io/chess-o-tron/','_blank');" title="Green is good from the players perspective, red is bad. Each page is 100 of your games, Pages=1,2,3 will use your last 300 games to build the graph. The filter is a regular expression to limit the opening moves e.g. e4 e5 f4 exf4 would filter for KGA">
-	<div id="status" style="font-size: 10px;"></div>
+
+
+	<div id="status" style="font-size: 11px;"></div>
 	<div id="graph"></div>
 
 	</html>
@@ -41,6 +45,10 @@
 		mapParam('player');
 		mapParam('pages');
 		mapParam('filter');
+		var trim = getParameterByName('trim');
+		if (trim != undefined) {
+			document.getElementById('trim').checked = (trim === "true");
+		}
 		var colour = getParameterByName('colour');
 		if (colour) {
 			document.getElementById('colour').checked = (colour === 'white');
@@ -56,13 +64,16 @@
 		}
 
 		function search() {
+			document.getElementById("Search").disabled = true;
 			var player = document.getElementById("player").value;
 			var pages = document.getElementById("pages").value;
 			var filter = document.getElementById("filter").value;
 			var colour = document.getElementById('colour').checked ? 'white' : 'black';
-			updateUrlWithState(player, pages, filter, colour);
-			fetchLichessData(player, [], pages.split(","), function(data) {
-				processData(data, player, colour, filter);
+			var trim = document.getElementById('trim').checked;
+			updateUrlWithState(player, pages, filter, colour, trim);
+			fetchLichessData(player, [], pages.split(","), player + pages, function(data) {
+				processData(data, player, colour, filter, trim);
+				document.getElementById("Search").disabled = false;
 			});
 		}
 

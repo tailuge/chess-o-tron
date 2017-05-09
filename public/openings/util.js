@@ -11,7 +11,7 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function updateUrlWithState(player, pages, filter, colour) {
+function updateUrlWithState(player, pages, filter, colour, trim) {
     if (history.pushState) {
         var newurl = window.location.protocol + "//" +
             window.location.host +
@@ -19,7 +19,8 @@ function updateUrlWithState(player, pages, filter, colour) {
             '?player=' + encodeURIComponent(player) +
             "&filter=" + encodeURIComponent(filter) +
             "&pages=" + encodeURIComponent(pages) +
-            "&colour=" + encodeURIComponent(colour);
+            "&colour=" + encodeURIComponent(colour) +
+            "&trim=" + encodeURIComponent(trim);
         window.history.pushState({
             path: newurl
         }, '', newurl);

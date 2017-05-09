@@ -78,15 +78,10 @@ function draw(graph) {
 		.start();
 
 	setTimeout(function() {
-		force.gravity(0.2).friction(0.98).start();
-	}, 4000);
-	setTimeout(function() {
-		force.gravity(0.01).friction(0.95).start();
-	}, 8000);
-	setTimeout(function() {
-		force.gravity(0.1).friction(0.9).start();
-	}, 12000);
-
+		force.gravity(0.11).friction(0.9).start();
+	}, 2000);
+	
+	
 	var link = g.selectAll(".link")
 		.data(graph.links)
 		.enter().append("line")
@@ -352,9 +347,12 @@ function isNumber(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-function reheat() {
-	force.gravity(0.01).friction(0.95).start();
-	setTimeout(function() {
-		force.gravity(0.1).friction(0.9).start();
-	}, 3000);
+function compact() {
+	force.gravity(0.11).friction(0.9).start();
 }
+
+function extend() {
+	force.gravity(0.005).friction(0.95).start();
+}
+
+	

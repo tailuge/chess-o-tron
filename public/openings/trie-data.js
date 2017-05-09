@@ -5,10 +5,19 @@ function status(text) {
 	document.getElementById("status").innerHTML = text;
 }
 
+var dataCache = {}
 
-function fetchLichessData(player, accumulated, pages, callback) {
+function fetchLichessData(player, accumulated, pages, cacheid, callback) {
 
 	status("Fetching data for player: " + player + " page: " + pages[0]);
+
+	if (dataCache[cacheid]) {
+		status("Using cached data for player: " + player + " page: " + pages[0] + " calculating");
+		setTimeout(function() {
+			callback(dataCache[cacheid]);
+		}, 100);
+		return;
+	}
 
 	$.ajax({
 		url: "https://en.lichess.org/api/user/" + player + "/games?nb=100&with_analysis=1&with_moves=1&with_opening=1&page=" + pages.shift(),
@@ -18,12 +27,11 @@ function fetchLichessData(player, accumulated, pages, callback) {
 			var all = accumulated.concat(data.currentPageResults);
 			if (pages.length > 0) {
 				setTimeout(function() {
-					fetchLichessData(player, all, pages, callback);
+					fetchLichessData(player, all, pages, cacheid, callback);
 				}, 1500);
 			}
 			else {
-				console.log(JSON.stringify(all[0].analysis));
-				console.log(JSON.stringify(all[0].moves));
+				dataCache[cacheid] = all;
 				status("Calculating");
 				setTimeout(function() {
 					callback(all);
@@ -36,7 +44,7 @@ function fetchLichessData(player, accumulated, pages, callback) {
 	});
 }
 
-function processData(allgames, player, colour, filter) {
+function processData(allgames, player, colour, filter, trim) {
 	var gamesWithStandardVariant = allgames.filter(x => x.variant === 'standard');
 	var gamesByPlayer = gamesWithStandardVariant.filter(x => {
 		var id = colour === "white" ? x.players.white.userId : x.players.black.userId;
@@ -44,7 +52,7 @@ function processData(allgames, player, colour, filter) {
 	});
 	var regExp = new RegExp("^" + filter + ".*$");
 	var gamesWithRegEx = gamesByPlayer.filter(x => x.moves.length > 8 && x.moves.match(regExp));
-	var depth = 18;
+	var depth = 32;
 	var uniqPrefixGames = gamesWithRegEx;
 	var games = uniqPrefixGames.map(x => {
 		var url = x.url.replace('white', colour).replace('black', colour);
@@ -55,7 +63,6 @@ function processData(allgames, player, colour, filter) {
 		return "start " + x.moves.split(" ").slice(0, depth).join(" ") + "..." + url + score;
 	});
 
-	//	console.log(JSON.stringify(games));
 	status("calculating games: " + games.length);
 
 	var evalDictionary = {};
@@ -64,8 +71,12 @@ function processData(allgames, player, colour, filter) {
 	});
 
 	var nodes = gamesToNodes(games);
+	//console.log(JSON.stringify(nodes));
 	status("trim arms");
-	nodes = trimArms(nodes);
+	if (trim === true) {
+		trimArms2(nodes);
+	}
+	//nodes = trimArms(nodes);
 	status("generate links");
 	var d3Links = nodesToLinks(nodes);
 	status("propagate scores");
