@@ -3,20 +3,6 @@
 var w = window.innerWidth;
 var h = window.innerHeight;
 
-var keyc = true,
-	keys = true,
-	keyt = true,
-	keyr = true,
-	keyx = true,
-	keyd = true,
-	keyl = true,
-	keym = true,
-	keyh = true,
-	key1 = true,
-	key2 = true,
-	key3 = true,
-	key0 = true;
-
 var focus_node = null,
 	highlight_node = null;
 
