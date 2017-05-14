@@ -103,22 +103,26 @@
 		<div class="force alpha">
 			<p><label>Game data</label> from lichess</p>
 			Player:<input type="text" id="player" name="player" value="tailuge" onkeydown="pressEnter(event)" /> Pages:
-			<input type="text" name="pages" id="pages" value="1" onkeydown="pressEnter(event)" /> Filter:
-			<input type="text" name="filter" id="filter" value="" onkeydown="pressEnter(event)" />
+			<input type="text" name="pages" id="pages" value="1" onkeydown="pressEnter(event)" />
 			<br/>
 			<br/>
-			<input type="submit" id="Search" value="Search" onclick="search()">
+			<input type="submit" id="Search" value="Fetch data" onclick="search()">
 		</div>
 		<div class="force alpha">
 			<p><label>Analysis</label> </p>
+			Filter:<input type="text" name="filter" id="filter" value="" onkeydown="pressEnter(event)" />
+			<br/>
+			Depth:<input type="text" name="depth" id="depth" value="24" onkeydown="pressEnter(event)" />
+			<br/>
 			<input type="radio" name="colour" id="colour" value="white" checked> White
 			<input type="radio" name="colour" id="colourOther" value="black"> Black
 			<br/>
 			<input type="radio" name="nodecolour" id="nodecolour" value="Win/Lose" checked> Win/Lose
 			<input type="radio" name="nodecolour" id="nodecolourOther" value="Eval"> Eval
 			<br/>
-			<input type="checkbox" id="trim" checked> Trim
+			<input type="checkbox" id="trim" checked> Trim tails
 			<br/>
+			<input type="submit" value="Compute" onclick="pressEnter(event)">
 		</div>
 
 		<div class="force alpha">
@@ -126,10 +130,9 @@
 			<div class="alpha_bar" onclick="updateAll();">
 				<div id="alpha_value"></div>
 			</div>
-	<div id="status" style="font-size: 11px;"></div>
+			<div id="status" style="font-size: 11px;"></div>
 			<br/>
-			<input type="submit" value="Compact" onclick="compact()">
-			<input type="submit" value="Extend" onclick="extend()">
+			<input type="submit" value="Layout" onclick="pressEnter(event)">
 		</div>
 
 		<div class="force">

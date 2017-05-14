@@ -1,4 +1,4 @@
-/* globals d3: false $: false gamesToNodes trimArms nodesToLinks backPropagateScores textToNode buildEvalDictionary draw*/
+/* globals d3: false $: false gamesToNodes trimArms2 trimArms nodesToLinks backPropagateScores textToNode buildEvalDictionary draw*/
 
 function status(text) {
 	console.log(text);
@@ -51,8 +51,8 @@ function processData(allgames, player, colour, filter, trim) {
 		return id && id.toUpperCase() == player.toUpperCase();
 	});
 	var regExp = new RegExp("^" + filter + ".*$");
-	var gamesWithRegEx = gamesByPlayer.filter(x => x.moves.length > 8 && x.moves.match(regExp));
-	var depth = 32;
+	var gamesWithRegEx = gamesByPlayer.filter(x => x.moves.length > 4 && x.moves.match(regExp));
+	var depth = 24;
 	var uniqPrefixGames = gamesWithRegEx;
 	var games = uniqPrefixGames.map(x => {
 		var url = x.url.replace('white', colour).replace('black', colour);

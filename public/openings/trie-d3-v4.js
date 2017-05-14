@@ -4,7 +4,7 @@ var svg = d3.select("svg"),
     height = +svg.node().getBoundingClientRect().height;
 
 // svg objects
-var link, node;
+var link, node, label;
 // the data - an object with nodes and links
 var graph;
 
@@ -25,6 +25,7 @@ var simulation = d3.forceSimulation();
 function initializeSimulation() {
     simulation.nodes(graph.nodes);
     initializeForces();
+
     simulation.on("tick", ticked);
 }
 
@@ -72,7 +73,9 @@ function initializeForces() {
         .force("collide", d3.forceCollide())
         .force("center", d3.forceCenter())
         .force("forceX", d3.forceX())
-        .force("forceY", d3.forceY());
+        .force("forceY", d3.forceY())
+        .alphaDecay(0.008);
+
     // apply properties to each of the forces
     updateForces();
 }
@@ -139,14 +142,15 @@ function initializeDisplay() {
             return d.id;
         });
 
-    node.append("text")
-        .attr("dy", ".15em")
-        .attr("dx", ".15em")
-        .text(function(d) {
-            return d.id;
-        })
-        .style("font-size", 11 + "px")
-        .style("text-anchor", "middle");
+    label = svg.selectAll(".mytext")
+                    .data(graph.nodes)
+                    .enter()
+                    .append("text")
+                    .text(function (d) { return d.id; })
+                    .style("text-anchor", "middle")
+                    .style("fill", "#555")
+                    .style("font-family", "Arial")
+                    .style("font-size", 12);
 
     // visualize the graph
     updateDisplay();
@@ -185,6 +189,13 @@ function ticked() {
             return d.x;
         })
         .attr("cy", function(d) {
+            return d.y;
+        });
+    label
+        .attr("x", function(d) {
+            return (d.x + 20);
+        })
+        .attr("y", function(d) {
             return d.y;
         });
     d3.select('#alpha_value').style('flex-basis', (simulation.alpha() * 100) + '%');
