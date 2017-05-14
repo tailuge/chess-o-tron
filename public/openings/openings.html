@@ -72,7 +72,7 @@
 			var trim = document.getElementById('trim').checked;
 			updateUrlWithState(player, pages, filter, colour, trim);
 			fetchLichessData(player, [], pages.split(","), player + pages, function(data) {
-				processData(data, player, colour, filter, trim);
+				processData(data, player, colour, filter, trim, 24);
 				document.getElementById("Search").disabled = false;
 			});
 		}

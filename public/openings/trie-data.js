@@ -44,7 +44,7 @@ function fetchLichessData(player, accumulated, pages, cacheid, callback) {
 	});
 }
 
-function processData(allgames, player, colour, filter, trim) {
+function processData(allgames, player, colour, filter, trim, depth) {
 	var gamesWithStandardVariant = allgames.filter(x => x.variant === 'standard');
 	var gamesByPlayer = gamesWithStandardVariant.filter(x => {
 		var id = colour === "white" ? x.players.white.userId : x.players.black.userId;
@@ -52,7 +52,9 @@ function processData(allgames, player, colour, filter, trim) {
 	});
 	var regExp = new RegExp("^" + filter + ".*$");
 	var gamesWithRegEx = gamesByPlayer.filter(x => x.moves.length > 4 && x.moves.match(regExp));
-	var depth = 24;
+	if (depth === undefined) {
+		depth = 24;
+	};
 	var uniqPrefixGames = gamesWithRegEx;
 	var games = uniqPrefixGames.map(x => {
 		var url = x.url.replace('white', colour).replace('black', colour);

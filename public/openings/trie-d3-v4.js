@@ -8,6 +8,10 @@ var link, node, label;
 // the data - an object with nodes and links
 var graph;
 
+var color = d3.scaleLinear()
+	.domain([0, 0.5, 1])
+	.range(["red", "grey", "lime"]);
+
 // load the data
 function draw(graphdata) {
     graph = graphdata;
@@ -37,9 +41,9 @@ var forceProperties = {
     },
     charge: {
         enabled: true,
-        strength: -115,
+        strength: -30,
         distanceMin: 1,
-        distanceMax: 600
+        distanceMax: 2000
     },
     collide: {
         enabled: true,
@@ -160,7 +164,7 @@ function initializeDisplay() {
 function updateDisplay() {
     node
         .attr("r", forceProperties.collide.radius)
-        .attr("stroke", forceProperties.charge.strength > 0 ? "blue" : "red")
+        .attr("stroke", d => color(d.score))
         .attr("stroke-width", forceProperties.charge.enabled == false ? 0 : Math.abs(forceProperties.charge.strength) / 15);
 
     link

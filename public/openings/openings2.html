@@ -114,15 +114,17 @@
 			<br/>
 			Depth:<input type="text" name="depth" id="depth" value="24" onkeydown="pressEnter(event)" />
 			<br/>
+			Player side:<br/>
 			<input type="radio" name="colour" id="colour" value="white" checked> White
 			<input type="radio" name="colour" id="colourOther" value="black"> Black
 			<br/>
+			Colour nodes by:<br/>
 			<input type="radio" name="nodecolour" id="nodecolour" value="Win/Lose" checked> Win/Lose
 			<input type="radio" name="nodecolour" id="nodecolourOther" value="Eval"> Eval
 			<br/>
 			<input type="checkbox" id="trim" checked> Trim tails
 			<br/>
-			<input type="submit" value="Compute" onclick="pressEnter(event)">
+			<input type="submit" value="Compute"  onclick="search()">
 		</div>
 
 		<div class="force alpha">
@@ -132,7 +134,7 @@
 			</div>
 			<div id="status" style="font-size: 11px;"></div>
 			<br/>
-			<input type="submit" value="Layout" onclick="pressEnter(event)">
+			<input type="submit" value="Layout" onclick="updateForces()">
 		</div>
 
 		<div class="force">
@@ -255,9 +257,10 @@
 			var filter = document.getElementById("filter").value;
 			var colour = document.getElementById('colour').checked ? 'white' : 'black';
 			var trim = document.getElementById('trim').checked;
+			var depth = document.getElementById("depth").value;
 			updateUrlWithState(player, pages, filter, colour, trim);
 			fetchLichessData(player, [], pages.split(","), player + pages, function(data) {
-				processData(data, player, colour, filter, trim);
+				processData(data, player, colour, filter, trim, depth);
 				document.getElementById("Search").disabled = false;
 			});
 		}
