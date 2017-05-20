@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+
+<head>
+	<style>
+		/* HTML styles */
+		
+		html {
+			width: 100%;
+		}
+		
+		body {
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			font-family: sans-serif;
+			font-size: 75%;
+		}
+		
+		.controls {
+			flex-basis: 200px;
+			padding: 0 5px;
+		}
+		
+		.controls .force {
+			background-color: #eee;
+			border-radius: 3px;
+			padding: 5px;
+			margin: 5px 0;
+		}
+		
+		.controls .force p label {
+			margin-right: .5em;
+			font-size: 120%;
+			font-weight: bold;
+		}
+		
+		.controls .force p {
+			margin-top: 0;
+		}
+		
+		.controls .force label {
+			display: inline-block;
+		}
+		
+		.controls input[type="checkbox"] {
+			transform: scale(1.2, 1.2);
+		}
+		
+		.controls input[type="range"] {
+			margin: 0 5% 0.5em 5%;
+			width: 90%;
+		}
+		/* alpha viewer */
+		
+		.controls .alpha p {
+			margin-bottom: .25em;
+		}
+		
+		.controls .alpha .alpha_bar {
+			height: .5em;
+			border: 1px #777 solid;
+			border-radius: 2px;
+			padding: 1px;
+			display: flex;
+		}
+		
+		.controls .alpha .alpha_bar #alpha_value {
+			background-color: #555;
+			border-radius: 1px;
+			flex-basis: 100%
+		}
+		
+		.controls .alpha .alpha_bar:hover {
+			border-width: 2px;
+			margin: -1px;
+		}
+		
+		.controls .alpha .alpha_bar:active #alpha_value {
+			background-color: #222
+		}
+		
+		.node {
+			cursor: pointer;
+		}
+		
+		.overlay {
+			background-color: #EEE;
+		}
+		
+		.node circle {
+			fill: #fff;
+			stroke: steelblue;
+			stroke-width: 1.5px;
+		}
+		
+		.node text {
+			font-size: 10px;
+			font-family: sans-serif;
+		}
+		
+		.link {
+			fill: none;
+			stroke: #ccc;
+			stroke-width: 1.5px;
+		}
+		
+		.templink {
+			fill: none;
+			stroke: red;
+			stroke-width: 3px;
+		}
+		
+		.ghostCircle.show {
+			display: block;
+		}
+		
+		.ghostCircle,
+		.activeDrag .ghostCircle {
+			display: none;
+		}
+		/* SVG styles */
+		
+		svg {
+			flex-basis: 100%;
+			min-width: 200px;
+		}
+		
+		.links line {
+			stroke: #aaa;
+		}
+		
+		.nodes circle {
+			pointer-events: all;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="controls">
+		<div class="force">
+			<p><label>Game data</label> from lichess</p>
+			Player:<input type="text" id="player" name="player" value="tailuge" onkeydown="pressEnter(event)" /> Pages:
+			<input type="text" name="pages" id="pages" value="1" onkeydown="pressEnter(event)" />
+			<br/>
+			<br/>
+			<input type="submit" id="Search" value="Fetch data" onclick="search()">
+		</div>
+		<div class="force">
+			<p><label>Analysis</label> </p>
+			Filter:<input type="text" name="filter" id="filter" value="" onkeydown="pressEnter(event)" />
+			<br/> Depth:
+			<input type="text" name="depth" id="depth" value="24" onkeydown="pressEnter(event)" />
+			<br/> Player side:<br/>
+			<input type="radio" name="colour" id="colour" value="white" checked> White
+			<input type="radio" name="colour" id="colourOther" value="black"> Black
+			<br/> Colour nodes by:<br/>
+			<input type="radio" name="nodecolour" id="nodecolour" value="Win/Lose" checked> Win/Lose
+			<input type="radio" name="nodecolour" id="nodecolourOther" value="Eval"> Eval
+			<br/>
+			<input type="checkbox" id="trim" checked> Trim tails
+			<br/>
+			<br/>
+			<input type="submit" value="Compute" onclick="search()">
+		</div>
+
+		<div class="force alpha">
+			<p><label>Activity</label></p>
+			<div id="status" style="font-size: 11px;"></div>
+			<br/>
+		</div>
+
+
+
+	</div>
+	<div id="tree-container"></div>
+
+	<script src="//d3js.org/d3.v4.min.js"></script>
+	<script>
+		var mystratify = d3.stratify;
+
+		function convertToTree(graphdata) {
+			graphdata.links.push({source:null, target:0})
+			var tree = mystratify()
+				.id(function(d) {
+					return d.target;
+				})
+				.parentId(function(d) {
+					return d.source;
+				})
+				(graphdata.links);
+
+			// assign the name to each node
+			tree.each(function(d) {
+				d.name = graphdata.nodes[d.id].id;
+				d.score = graphdata.nodes[d.id].score;
+				if (graphdata.nodes[d.id].url) {
+					d.url = graphdata.nodes[d.id].url;
+				}
+				if (graphdata.nodes[d.id].eval) {
+					d.eval = graphdata.nodes[d.id].eval;
+				}
+			});
+			return tree;
+		}
+	</script>
+	<script src="//d3js.org/d3.v3.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+	<script src="util.js"></script>
+	<script src="trie-calc.js"></script>
+	<script src="tree-d3.js"></script>
+	<script src="trie-data.js"></script>
+
+	<script>
+		/* globals fetchLichessData processData updateUrlWithState*/
+		/* globals getParameterByName*/
+
+		mapParam('player');
+		mapParam('pages');
+		mapParam('filter');
+		var trim = getParameterByName('trim');
+		if (trim != undefined) {
+			document.getElementById('trim').checked = (trim === "true");
+		}
+		var colour = getParameterByName('colour');
+		if (colour) {
+			document.getElementById('colour').checked = (colour === 'white');
+			document.getElementById('colourOther').checked = (colour === 'black');
+			search();
+		}
+
+		function mapParam(parameter) {
+			var value = getParameterByName(parameter);
+			if (value) {
+				document.getElementById(parameter).value = value;
+			}
+		}
+
+		function search() {
+			document.getElementById("Search").disabled = true;
+			var player = document.getElementById("player").value;
+			var pages = document.getElementById("pages").value;
+			var filter = document.getElementById("filter").value;
+			var colour = document.getElementById('colour').checked ? 'white' : 'black';
+			var trim = document.getElementById('trim').checked;
+			var depth = document.getElementById("depth").value;
+			updateUrlWithState(player, pages, filter, colour, trim);
+			fetchLichessData(player, [], pages.split(","), player + pages, function(data) {
+				processData(data, player, colour, filter, trim, depth);
+				document.getElementById("Search").disabled = false;
+			});
+		}
+
+		function pressEnter(event) {
+			if (event.keyCode == 13) {
+				document.getElementById('Search').click();
+			}
+		}
+	</script>
+</body>
+
+</html>

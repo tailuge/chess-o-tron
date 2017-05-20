@@ -96,5 +96,7 @@ function processData(allgames, player, colour, filter, trim, depth) {
 		"links": d3Links
 	};
 
+//console.log(JSON.stringify(data,null,1));
+
 	draw(data);
 }
