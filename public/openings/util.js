@@ -11,16 +11,20 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+function encodedState(player, pages, filter, colour, trim) {
+    return '?player=' + encodeURIComponent(player) +
+        "&filter=" + encodeURIComponent(filter) +
+        "&pages=" + encodeURIComponent(pages) +
+        "&colour=" + encodeURIComponent(colour) +
+        "&trim=" + encodeURIComponent(trim);
+}
+
 function updateUrlWithState(player, pages, filter, colour, trim) {
     if (history.pushState) {
         var newurl = window.location.protocol + "//" +
             window.location.host +
             window.location.pathname +
-            '?player=' + encodeURIComponent(player) +
-            "&filter=" + encodeURIComponent(filter) +
-            "&pages=" + encodeURIComponent(pages) +
-            "&colour=" + encodeURIComponent(colour) +
-            "&trim=" + encodeURIComponent(trim);
+            encodedState(player, pages, filter, colour, trim);
         window.history.pushState({
             path: newurl
         }, '', newurl);

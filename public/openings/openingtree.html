@@ -164,6 +164,7 @@
 			<br/>
 			<br/>
 			<input type="submit" value="Compute" onclick="search()">
+			<input type="submit" value="Transmogrify" onclick="transmogrify()">
 		</div>
 
 		<div class="force alpha">
@@ -182,7 +183,10 @@
 		var mystratify = d3.stratify;
 
 		function convertToTree(graphdata) {
-			graphdata.links.push({source:null, target:0})
+			graphdata.links.push({
+				source: null,
+				target: 0
+			})
 			var tree = mystratify()
 				.id(function(d) {
 					return d.target;
@@ -238,6 +242,7 @@
 			}
 		}
 
+
 		function search() {
 			document.getElementById("Search").disabled = true;
 			var player = document.getElementById("player").value;
@@ -251,6 +256,18 @@
 				processData(data, player, colour, filter, trim, depth);
 				document.getElementById("Search").disabled = false;
 			});
+		}
+
+		function transmogrify() {
+			var player = document.getElementById("player").value;
+			var pages = document.getElementById("pages").value;
+			var filter = document.getElementById("filter").value;
+			var colour = document.getElementById('colour').checked ? 'white' : 'black';
+			var trim = document.getElementById('trim').checked;
+			var depth = document.getElementById("depth").value;
+			setTimeout(function() {
+				window.open('./openings.html' + encodedState(player, pages, filter, colour, trim), '_blank');
+			}, 200);
 		}
 
 		function pressEnter(event) {
