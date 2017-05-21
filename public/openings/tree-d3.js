@@ -1,10 +1,19 @@
 /* globals d3 convertToTree*/
-// Mostly copied from http://bl.ocks.org/robschmuecker/7880033
+
+// Very nice tree zoom and pan code
+// mostly copied from http://bl.ocks.org/robschmuecker/7880033
 
 var baseSvg;
 
 function draw(nodeData) {
-    //console.log(JSON.stringify(nodeData.links,null,1));
+//    console.log(JSON.stringify(nodeData.links,null,1));
+
+    if (nodeData.nodes.length === 0) {
+        if (baseSvg) {
+            baseSvg.selectAll('*').remove();
+        }
+        return;
+    }
     drawTree(convertToTree(nodeData));
 }
 

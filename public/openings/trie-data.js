@@ -44,9 +44,13 @@ function fetchLichessData(player, accumulated, pages, cacheid, callback) {
 	});
 }
 
-function processData(allgames, player, colour, filter, trim, depth) {
-	var gamesWithStandardVariant = allgames.filter(x => x.variant === 'standard');
-	var gamesByPlayer = gamesWithStandardVariant.filter(x => {
+function processData(allgames, player, colour, filter, trim, depth, variant, timecontrol) {
+	console.log(JSON.stringify(allgames,null,1));
+	variant = variant ? variant : 'standard'
+
+	var gamesWithStandardVariant = allgames.filter(x => x.variant === variant);
+	var gamesWithTimecontrol = gamesWithStandardVariant.filter(x => timecontrol ? x.speed === timecontrol : true);
+	var gamesByPlayer = gamesWithTimecontrol.filter(x => {
 		var id = colour === "white" ? x.players.white.userId : x.players.black.userId;
 		return id && id.toUpperCase() == player.toUpperCase();
 	});
@@ -96,7 +100,7 @@ function processData(allgames, player, colour, filter, trim, depth) {
 		"links": d3Links
 	};
 
-//console.log(JSON.stringify(data,null,1));
+	//console.log(JSON.stringify(data,null,1));
 
 	draw(data);
 }

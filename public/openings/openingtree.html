@@ -121,20 +121,6 @@
 		.activeDrag .ghostCircle {
 			display: none;
 		}
-		/* SVG styles */
-		
-		svg {
-			flex-basis: 100%;
-			min-width: 200px;
-		}
-		
-		.links line {
-			stroke: #aaa;
-		}
-		
-		.nodes circle {
-			pointer-events: all;
-		}
 	</style>
 </head>
 
@@ -150,7 +136,29 @@
 		</div>
 		<div class="force">
 			<p><label>Analysis</label> </p>
-			Filter:<input type="text" name="filter" id="filter" value="" onkeydown="pressEnter(event)" />
+			Variant: <br/>
+			<select id="variant">
+			  <option value="standard">Standard</option>
+  			  <option value="crazyhouse">Crazyhouse</option>
+  			  <option value="horde">Horde</option>
+  			  <option value="threeCheck">3 Check</option>
+  			  <option value="kingofthehill">KotH</option>
+  			  <option value="atomic">Atomic</option>
+  			  <option value="antichess">Antichess</option>
+  			  <option value="racingKings">RacingKings</option>
+			</select>
+			<br/> Time control: <br/>
+			<select id="timecontrol">
+  				<option value="">Any</option>
+  		  		<option value="classical">Classical</option>
+  				<option value="blitz">Blitz</option>
+  				<option value="bullet">Bullet</option>
+  				<option value="ultraBullet">UltraBullet</option>
+  				<option value="unlimited">Unlimited</option>
+  				<option value="correspondence">Correspondence</option>
+			</select>
+			<br/> Move filter:
+			<input type="text" name="filter" id="filter" value="" onkeydown="pressEnter(event)" />
 			<br/> Depth:
 			<input type="text" name="depth" id="depth" value="24" onkeydown="pressEnter(event)" />
 			<br/> Player side:<br/>
@@ -180,13 +188,15 @@
 
 	<script src="//d3js.org/d3.v4.min.js"></script>
 	<script>
+		/* globals d3 */
 		var mystratify = d3.stratify;
 
 		function convertToTree(graphdata) {
+
 			graphdata.links.push({
 				source: null,
 				target: 0
-			})
+			});
 			var tree = mystratify()
 				.id(function(d) {
 					return d.target;
@@ -195,6 +205,7 @@
 					return d.source;
 				})
 				(graphdata.links);
+
 
 			// assign the name to each node
 			tree.each(function(d) {
@@ -219,7 +230,7 @@
 
 	<script>
 		/* globals fetchLichessData processData updateUrlWithState*/
-		/* globals getParameterByName*/
+		/* globals getParameterByName encodedState*/
 
 		mapParam('player');
 		mapParam('pages');
@@ -251,9 +262,12 @@
 			var colour = document.getElementById('colour').checked ? 'white' : 'black';
 			var trim = document.getElementById('trim').checked;
 			var depth = document.getElementById("depth").value;
+			var variant = document.getElementById("variant").value;
+			var timecontrol = document.getElementById("timecontrol").value;
+
 			updateUrlWithState(player, pages, filter, colour, trim);
 			fetchLichessData(player, [], pages.split(","), player + pages, function(data) {
-				processData(data, player, colour, filter, trim, depth);
+				processData(data, player, colour, filter, trim, depth, variant, timecontrol);
 				document.getElementById("Search").disabled = false;
 			});
 		}
@@ -264,7 +278,6 @@
 			var filter = document.getElementById("filter").value;
 			var colour = document.getElementById('colour').checked ? 'white' : 'black';
 			var trim = document.getElementById('trim').checked;
-			var depth = document.getElementById("depth").value;
 			setTimeout(function() {
 				window.open('./openings.html' + encodedState(player, pages, filter, colour, trim), '_blank');
 			}, 200);
