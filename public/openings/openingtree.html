@@ -211,6 +211,9 @@
 			tree.each(function(d) {
 				d.name = graphdata.nodes[d.id].id;
 				d.score = graphdata.nodes[d.id].score;
+				if (graphdata.nodes[d.id].opening) {
+					d.opening = graphdata.nodes[d.id].opening;
+				}
 				if (graphdata.nodes[d.id].url) {
 					d.url = graphdata.nodes[d.id].url;
 				}

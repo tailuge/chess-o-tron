@@ -6,7 +6,7 @@
 var baseSvg;
 
 function draw(nodeData) {
-//    console.log(JSON.stringify(nodeData.links,null,1));
+    //    console.log(JSON.stringify(nodeData.links,null,1));
 
     if (nodeData.nodes.length === 0) {
         if (baseSvg) {
@@ -67,7 +67,7 @@ function drawTree(treeData) {
     visit(treeData, function(d) {
         totalNodes++;
         maxLabelLength = Math.max(d.name.length, maxLabelLength);
-
+        maxLabelLength = 5;
     }, function(d) {
         return d.children && d.children.length > 0 ? d.children : null;
     });
@@ -388,6 +388,23 @@ function drawTree(treeData) {
         //centerNode(d);
     }
 
+    function mouseover(d) {
+        if (d.opening) {
+            d3.select(this).append("text")
+                .attr("class", "hover")
+                .attr('transform', function(d) {
+                    return 'translate(35, 3)';
+                })
+                .text("- "+d.opening);
+        }
+    }
+
+    // Toggle children on click.
+    function mouseout(d) {
+        if (d.opening) {
+            d3.select(this).select("text.hover").remove();
+        }
+    }
     var color = d3.scale.linear()
         .domain([0, 0.5, 1])
         .range(["red", "grey", "lime"]);
@@ -432,12 +449,14 @@ function drawTree(treeData) {
 
         // Enter any new nodes at the parent's previous position.
         var nodeEnter = node.enter().append("g")
-            .call(dragListener)
+            //            .call(dragListener)
             .attr("class", "node")
             .attr("transform", function(d) {
                 return "translate(" + source.y0 + "," + source.x0 + ")";
             })
-            .on('click', click);
+            .on('click', click)
+            .on("mouseover", mouseover)
+            .on("mouseout", mouseout);
 
         nodeEnter.append("circle")
             .attr('class', 'nodeCircle')
@@ -579,6 +598,8 @@ function drawTree(treeData) {
     update(root);
     rootToLeft(root);
 }
+
+
 
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);

@@ -66,7 +66,12 @@ function processData(allgames, player, colour, filter, trim, depth, variant, tim
 		if (x.winner) {
 			score = x.winner === colour ? '{1,0}' : '{0,1}';
 		}
-		return "start " + x.moves.split(" ").slice(0, depth).join(" ") + "..." + url + score;
+		var opening = "";
+		if (x.opening && x.opening.name) {
+			opening = "_" + x.opening.name.replace(/ /g,"_");
+		}
+	
+		return "start " + x.moves.split(" ").slice(0, depth).join(" ") + "..." + url + score + opening;
 	});
 
 	status("calculating games: " + games.length);
@@ -77,7 +82,6 @@ function processData(allgames, player, colour, filter, trim, depth, variant, tim
 	});
 
 	var nodes = gamesToNodes(games);
-	//console.log(JSON.stringify(nodes));
 	status("trim arms");
 	if (trim === true) {
 		trimArms2(nodes);
@@ -87,8 +91,10 @@ function processData(allgames, player, colour, filter, trim, depth, variant, tim
 	var d3Links = nodesToLinks(nodes);
 	status("propagate scores");
 	backPropagateScores(nodes);
+//	console.log(JSON.stringify(nodes));
 
 	var d3Nodes = nodes.map(t => textToNode(t, evalDictionary));
+//	console.log(JSON.stringify(d3Nodes));
 
 	status("Produced " + nodes.length + " nodes from " + games.length + " games");
 

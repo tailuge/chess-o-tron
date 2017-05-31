@@ -39,6 +39,10 @@ function movesToNodes(moves) {
 function textToNode(text, evalDictionary) {
     var halfmoves = text.split(" ");
     var WL = winsAndLosses(text);
+    var opening = '';
+    if (text.indexOf("_") >= 0) {
+        opening = text.replace(/[^_]*_(.*)/, '$1').replace(/_/g, " ");
+    }
     var score = WL[0] / (WL[0] + WL[1]);
     var movestem = halfmoves.slice(1, halfmoves.length).join(' ').replace(/{.*}/, '');
     var ceval = evalDictionary[movestem];
@@ -67,7 +71,8 @@ function textToNode(text, evalDictionary) {
             "score": score,
             "id": text.replace(/.* ([^ ,]+),.*/, '$1').replace(/\.\.\..*/, ''),
             "url": text.replace(/.*\.\.\.(.*){.*/, '$1'),
-            "type": "cross"
+            "type": "cross",
+            "opening": opening
         };
 
     }
