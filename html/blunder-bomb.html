@@ -25,30 +25,53 @@
     </script>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/chessboard-0.3.0.min.css">
+    <style>
+        div#history {
+            text-align: left;
+            font-size: x-small;
+        }
+
+        b#correct {
+            color: green;
+        }
+
+        b#failed {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>Blunder-bomb</h1>
-    <div><i>Identify the blunders - all data extracted from <a href="database.lichess.org">database.lichess.org</a></i></div>
-    <div id="score">Score: 0/0</div>
-    <input type="button" id="restart" value="Restart" />
+    <div align="center" style="width: 100%;">
+        <h1>Blunder-bomb</h1>
+        <div><i>Identify the blunders - all data extracted from <a href="database.lichess.org">database.lichess.org</a></i></div>
+        <br/>
 
-    <div id="board" style="width: 100px"></div>
-
-    <input type="button" id="next" value="Next (Spacebar)" />
-    <input type="button" id="blunder" value="Blunder (B)" />
-
-    <div id="history">History:</div>
+        <div id="score">Score: 0/0</div>
+        <br/>
 
 
-        <!-- libraries -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-        <script src="js/chessboard-0.3.0.min.js"></script>
-        <script src="js/chess.min.js"></script>
+        <div id="board" style="width: 80%; max-width: 600px;"></div>
+        <br/>
 
-        <!-- code -->
-        <script src="js/blunder-bomb.js"></script> 
+        <input type="button" id="next" value="Next (Spacebar)" onclick="this.blur();" />
+        <input type="button" id="blunder" value="Blunder (B)" onclick="this.blur();" />
+        <input type="button" id="restart" onclick="location.href = 'blunder-bomb.html';" value="Restart" onclick="this.blur();" />
+
+        <br/>
+        <br/>
+        <p>Progress:</p>
+        <div id="history" style="width: 80%; max-width: 600px;"></div>
+    </div>
+
+    <!-- libraries -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="js/chessboard-0.3.0.min.js"></script>
+    <script src="js/chess.min.js"></script>
+
+    <!-- code -->
+    <script src="js/blunder-bomb.js"></script>
 
 </body>
 

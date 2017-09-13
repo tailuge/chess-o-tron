@@ -113,36 +113,35 @@ var correct = 0;
 var moveindex = 0;
 var board = ChessBoard('board', 'start');
 var chess = new Chess();
-loadPuzzle();
-
-function init() {
-    $('#blunder').on('click', blunder);
-    $('#next').on('click', nextMove);
-    $('#restart').on('click', restart);
-}
+var pgn = '';
+var moves = {};
 
 function restart() {
     tried = 0;
     correct = 0;
-    $('#history').html("History:");
+    $('#history').html('');
     loadPuzzle(0);
 }
 
 function loadPuzzle() {
     moveindex = 0;
-    chess.load_pgn(puzzles[Math.floor(Math.random() * puzzles.length)]);
+    pgn = puzzles[Math.floor(Math.random() * puzzles.length)];
+    chess.load_pgn(pgn);
+    moves = chess.history({ verbose: true });
+    chess.reset();
     board.start();
     updateScore(correct, tried);
 }
 
 function nextMove() {
-    var history = chess.history({ verbose: true });
+
     if (moveWasBlunder()) {
         failedToIdentifyBlunder();
-    } else {
-        var move = history[moveindex++];
-        var boardMove = move.from + '-' + move.to;
-        board.move(boardMove);
+    }
+    else {
+        var move = moves[moveindex++];
+        chess.move(move);
+        board.position(chess.fen());
     }
 }
 
@@ -158,19 +157,18 @@ function blunder() {
 function correctlyIdentifiedBlunder() {
     tried++;
     correct++;
-    appendToHistory(chess.history() + '?? <b id="correct">CORRECT</b>');
+    appendToHistory(pgn + '?? <b id="correct">CORRECT</b>');
     loadPuzzle();
 }
 
 function failedToIdentifyBlunder() {
     tried++;
-    appendToHistory(chess.history() + '?? <b id="failed">FAILED</b>');
+    appendToHistory(pgn + '?? <b id="failed">FAILED</b>');
     loadPuzzle();
 }
 
 function moveWasBlunder() {
-    var history = chess.history({ verbose: true });
-    return (history.length == moveindex);
+    return (moves.length == moveindex);
 }
 
 function updateScore(correct, tried) {
@@ -181,9 +179,15 @@ function appendToHistory(text) {
     $('#history').html($('#history').html() + "<br/>" + text);
 }
 
-$(document).ready(init);
+function init() {
+    $('#blunder').on('click', blunder);
+    $('#next').on('click', nextMove);
+//    $('#restart').on('click', restart);
+    $(document).on('keypress', function(e) {
+        if (e.which == 32) { nextMove(); }
+        if (e.which == 98) { blunder(); }
+    });
+    loadPuzzle();
+}
 
-$(document).on('keypress', function(e) {
-    if (e.which == 32) { nextMove(); }
-    if (e.which == 98) { blunder(); }
-});
+$(document).ready(init);
