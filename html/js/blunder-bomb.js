@@ -179,8 +179,9 @@ function init() {
     $('#blunder').on('click', blunder);
     $('#next').on('click', nextMove);
     $(document).on('keypress', function(e) {
-        if (e.which == 32) { nextMove(); }
+        if (e.which == 32) { nextMove(); e.preventDefault(); return false;}
         if (e.which == 98) { blunder(); }
+        
     });
     loadPuzzle();
 }
