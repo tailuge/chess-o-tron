@@ -116,13 +116,6 @@ var chess = new Chess();
 var pgn = '';
 var moves = {};
 
-function restart() {
-    tried = 0;
-    correct = 0;
-    $('#history').html('');
-    loadPuzzle(0);
-}
-
 function loadPuzzle() {
     moveindex = 0;
     pgn = puzzles[Math.floor(Math.random() * puzzles.length)];
@@ -134,7 +127,6 @@ function loadPuzzle() {
 }
 
 function nextMove() {
-
     if (moveWasBlunder()) {
         failedToIdentifyBlunder();
     }
@@ -157,14 +149,18 @@ function blunder() {
 function correctlyIdentifiedBlunder() {
     tried++;
     correct++;
-    appendToHistory(pgn + '?? <b id="correct">CORRECT</b>');
+    appendToHistory(pgn + '?? '+linkToAnalysis('<b id="correct">CORRECT</b>'));
     loadPuzzle();
 }
 
 function failedToIdentifyBlunder() {
     tried++;
-    appendToHistory(pgn + '?? <b id="failed">FAILED</b>');
+    appendToHistory(pgn + '?? '+linkToAnalysis('<b id="failed">FAILED</b>'));
     loadPuzzle();
+}
+
+function linkToAnalysis(text) {
+    return '<a target="_blank" href="https://lichess.org/analysis/'+encodeURI(chess.fen())+'">'+text+'</a>';
 }
 
 function moveWasBlunder() {
@@ -182,7 +178,6 @@ function appendToHistory(text) {
 function init() {
     $('#blunder').on('click', blunder);
     $('#next').on('click', nextMove);
-//    $('#restart').on('click', restart);
     $(document).on('keypress', function(e) {
         if (e.which == 32) { nextMove(); }
         if (e.which == 98) { blunder(); }
