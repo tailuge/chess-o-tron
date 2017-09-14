@@ -49,17 +49,20 @@
         <br/>
         <div id="score">Score: 0/0</div>
         <br/>
-        <div id="board" style="width: 80%; max-width: 500px;"></div>
+        <div id="board" style="width: 80%; max-width: 450px;"></div>
         <br/>
 
         <input type="button" id="next" value="Next (Spacebar)" onclick="this.blur();" />
         <input type="button" id="blunder" value="Blunder (B)" onclick="this.blur();" />
+        <input type="button" id="flip" value="Flip" onclick="this.blur();" />
         <input type="button" id="restart" onclick="location.href = 'blunder-bomb.html';" value="Restart" onclick="this.blur();" />
+        <input type="button" id="kg" value="KG(ish)" onclick="this.blur();" />
+        <input type="button" id="caro" value="Caro(ish)" onclick="this.blur();" />
 
         <br/>
         <br/>
         <p>Progress:</p>
-        <div id="history" style="width: 80%; max-width: 500px;"></div>
+        <div id="history" style="width: 80%; max-width: 450px;"></div>
     </div>
 
     <!-- libraries -->
@@ -70,6 +73,12 @@
     <!-- code -->
     <script src="js/blunder-bomb.js"></script>
 
+    <!-- to extract data
+    
+    time grep "%eval" lichess_db_standard_rated_2017-06.pgn | sed 's/{[^}]*}//g' | sed -r 's/[0-9]{1,2}\.\.\. //g' | sed 's/??.*//' |sed 's/[?!]//g'| sed 's/  / /g' | grep -v '10\.' | egrep 'c6 2\. .* d5 3\.' | sort | uniq -c | sort -r -n | head -100 | cut -c9- | sed 's/\(.*\)/"\1",/'
+    
+    -->
+    
 </body>
 
 </html>
