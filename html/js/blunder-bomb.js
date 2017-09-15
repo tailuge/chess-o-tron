@@ -117,8 +117,6 @@ var caro_puzzles = [
     "1. e4 c6 2. Nf3 d5 3. e5 Bf5 4. d4 e6 5. Nh4",
     "1. e4 c6 2. Nf3 d5 3. d3 dxe4 4. Ne5",
     "1. e4 c6 2. Qf3 d5 3. Bc4",
-    "1. e4 Nc6 2. Nf3 d5 3. Bc4",
-    "1. e4 Nc6 2. d4 d5 3. exd5 Qxd5 4. Nf3 Bg4 5. Be2 Bxf3 6. Bxf3 Qxd4",
     "1. e4 c6 2. Nf3 d5 3. e5 Bg4 4. d4 e6 5. Bg5",
     "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg4",
     "1. e4 c6 2. d4 d5 3. e5 Bg4",
@@ -126,7 +124,6 @@ var caro_puzzles = [
     "1. e4 c6 2. Bc4 d5 3. exd5 Bg4",
     "1. e4 c6 2. Bc4 d5 3. e5",
     "1. e4 c6 2. Bc4 d5 3. d3",
-    "1. e4 Nc6 2. g3 d5 3. exd5 Qxd5 4. Nf3",
     "1. e4 c6 2. Nf3 d5 3. Be2 dxe4 4. Nd4",
     "1. e4 c6 2. d4 d5 3. Nc3 Bg4",
     "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. Bd3 Bf5",
@@ -146,15 +143,6 @@ var caro_puzzles = [
     "1. Nc3 c6 2. d4 d5 3. e4 Bf5",
     "1. g3 c6 2. Bg2 d5 3. Nf3 Nf6 4. O-O Bh3",
     "1. g3 c6 2. Bg2 d5 3. b3 e6 4. Bb2 Bd6",
-    "1. e4 Nc6 2. Nf3 d5 3. exd5 Qxd5 4. Nc3 Qh5 5. Bc4 Bg4 6. d3",
-    "1. e4 Nc6 2. Nf3 d5 3. exd5 Qxd5 4. d4 Bg4 5. Be2 Bxf3 6. Bxf3 Qxd4",
-    "1. e4 Nc6 2. Nf3 d5 3. exd5 Qxd5 4. Bb5",
-    "1. e4 Nc6 2. Nf3 d5 3. d4 dxe4 4. Ng5 Qxd4 5. Qxd4 Nxd4 6. Nxe4",
-    "1. e4 Nc6 2. Nf3 d5 3. Bb5 dxe4 4. Bxc6+ bxc6 5. Ne5 Qd5 6. Qh5",
-    "1. e4 Nc6 2. d4 d5 3. exd5 Qxd5 4. Be3 e5 5. Nc3 exd4",
-    "1. e4 Nc6 2. d4 d5 3. exd5 Qd6",
-    "1. e4 Nc6 2. d4 d5 3. e5 Bf5 4. Nf3 e6 5. Nh4",
-    "1. e4 Nc6 2. Bc4 d5 3. exd5 Ne5 4. d6",
     "1. e4 c6 2. Qf3 d5 3. exd5 cxd5 4. c4 Nf6 5. cxd5 Qxd5 6. Bc4",
     "1. e4 c6 2. Nf3 d5 3. Nc3 Nf6 4. e5 Nfd7 5. d4 e6 6. Bg5 c5",
     "1. e4 c6 2. Nf3 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. h4 h6 7. Ne5 Bh7 8. Qh5 g6 9. Bc4 gxh5",
@@ -197,18 +185,43 @@ var caro_puzzles = [
     "1. e4 c6 2. Bc4 d5 3. exd5 cxd5 4. Bb3 Nf6 5. c4 Bg4 6. cxd5",
     "1. e4 c6 2. Bc4 d5 3. exd5 cxd5 4. Bb3 Bf5 5. Qf3 Nf6",
     "1. e3 c6 2. d4 d5 3. Bc4",
-    "1. d4 Nc6 2. e3 d5 3. Bd3 Bf5",
-    "1. d4 Nc6 2. Bf4 d5 3. e3 e5 4. Nf3",
     "1. d4 c6 2. Nf3 d5 3. g3 Bh3",
     "1. d4 c6 2. e4 d5 3. e5 Bf5 4. Bd3 Bxd3 5. Qd2",
     "1. d4 c6 2. e3 d5 3. Bd3 Bf5",
     "1. c3 c6 2. d4 d5 3. Bf4 Nd7 4. Bc7",
     "1. b3 c6 2. Bb2 d5 3. e3 Nf6 4. c4 Bg4 5. cxd5",
     "1. Nh3 c6 2. g3 d5 3. d3 Nd7 4. f4 Ngf6 5. Nf2 e5 6. Bg2 exf4 7. Bxf4 Bd6",
-    "1. Nf3 Nc6 2. Nc3 d5 3. e4 d4 4. Ne2 e5 5. d3 Bg4 6. Ng3 h5 7. h3 h4",
-    "1. Nf3 Nc6 2. Nc3 d5 3. e4 d4 4. Ne2 e5 5. c3 d3 6. Ng3 h5 7. h4 Nf6 8. Qb3 Bc5 9. c4",
-    "1. Nf3 Nc6 2. Nc3 d5 3. d4 Nf6 4. Bf4 e6 5. Nb5 Bd6 6. Nxd6+ cxd6 7. Qd3 Ne4 8. O-O-O",
-    "1. Nf3 Nc6 2. Nc3 d5 3. d4 Bf5 4. Bf4 Nb4 5. Rb1 Bxc2 6. Qd2 Bxb1 7. Be5"
+];
+
+var mcdonnell_puzzles = [
+"1. e4 c5 2. f4 e6 3. e5 d5 4. d3 Ne7 5. c4 dxc4 6. Qa4+ Nbc6 7. Bd2 Ng6 8. g3",
+"1. e4 c5 2. f4 e6 3. Nf3 d6 4. Bc4 g6 5. Nc3 Bg7 6. O-O Ne7 7. d4 Qb6 8. Be3 Qxb2",
+"1. e4 c5 2. f4 e6 3. Nf3 d5 4. e5 Nc6 5. Be2 f6 6. O-O Qc7 7. d4 cxd4 8. Nxd4",
+"1. e4 c5 2. f4 e6 3. Nf3 Qc7 4. d3 b6 5. Be2 Bb7 6. O-O c4 7. Nc3 e5",
+"1. e4 c5 2. f4 e5 3. f5",
+"1. e4 c5 2. f4 d6 3. Nf3 f6 4. Bc4 e5 5. d3 Ne7 6. fxe5 fxe5",
+"1. e4 c5 2. f4 d6 3. Nf3 Nf6 4. e5 dxe5 5. fxe5 Nd5 6. Bc4 Bg4 7. O-O Nc6 8. c3 Nxe5",
+"1. e4 c5 2. f4 d6 3. Nf3 Nf6 4. d3 g6 5. Be3 Bg7 6. Nc3 Qa5 7. Qd2 Qb6 8. Be2 Ng4 9. Bg1",
+"1. e4 c5 2. f4 d6 3. Nf3 Nf6 4. Nc3 a6 5. d4 cxd4 6. Nxd4 Nc6 7. h3 Qb6 8. Be3 Qxb2 9. Bd2",
+"1. e4 c5 2. f4 d6 3. Nf3 Nc6 4. d4 cxd4 5. Nxd4 Nf6 6. Nc3 a6 7. Bc4 Bg4 8. Qd3 Rac8 9. Be3",
+"1. e4 c5 2. f4 d6 3. Nf3 Nc6 4. Bb5 Bd7 5. O-O a6 6. Bxc6 Bxc6 7. e5 dxe5 8. fxe5 Qc7 9. Ng5 e6",
+"1. e4 c5 2. f4 d6 3. Nf3 Bd7 4. d3 Nc6 5. e5 Qc7 6. e6 Bxe6 7. Be2 O-O-O 8. O-O Bd5 9. Ng5 1-0",
+"1. e4 c5 2. f4 d6 3. Nc3 e5 4. fxe5 dxe5 5. Bc4 Nf6 6. Nf3 Bg4",
+"1. e4 c5 2. f4 d6 3. Bc4 e6 4. Nc3 Nf6 5. d3 Nc6 6. Nf3 Be7 7. g3 O-O 8. a3 a6 9. Be3",
+"1. e4 c5 2. f4 d5 3. exd5 Qxd5 4. Nf3 Nf6 5. Nc3 Qc6",
+"1. e4 c5 2. f4 d5 3. exd5 Qxd5 4. Nf3 Bg4 5. Be2 Nf6 6. Nc3 Qc6",
+"1. e4 c5 2. f4 d5 3. exd5 Qxd5 4. Nc3 Qd8 5. Nf3 e6 6. Bc4 Nf6 7. f5 Nd5 8. fxe6 Bxe6 9. O-O",
+"1. e4 c5 2. f4 d5 3. exd5 Qxd5 4. Nc3 Qd8 5. Nf3 Bg4 6. Bb5+ Nc6 7. Bxc6+ bxc6 8. d3 1-0",
+"1. e4 c5 2. f4 d5 3. e5 Nc6 4. d3 Nh6 5. Be2 Nf5 6. g4 Nh4 7. Bf3 Bxg4",
+"1. e4 c5 2. f4 Nf6 3. d3 d5 4. Nf3 dxe4 5. Ne5 e3 6. Be2 Qd5 7. O-O g6 8. Bxe3 b6",
+"1. e4 c5 2. f4 Nc6 3. Nf3 h6 4. c4 a6 5. d3 d6 6. Nbd2 Bg4 7. Be2 Nd4",
+"1. e4 c5 2. f4 Nc6 3. Nf3 g6 4. Bc4 Bg7 5. O-O e6 6. d4 1-0",
+"1. e4 c5 2. f4 Nc6 3. Nf3 e6 4. Nc3 d5 5. e5 a6 6. d3 d4 7. Ne4 f5 8. exf6 Nxf6 9. Ne5 g6",
+"1. e4 c5 2. f4 Nc6 3. Nf3 e5 4. fxe5 Nxe5 5. Nxe5 Qh4+ 6. g3 Qxe4+ 7. Qe2 Qxh1 8. Nc3",
+"1. e4 c5 2. f4 Nc6 3. Nf3 d6 4. Bc4 e6 5. a3 Qc7 6. O-O Be7 7. Nc3 a6 8. d4 cxd4 9. Nxd4 b5",
+"1. e4 c5 2. f4 Nc6 3. Nf3 d6 4. Bc4 Nf6 5. Ng5 e6 6. e5 dxe5 7. O-O",
+"1. e4 c5 2. f4 Nc6 3. Nf3 d5 4. Bb5 dxe4 5. Bxc6+ bxc6 6. Ne5 Qd6 7. Nc3 f6 8. Nxe4",
+"1. e4 c5 2. f4 Nc6 3. Nf3 b6 4. Bc4 Bb7 5. O-O e6 6. f5 Nf6 7. fxe6 fxe6 8. e5 Nd5 9. Ng5"
 ];
 
 var puzzles = kg_puzzles;
@@ -284,8 +297,10 @@ function init() {
     $('#blunder').on('click', blunder);
     $('#next').on('click', nextMove);
     $('#flip').on('click', function f() { board.flip(); });
+    $('#restart').on('click', restart);
     $('#kg').on('click', function f() { puzzles=kg_puzzles; restart(); });
     $('#caro').on('click', function f() { puzzles=caro_puzzles; restart(); });
+    $('#mcdonnell').on('click', function f() { puzzles=mcdonnell_puzzles; restart(); });
     $(document).on('keypress', function(e) {
         if (e.which == 32) { nextMove();
             e.preventDefault(); return false; }
