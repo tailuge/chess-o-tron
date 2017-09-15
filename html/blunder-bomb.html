@@ -44,12 +44,14 @@
 <body>
 
     <div align="center" style="width: 100%;">
-        <h2>Blunder-bomb-o-tron</h2>
-        <div><i>Identify the blunders - all data extracted from <a href="https://database.lichess.org/">database.lichess.org</a></i></div>
-        <input type="button" id="kg" value="King's Gambit" onclick="this.blur();" />
-        <input type="button" id="caro" value="Caro-Kann" onclick="this.blur();" />
-        <input type="button" id="mcdonnell" value="McDonnell Attack" onclick="this.blur();" />
-        <input type="button" id="restart" value="Restart" onclick="this.blur();" />
+        <h2>Blunder-bomb-<a href="https://tailuge.github.io/chess-o-tron/">o-tron</a></h2>
+        <div><i>Identify the 
+        <select id="puzzleType" onChange="selectPuzzle(this)">
+         <option value="kg" selected="selected">King's Gambit</option>
+         <option value="mcdonnell">McDonnell Attack</option>
+         <option value="caro">Caro-Kann</option>
+        </select>
+        blunders - all data extracted from <a href="https://database.lichess.org/">database.lichess.org</a></i></div>
         <br/>
         <div id="board" style="width: 80%; max-width: 425px;"></div>
         <br/>
@@ -60,7 +62,8 @@
 
         <br/>
         <br/>
-        <div id="score">Score: 0/0</div><p>Progress:</p>
+        <div id="score">Score: 0/0</div>
+        <p>Progress:</p>
         <div id="history" style="width: 80%; max-width: 425px;"></div>
     </div>
 
@@ -79,8 +82,20 @@
     aquiecent state then blunder after move 20
     
     head -200 evals | sed 's/\[\%eval -*0\..../ X /g' | sed 's/..clk[^]]*.//g' | egrep '20\. .*X[^X?]*X[^X?]*X[^X?]*\?\?'
-    -->
     
+    bzgrep -B15 "%eval" lichess_db_standard_rated_2014-01.pgn.bz2 | egrep '^\[Site|^1. ' | tr -d '\n' | sed 's/\[Site/\n/g' | sed 's/"\]/" /'> siteAndEvals
+    cat siteEvals | sed 's/{[^}]*}//g' | sed -r 's/[0-9]{1,2}\.\.\. //g' | sed 's/??.*/??/' | sed 's/  / /g' | grep -v '10\.' | grep '1. e4 e5 2. f4' | grep -v '? ' | sed 's/^\(.*"\) \(.*\)/{url:\1, moves:"\2"},/'
+
+    skip lines with mistakes leading up to the blunder, make sure they have a blunder, filter for my style of king's gambit
+
+    cat siteEvals | sed 's/{[^}]*}//g' | sed -r 's/[0-9]{1,2}\.\.\. //g' | sed 's/??.*/??/' | sed 's/  / /g' | grep -v '10\.' | grep '??' | grep '1\. e4 e5 2\. f4' | grep -v '? ' | sed 's/^\(.*"\) \(.*\)/{url:\1, moves:"\2"},/' > kg.json
+
+caro grep 'c6 2\. .* d5 3\.'
+kg grep '1\. e4 e5 2\. f4'
+mcdonnell grep '1. e4 c5 2. f4 .* 3\. Nf3'
+
+    -->
+
 </body>
 
 </html>
