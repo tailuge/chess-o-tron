@@ -78,7 +78,6 @@ var kg_puzzles = [
 
 var mcdonnell_puzzles = [
     { url: "https://lichess.org/z5q9oti0", moves: "1. e4 c5 2. f4 d6 3. Nf3 Nc6 4. d4?! cxd4 5. Nxd4 Nf6 6. Nc3 a6 7. Bc4 Bg4?! 8. Qd3?! Rac8 9. Be3??" },
-    { url: "https://lichess.org/irqhjpdh", moves: "1. e4 c5 2. f4 d6 3. Nf3 Bd7 4. d3 Nc6 5. e5 Qc7 6. e6 Bxe6 7. Be2 O-O-O?! 8. O-O Bd5?! 9. Ng5 1-0" },
     { url: "https://lichess.org/2iks2izp", moves: "1. e4 c5 2. f4 e6 3. Nf3 d6 4. Bc4 g6?! 5. Nc3 Bg7 6. O-O?! Ne7 7. d4 Qb6?! 8. Be3 Qxb2??" },
     { url: "https://lichess.org/5fyap32n", moves: "1. e4 c5 2. f4 Nc6 3. Nf3 h6 4. c4 a6 5. d3 d6 6. Nbd2 Bg4 7. Be2 Nd4??" },
     { url: "https://lichess.org/p0cfwgk8", moves: "1. e4 c5 2. f4 e6 3. Nf3 d5 4. e5?! Nc6 5. Be2 f6 6. O-O Qc7?! 7. d4?! cxd4 8. Nxd4??" },
