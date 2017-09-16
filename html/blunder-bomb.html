@@ -38,6 +38,7 @@
         b#failed {
             color: red;
         }
+
     </style>
 </head>
 
@@ -72,6 +73,11 @@
     <script src="js/chessboard-0.3.0.min.js"></script>
     <script src="js/chess.min.js"></script>
 
+    <!-- puzzle data -->
+    <script src="js/kg.js"></script>
+    <script src="js/caro.js"></script>
+    <script src="js/mcdonnell.js"></script>
+    
     <!-- code -->
     <script src="js/blunder-bomb.js"></script>
 
@@ -93,6 +99,14 @@
 caro grep 'c6 2\. .* d5 3\.'
 kg grep '1\. e4 e5 2\. f4'
 mcdonnell grep '1. e4 c5 2. f4 .* 3\. Nf3'
+
+remove duplicates and filter for black blunders
+
+cat siteEvalLine | sed 's/{[^}]*}//g' | sed 's/??.*/??/' | sed 's/  / /g' | grep -v '10\.' | grep '??' | grep '1. e4 c5 2. f4 .* 3\. Nf3' | grep -v '? ' | sed 's/^\(.*"\) \(.*\)/{url:\1, moves:"\2"},/' | sort -t, -k2 | uniq -s50 | egrep -v '\. [^ ]*$' > mcdonnell.json
+
+squash line size when disk space is limited
+
+bzgrep -B15 "%eval" lichess_db_standard_rated_2017-03.pgn.bz2 | egrep '^\[Site|^1. ' | sed 's/\[%eval \([^]]*\)\]/%\1/g'| sed -r 's/[0-9]{1,2}\.\.\. //g' > siteEval
 
     -->
 
