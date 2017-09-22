@@ -1,6 +1,6 @@
 /* globals clearHighlights, highlightFromDescriptions, 
     initializeClock, ChessBoard, $, problems, renderFeature, updateUrlWithState, getParameterByName,
-    updateFilters, Chess, kg_puzzles, mcdonnell_puzzles, caro_puzzles */
+    updateFilters, Chess, kg_puzzles, mcdonnell_puzzles, caro_puzzles ,endgame_puzzles */
 
 'use strict';
 
@@ -19,6 +19,15 @@ var move = {};
 function loadPuzzle() {
     moveindex = 0;
     puzzleindex = Math.floor(Math.random() * puzzles.length);
+    if (puzzles[puzzleindex].fen) {
+        pgn = puzzles[puzzleindex].moves;
+        moves = pgn.replace(/[?!]*/g, '').split(' ');
+        chess.reset();
+        chess.load(puzzles[puzzleindex].fen);
+        board.position(chess.fen());
+        updateScore(correct, tried);
+        return;
+    }
     pgn = puzzles[puzzleindex].moves;
     chess.load_pgn(pgn);
     moves = chess.history({ verbose: true });
@@ -43,7 +52,7 @@ function blunder() {
         correctlyIdentifiedBlunder();
     }
     else {
-        failedToIdentifyBlunder(move.san + " not a blunder");
+        failedToIdentifyBlunder((move.san ? move.san : move) + " not a blunder");
     }
 }
 
@@ -98,6 +107,7 @@ function selectPuzzle(a) {
     if (selectedValue === 'kg') { puzzles = kg_puzzles }
     if (selectedValue === 'mcdonnell') { puzzles = mcdonnell_puzzles }
     if (selectedValue === 'caro') { puzzles = caro_puzzles }
+    if (selectedValue === 'endgame') { puzzles = endgame_puzzles }
     restart();
 }
 

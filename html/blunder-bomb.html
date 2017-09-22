@@ -51,6 +51,7 @@
          <option value="kg" selected="selected">King's Gambit</option>
          <option value="mcdonnell">McDonnell Attack</option>
          <option value="caro">Caro-Kann</option>
+         <option value="endgame">K+P endgames</option>
         </select>
         blunders - all data extracted from <a href="https://database.lichess.org/">database.lichess.org</a></i></div>
         <br/>
@@ -77,6 +78,7 @@
     <script src="js/kg.js"></script>
     <script src="js/caro.js"></script>
     <script src="js/mcdonnell.js"></script>
+    <script src="js/endgames.js"></script>
     
     <!-- code -->
     <script src="js/blunder-bomb.js"></script>
@@ -107,6 +109,15 @@ cat siteEvalLine | sed 's/{[^}]*}//g' | sed 's/??.*/??/' | sed 's/  / /g' | grep
 squash line size when disk space is limited
 
 bzgrep -B15 "%eval" lichess_db_standard_rated_2017-03.pgn.bz2 | egrep '^\[Site|^1. ' | sed 's/\[%eval \([^]]*\)\]/%\1/g'| sed -r 's/[0-9]{1,2}\.\.\. //g' > siteEval
+
+find games where there is an aquiecent period of play (zero evals) then a blunder - the last such blunder
+
+cat siteEvalLine | sed 's/%-*0[^ ]*/X/g' | sed 's/{ X }/X/g' | sed 's/{ [^ ]* }//g' |sed 's/  / /g'| head -1000 | egrep -o '.*([0-9]+\. [^ ]+ X [^ ]+ X)+ ([0-9]+\. [^ ]+ X [^ ]+\?\?)'
+
+blunder by black or white, dont worry about inaccuracies and more than 32 moves
+
+cat siteEvalLine | sed 's/%-*0[^ ]*/X/g' | sed 's/{ X }/X/g' | sed 's/{ [^ ]* }//g' | sed 's/?!//g' |sed 's/  / /g'| egrep -o '^.*(( X [0-9]+\. [^ ?]+\?\?)|( X [^ ?]+\?\?))' | grep  '32\.' > endings
+
 
     -->
 
