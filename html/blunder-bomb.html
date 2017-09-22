@@ -38,7 +38,6 @@
         b#failed {
             color: red;
         }
-
     </style>
 </head>
 
@@ -67,6 +66,11 @@
         <div id="score">Score: 0/0</div>
         <p>Progress:</p>
         <div id="history" style="width: 80%; max-width: 425px;"></div>
+        <br />
+        <div style="width: 50%;"><small><i>Step through the moves of the games using the spacebar until you see a blunder. If you identify the blunder you score a point. 
+        If you miss it or think a good move is a blunder you fail. Click the link in the progress section to see the game on lichess that explains the blunder.
+        The games all start out drawn (zero eval in Stockfish) and the objective is to train yourself to spot blunders when they happen in a passage of play.</i></small></div>
+
     </div>
 
     <!-- libraries -->
@@ -79,9 +83,10 @@
     <script src="js/caro.js"></script>
     <script src="js/mcdonnell.js"></script>
     <script src="js/endgames.js"></script>
-    
+
     <!-- code -->
     <script src="js/blunder-bomb.js"></script>
+    <script src="js/queryParam.js"></script>
 
     <!-- to extract data
     

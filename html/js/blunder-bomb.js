@@ -1,6 +1,6 @@
 /* globals clearHighlights, highlightFromDescriptions, 
     initializeClock, ChessBoard, $, problems, renderFeature, updateUrlWithState, getParameterByName,
-    updateFilters, Chess, kg_puzzles, mcdonnell_puzzles, caro_puzzles ,endgame_puzzles */
+    updateFilters, Chess, kg_puzzles, mcdonnell_puzzles, caro_puzzles ,endgame_puzzles, selectPuzzle */
 
 'use strict';
 
@@ -99,18 +99,30 @@ function init() {
         if (e.which == 98) { blunder(); }
 
     });
+    
+    var puzzle = getParameterByName('p');
+    if (puzzle!==null) {
+        document.getElementById("puzzleType").value=puzzle;
+        changeToPuzzle(puzzle);
+        return;
+    }
+    
     loadPuzzle();
 }
 
 function selectPuzzle(a) {
     var selectedValue = a.options[a.selectedIndex].value;
+    changeToPuzzle(selectedValue);
+}
+
+function changeToPuzzle(selectedValue){
+    updateUrlWithState(selectedValue);
     if (selectedValue === 'kg') { puzzles = kg_puzzles }
     if (selectedValue === 'mcdonnell') { puzzles = mcdonnell_puzzles }
     if (selectedValue === 'caro') { puzzles = caro_puzzles }
     if (selectedValue === 'endgame') { puzzles = endgame_puzzles }
     restart();
 }
-
 function restart() {
     tried = 0;
     correct = 0;
