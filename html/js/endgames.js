@@ -70,11 +70,6 @@ var endgame_puzzles=[
     "url": "https://lichess.org/TxctQlFu#88"
   },
   {
-    "fen": "8/8/7K/4p2P/4P1k1/3P4/8/8 w - - 0 83",
-    "moves": "Na6??",
-    "url": "https://lichess.org/HyYsOGlQ#166"
-  },
-  {
     "fen": "8/1p2k2p/p5p1/8/7P/8/PP4P1/6K1 w - - 0 38",
     "moves": "g4 Kd6 Kf2 Kd5 Ke3 b5 b3 a5 h5 g5 h6??",
     "url": "https://lichess.org/34EwDMZO#76"
@@ -565,11 +560,6 @@ var endgame_puzzles=[
     "url": "https://lichess.org/HlCw4FEt#58"
   },
   {
-    "fen": "8/5Kp1/1k5p/7P/6P1/8/8/8 b - - 3 76",
-    "moves": "Rxe7 Rec2 g3 hxg3 Bxg3 Kf8??",
-    "url": "https://lichess.org/WlJJeFG3#152"
-  },
-  {
     "fen": "8/6k1/8/5KP1/8/8/8/8 b - - 0 56",
     "moves": "Kf7 Kg4 Kg6 Kh4 Kh7 Kg4 Kg6 Kf4 Kf7 Kf5 Kf8??",
     "url": "https://lichess.org/yus7BKOP#112"
@@ -863,11 +853,6 @@ var endgame_puzzles=[
     "fen": "8/8/8/1P1k3p/8/4p1PP/7K/8 w - - 0 50",
     "moves": "Kg2 Kc5??",
     "url": "https://lichess.org/fa3FqyNk#100"
-  },
-  {
-    "fen": "8/8/8/8/8/p7/k7/2K5 b - - 1 57",
-    "moves": "Nf7 Qa5 g5 e5 Bg4??",
-    "url": "https://lichess.org/Nj6ma3OQ#114"
   },
   {
     "fen": "8/8/5pkp/8/5K2/7P/8/8 w - - 0 50",
@@ -1483,11 +1468,6 @@ var endgame_puzzles=[
     "fen": "8/8/4k3/3pp1K1/p1p3P1/P1P5/1P3P2/8 b - - 0 42",
     "moves": "d4 cxd4 exd4 Kf4 Kd5 Kf3 c3??",
     "url": "https://lichess.org/zYwijCpy#84"
-  },
-  {
-    "fen": "8/ppp4p/6p1/7k/6P1/8/PP5P/6K1 b - - 0 40",
-    "moves": "Rc6 Rg5+ Kh2 Re5 Rc8 Rf5 Rd8 Kf7 Rg8??",
-    "url": "https://lichess.org/KljNL2uf#80"
   },
   {
     "fen": "8/4kp1p/2K5/p7/P5P1/1P6/8/8 b - - 0 43",
@@ -2350,11 +2330,6 @@ var endgame_puzzles=[
     "url": "https://lichess.org/dEVgernP#118"
   },
   {
-    "fen": "8/2p2p2/1p3p2/p5kP/6P1/2P5/5K2/8 b - - 2 38",
-    "moves": "Kf5 c1=Q Rxc1 Kxc1 Kg6??",
-    "url": "https://lichess.org/KaE6hGBV#76"
-  },
-  {
     "fen": "8/5kp1/p2p4/1p2p3/1P3pPp/P2P3P/2P2P2/6K1 w - - 0 40",
     "moves": "f3 g5 Kf2 Ke6 Ke2 Kd5 Kd2 Kd4 c3+ Kd5 Kc2 Kc6 Kb3 d5 a4??",
     "url": "https://lichess.org/AinQ6Tna#80"
@@ -2368,11 +2343,6 @@ var endgame_puzzles=[
     "fen": "1k6/p4ppp/4p3/2Pp4/3P4/P2K4/5PPP/8 w - - 0 28",
     "moves": "f4 Kc7 g4 Kc6 Kc3 a5 a4 h6 h4 g6 Kd3 f5??",
     "url": "https://lichess.org/s5otly1A#56"
-  },
-  {
-    "fen": "8/8/8/8/8/1P6/P6k/4K3 w - - 0 54",
-    "moves": "a3 a5 b4 axb4+ axb4 cxb4+ Kxb4 Be4 Nf2 Bc2 Kc3 Ba4 Kd4 Bc6 c5+ Ke6 Nd3 h5 Nb4 Bg2 Nd3 Bc6 h4 f4 hxg5 fxg3 Ke3 Kf5 Nb4??",
-    "url": "https://lichess.org/Nfidf8NW#108"
   },
   {
     "fen": "8/5pp1/2p4p/1Pk1PP1P/p3K3/P7/1P6/8 b - - 0 37",
@@ -2603,11 +2573,6 @@ var endgame_puzzles=[
     "fen": "1K6/8/7p/8/2k3P1/7P/8/8 b - - 0 49",
     "moves": "Kd5 h4 Ke6 Kc7 Kf6??",
     "url": "https://lichess.org/WNJakoK8#98"
-  },
-  {
-    "fen": "8/1p6/3k4/1P2p3/3pK3/3P4/2P5/8 b - - 0 45",
-    "moves": "bxa5 Nxa5 Ke5 Nb3 Kf4??",
-    "url": "https://lichess.org/yfUy2Ckj#90"
   },
   {
     "fen": "8/8/1p3k2/p1p1pP1P/P1P1K3/6p1/8/8 w - - 0 50",
@@ -3765,11 +3730,6 @@ var endgame_puzzles=[
     "url": "https://lichess.org/whBChl41#58"
   },
   {
-    "fen": "8/8/2p4k/5p2/3P2P1/1P5P/5P1K/8 w - - 0 42",
-    "moves": "h3 Ne4??",
-    "url": "https://lichess.org/GE3wxbxT#84"
-  },
-  {
     "fen": "8/8/5pk1/6p1/4K1P1/8/8/8 w - - 4 50",
     "moves": "Kf3 f5 gxf5+ Kxf5 Kg3 g4 Kh4??",
     "url": "https://lichess.org/vrjzPX33#100"
@@ -4720,11 +4680,6 @@ var endgame_puzzles=[
     "url": "https://lichess.org/i4O5zIUv#130"
   },
   {
-    "fen": "8/6p1/8/3K1Pkp/8/1P6/8/8 w - - 0 59",
-    "moves": "Ke4 Kg4 b4 h4 b5??",
-    "url": "https://lichess.org/xgn2hk80#118"
-  },
-  {
     "fen": "8/1K5p/8/p7/P1k5/6P1/7P/8 b - - 0 44",
     "moves": "Kb4 h4 Kxa4 g4 Kb4 g5 a4 h5 a3 g6 a2 gxh7??",
     "url": "https://lichess.org/VBpc0lUJ#88"
@@ -4923,11 +4878,6 @@ var endgame_puzzles=[
     "fen": "8/8/1Kp3pp/2Pk1p2/5P2/6P1/7P/8 b - - 0 40",
     "moves": "g5 h3 gxf4??",
     "url": "https://lichess.org/h48hKBjB#80"
-  },
-  {
-    "fen": "6k1/p7/1p2K1PP/5P2/8/P7/8/8 w - - 1 55",
-    "moves": "Ba7 Kb5 Kc7 Nc5 Ne7??",
-    "url": "https://lichess.org/esn9dB4D#110"
   },
   {
     "fen": "5k2/2p3p1/3p4/p1pPp3/2P1P1p1/1P4P1/P5KP/8 w - - 0 30",
@@ -6275,11 +6225,6 @@ var endgame_puzzles=[
     "url": "https://lichess.org/fyZz08Nt#106"
   },
   {
-    "fen": "8/8/8/8/8/7p/5K2/7k b - - 3 58",
-    "moves": "Qd6 Rd8??",
-    "url": "https://lichess.org/h1SzLxzM#116"
-  },
-  {
     "fen": "8/8/3k4/6p1/4PpP1/5K2/8/8 w - - 0 56",
     "moves": "Kf2??",
     "url": "https://lichess.org/b06xKKgp#112"
@@ -6618,11 +6563,6 @@ var endgame_puzzles=[
     "fen": "8/6p1/p2p1p1p/2k2P2/2P3P1/P1K4P/8/8 w - - 0 38",
     "moves": "h4 a5 Kd3 d5 cxd5 Kxd5 Kc3??",
     "url": "https://lichess.org/UCwgLRvE#76"
-  },
-  {
-    "fen": "8/p7/3pk3/2p3p1/2P2pP1/P4K2/1P6/8 w - - 0 36",
-    "moves": "c6 d4 d5 exd5 cxd5 Bd3 e6 c3 Nf6 Bf4 Bd6 Nf3??",
-    "url": "https://lichess.org/jm82UnCA#72"
   },
   {
     "fen": "8/p7/2p2k2/1p3P2/1P2KP2/8/8/8 w - b6 0 41",
@@ -7330,11 +7270,6 @@ var endgame_puzzles=[
     "url": "https://lichess.org/gkQhiwjJ#72"
   },
   {
-    "fen": "8/3k4/5P2/2P3P1/1P3K1p/8/8/8 w - - 0 61",
-    "moves": "Kf2 Kg4 Ke3??",
-    "url": "https://lichess.org/vdSHCrDv#122"
-  },
-  {
     "fen": "8/8/8/1p2p2p/pPp1k1p1/P5P1/2P1KP1P/8 w - - 0 52",
     "moves": "c3 Kf5 Ke3 e4??",
     "url": "https://lichess.org/6lu131zx#104"
@@ -7358,11 +7293,6 @@ var endgame_puzzles=[
     "fen": "8/8/p3pkp1/5p1p/2p2P2/2P3KP/PP4P1/8 b - - 1 31",
     "moves": "a5 Kf3 e5 Ke3 Ke6 g3 Kd5 a3??",
     "url": "https://lichess.org/af8jVwmo#62"
-  },
-  {
-    "fen": "8/8/6kp/3pP3/2pK1Pp1/2P3P1/7P/8 w - - 0 43",
-    "moves": "Bb7 Rg2 Nf8??",
-    "url": "https://lichess.org/W7bwjx5K#86"
   },
   {
     "fen": "8/8/8/6p1/5kP1/pP1K4/P7/8 b - - 0 41",
@@ -8155,11 +8085,6 @@ var endgame_puzzles=[
     "url": "https://lichess.org/ts25FEjM#70"
   },
   {
-    "fen": "k7/P7/K7/6pp/6P1/7P/8/8 w - - 0 51",
-    "moves": "Rxf7 Rb5 Re7??",
-    "url": "https://lichess.org/iA3rsRQf#102"
-  },
-  {
     "fen": "8/1k1p4/4p3/2K1Pp2/5Pp1/6P1/8/8 w - - 0 49",
     "moves": "Kd6 Kc8 Ke7 Kc7 Kf6 Kc6 Ke7 Kc7 Kf6 d6??",
     "url": "https://lichess.org/jmsjT6N9#98"
@@ -8313,11 +8238,6 @@ var endgame_puzzles=[
     "fen": "8/8/6pp/K4p2/2k1pP2/4P1P1/P6P/8 w - - 1 39",
     "moves": "a4 Kd3 Kb6 Kxe3 a5 Kf3??",
     "url": "https://lichess.org/6FNC2FhS#78"
-  },
-  {
-    "fen": "8/p4k2/1p1p4/2p3p1/3pP1P1/3P2KP/PPP5/8 w - - 0 35",
-    "moves": "Rae8 Rf6 Qxh6 gxh6 Re3 Nf5 Rxc3 Re1 Be6??",
-    "url": "https://lichess.org/4oAA9Csu#70"
   },
   {
     "fen": "8/ppp5/7K/8/P1P3k1/1P6/2P5/8 b - - 0 54",
@@ -8933,11 +8853,6 @@ var endgame_puzzles=[
     "fen": "8/3k1ppp/4p3/8/8/6P1/P4PKP/8 w - - 0 34",
     "moves": "Kf3 Kc6 Ke4 Kb5 Ke5 Ka4??",
     "url": "https://lichess.org/A3iZBPrg#68"
-  },
-  {
-    "fen": "8/8/8/1pk2pKP/4pP2/4P3/8/8 w - - 1 54",
-    "moves": "Re8??",
-    "url": "https://lichess.org/bCZhq8v0#108"
   },
   {
     "fen": "8/4k3/8/pp2P2p/5P2/P5P1/6KP/8 w - - 0 45",
@@ -9630,11 +9545,6 @@ var endgame_puzzles=[
     "url": "https://lichess.org/VX1Ets0H#80"
   },
   {
-    "fen": "8/6p1/8/2k1p1p1/4P3/2P2PP1/2K5/8 w - - 2 59",
-    "moves": "a5 bxa5 Ra3 Nd6??",
-    "url": "https://lichess.org/d2Wmp0Zt#118"
-  },
-  {
     "fen": "8/8/8/5p2/5P2/p1K4k/P7/8 w - - 0 56",
     "moves": "Kd3??",
     "url": "https://lichess.org/tzOsCUfC#112"
@@ -9653,11 +9563,6 @@ var endgame_puzzles=[
     "fen": "8/8/4kP2/pp6/3K4/2P5/P7/8 b - - 2 35",
     "moves": "b4 c4 a4 f7 Kxf7 c5 Ke6 Kc4 b3 axb3 a3??",
     "url": "https://lichess.org/0xOJ2YDi#70"
-  },
-  {
-    "fen": "8/5p2/4p1p1/4P2p/3k1K2/8/8/8 w - - 0 59",
-    "moves": "a3 Be7 Ke2 Bf8 Kf1 Be7 Kg2 Bf8 Kh3 Bxc5??",
-    "url": "https://lichess.org/aDzOcFlm#118"
   },
   {
     "fen": "8/6k1/p3p1p1/7p/2p5/2P1P3/P1PK2PP/8 w - - 0 32",
@@ -10945,11 +10850,6 @@ var endgame_puzzles=[
     "url": "https://lichess.org/bivR41iD#52"
   },
   {
-    "fen": "8/6pp/2p5/1p3k2/3K4/2P5/PP3PPP/8 w - - 0 30",
-    "moves": "Qd7 Rexe7 Qd8??",
-    "url": "https://lichess.org/iMAZaChE#60"
-  },
-  {
     "fen": "8/8/4k3/p1p1P3/8/PP3K2/8/8 b - - 1 40",
     "moves": "Kxe5 Ke3 Kd5 Kd3 c4+??",
     "url": "https://lichess.org/8FG1URaR#80"
@@ -11103,11 +11003,6 @@ var endgame_puzzles=[
     "fen": "8/8/4k3/6pp/8/7P/6K1/8 w - - 0 65",
     "moves": "Kg3??",
     "url": "https://lichess.org/cebyMfgB#130"
-  },
-  {
-    "fen": "8/8/5p2/4k2p/7P/5K2/8/8 b - - 1 47",
-    "moves": "c5 Nf3 d6 c3 Nf6 Bd3 Bg4 Bc2 Nc6 d3 Qa5 Nbd2 Nd4??",
-    "url": "https://lichess.org/eC1c5x0a#94"
   },
   {
     "fen": "8/1p6/p7/4Kpk1/7P/1P6/P7/8 b - - 0 48",
