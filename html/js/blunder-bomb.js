@@ -15,10 +15,12 @@ var chess = new Chess();
 var pgn = '';
 var moves = {};
 var move = {};
+var boardEl = $('#board');
 
 function loadPuzzle() {
     moveindex = 0;
     puzzleindex = Math.floor(Math.random() * puzzles.length);
+    clearHighlight();
     if (puzzles[puzzleindex].fen) {
         pgn = puzzles[puzzleindex].moves;
         moves = pgn.replace(/[?!]*/g, '').split(' ');
@@ -42,9 +44,19 @@ function nextMove() {
     }
     else {
         move = moves[moveindex++];
-        chess.move(move);
+        highlight(chess.move(move));
         board.position(chess.fen());
     }
+}
+
+function highlight(move) {
+    clearHighlight();
+    boardEl.find('.square-' + move.from).addClass('highlight');
+    boardEl.find('.square-' + move.to).addClass('highlight');
+}
+
+function clearHighlight() {
+    boardEl.find('.square-55d63').removeClass('highlight');
 }
 
 function blunder() {
