@@ -16,6 +16,16 @@ var pgn = '';
 var moves = {};
 var move = {};
 var boardEl = $('#board');
+var e1p = endgame_puzzles.filter(x => pawnCount(x.fen, 1));
+var e2p = endgame_puzzles.filter(x => pawnCount(x.fen, 2));
+var e3p = endgame_puzzles.filter(x => pawnCount(x.fen, 3));
+var e4p = endgame_puzzles.filter(x => pawnCount(x.fen, 4));
+var e5p = endgame_puzzles.filter(x => pawnCount(x.fen, 5));
+var e6p = endgame_puzzles.filter(x => pawnCount(x.fen, 6));
+
+function pawnCount(fen, n) {
+    return fen.replace(/[^pP]*/g, '').length === n;
+}
 
 function loadPuzzle() {
     moveindex = 0;
@@ -111,14 +121,14 @@ function init() {
         if (e.which == 98) { blunder(); }
 
     });
-    
+
     var puzzle = getParameterByName('p');
-    if (puzzle!==null) {
-        document.getElementById("puzzleType").value=puzzle;
+    if (puzzle !== null) {
+        document.getElementById("puzzleType").value = puzzle;
         changeToPuzzle(puzzle);
         return;
     }
-    
+
     loadPuzzle();
 }
 
@@ -127,14 +137,21 @@ function selectPuzzle(a) {
     changeToPuzzle(selectedValue);
 }
 
-function changeToPuzzle(selectedValue){
+function changeToPuzzle(selectedValue) {
     updateUrlWithState(selectedValue);
     if (selectedValue === 'kg') { puzzles = kg_puzzles }
     if (selectedValue === 'mcdonnell') { puzzles = mcdonnell_puzzles }
     if (selectedValue === 'caro') { puzzles = caro_puzzles }
     if (selectedValue === 'endgame') { puzzles = endgame_puzzles }
+    if (selectedValue === '1p') { puzzles = e1p }
+    if (selectedValue === '2p') { puzzles = e2p }
+    if (selectedValue === '3p') { puzzles = e3p }
+    if (selectedValue === '4p') { puzzles = e4p }
+    if (selectedValue === '5p') { puzzles = e5p }
+    if (selectedValue === '6p') { puzzles = e6p }
     restart();
 }
+
 function restart() {
     tried = 0;
     correct = 0;
