@@ -16,6 +16,8 @@ var pgn = '';
 var moves = {};
 var move = {};
 var boardEl = $('#board');
+var puzzleStateShowResult = false;
+
 var e1p = endgame_puzzles.filter(x => pawnCount(x.fen, 1));
 var e2p = endgame_puzzles.filter(x => pawnCount(x.fen, 2));
 var e3p = endgame_puzzles.filter(x => pawnCount(x.fen, 3));
@@ -29,10 +31,12 @@ function pawnCount(fen, n) {
 
 function loadPuzzle() {
     moveindex = 0;
+    move = { san: 'Initial position' };
+    updateScore(correct, tried);
     puzzleindex = Math.floor(Math.random() * puzzles.length);
+    pgn = puzzles[puzzleindex].moves;
     clearHighlight();
     if (puzzles[puzzleindex].fen) {
-        pgn = puzzles[puzzleindex].moves;
         moves = pgn.replace(/[?!]*/g, '').split(' ');
         chess.reset();
         chess.load(puzzles[puzzleindex].fen);
@@ -40,55 +44,73 @@ function loadPuzzle() {
         updateScore(correct, tried);
         return;
     }
-    pgn = puzzles[puzzleindex].moves;
     chess.load_pgn(pgn);
     moves = chess.history({ verbose: true });
     chess.reset();
     board.start();
-    updateScore(correct, tried);
 }
 
 function nextMove() {
+    if (puzzleStateShowResult) {
+        enterNextPuzzleState();
+        return;
+    }
     if (moveWasBlunder()) {
+        highlight(move, 'blunderhighlight');
         failedToIdentifyBlunder("missed blunder");
     }
     else {
-        move = moves[moveindex++];
-        highlight(chess.move(move));
+        move = chess.move(moves[moveindex++]);
+        highlight(move, 'highlight');
         board.position(chess.fen());
     }
 }
 
-function highlight(move) {
+function highlight(move, style) {
     clearHighlight();
-    boardEl.find('.square-' + move.from).addClass('highlight');
-    boardEl.find('.square-' + move.to).addClass('highlight');
+    boardEl.find('.square-' + move.from).addClass(style);
+    boardEl.find('.square-' + move.to).addClass(style);
 }
 
 function clearHighlight() {
     boardEl.find('.square-55d63').removeClass('highlight');
+    boardEl.find('.square-55d63').removeClass('blunderhighlight');
+    boardEl.find('.square-55d63').removeClass('goodmovehighlight');
 }
 
 function blunder() {
+    if (puzzleStateShowResult) {
+        enterNextPuzzleState();
+        return;
+    }
+
     if (moveWasBlunder()) {
+        highlight(move, 'blunderhighlight');
         correctlyIdentifiedBlunder();
     }
     else {
-        failedToIdentifyBlunder((move.san ? move.san : move) + " not a blunder");
+        highlight(move, 'goodmovehighlight');
+        failedToIdentifyBlunder(move.san + " not a blunder");
     }
 }
 
 function correctlyIdentifiedBlunder() {
     tried++;
     correct++;
+    var link = linkToAnalysis('<b id="correct">' + move.san + '</b>');
+    $('#outcometext').html('<b>Correct</b><br/><br/>' + link + ' was a blunder</b>');
     prependToHistory(pgn + ' ' + linkToAnalysis('<b id="correct">correct</b>'));
-    loadPuzzle();
+    $('.outcome').css({ 'background-image': 'linear-gradient(to bottom, #e6ffc4 5%, #a8ff92 100%)' });
+    enterShowCorrectState();
 }
 
 function failedToIdentifyBlunder(text) {
     tried++;
-    prependToHistory(pgn + ' ' + linkToAnalysis('<b id="failed">' + text + '</b>'));
-    loadPuzzle();
+    var link = linkToAnalysis('<b id="failed">' + text + '</b>');
+    $('#outcometext').html('<b>Wrong</b><br/><br/>' + link);
+    prependToHistory(pgn + ' ' + link);
+    $('.outcome').css({ 'background-image': 'linear-gradient(#fed1d1, #fd715d)' });
+    enterShowIncorrectState();
 }
 
 function linkToAnalysis(text) {
@@ -107,30 +129,6 @@ function prependToHistory(text) {
     $('#history').html(text + "<br/>" + $('#history').html());
 }
 
-function init() {
-    $('#blunder').on('click', blunder);
-    $('#next').on('click', nextMove);
-    $('#flip').on('click', function f() { board.flip(); });
-    $('#restart').on('click', restart);
-    $(document).on('keypress', function(e) {
-        if (e.which == 32) {
-            nextMove();
-            e.preventDefault();
-            return false;
-        }
-        if (e.which == 98) { blunder(); }
-
-    });
-
-    var puzzle = getParameterByName('p');
-    if (puzzle !== null) {
-        document.getElementById("puzzleType").value = puzzle;
-        changeToPuzzle(puzzle);
-        return;
-    }
-
-    loadPuzzle();
-}
 
 function selectPuzzle(a) {
     var selectedValue = a.options[a.selectedIndex].value;
@@ -156,6 +154,48 @@ function restart() {
     tried = 0;
     correct = 0;
     $('#history').html('');
+    enterNextPuzzleState();
+}
+
+function enterShowCorrectState() {
+    updateScore(correct, tried);
+    puzzleStateShowResult = true;
+    $('.outcome').css("visibility", "visible");
+}
+
+function enterShowIncorrectState() {
+    updateScore(correct, tried);
+    puzzleStateShowResult = true;
+    $('.outcome').css("visibility", "visible");
+}
+
+function enterNextPuzzleState() {
+    puzzleStateShowResult = false;
+    $('.outcome').css("visibility", "hidden");
+    loadPuzzle();
+}
+
+function init() {
+    $('#blunder').on('click', blunder);
+    $('#next').on('click', nextMove);
+    $('#continue').on('click', enterNextPuzzleState);
+    $('#flip').on('click', function f() { board.flip(); });
+    $(document).on('keypress', function(e) {
+        if (e.which == 32) {
+            nextMove();
+            e.preventDefault();
+            return false;
+        }
+        if (e.which == 98) { blunder(); }
+    });
+
+    var puzzle = getParameterByName('p');
+    if (puzzle !== null) {
+        document.getElementById("puzzleType").value = puzzle;
+        changeToPuzzle(puzzle);
+        return;
+    }
+
     loadPuzzle();
 }
 

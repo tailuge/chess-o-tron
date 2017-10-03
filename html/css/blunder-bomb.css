@@ -1,0 +1,73 @@
+div#history {
+  text-align: left;
+  font-size: x-small;
+}
+
+b#correct {
+  color: green;
+}
+
+b#failed {
+  color: red;
+}
+
+.highlight {
+  box-shadow: inset 0 0 6px 6px rgba(0, 180, 0, 0.2);
+}
+
+.blunderhighlight {
+  box-shadow: inset 0 0 6px 6px rgba(180, 0, 0, 0.5);
+}
+
+.goodmovehighlight {
+  box-shadow: inset 0 0 6px 6px rgba(0, 210, 0, 0.5);
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center
+}
+
+.column-left {
+  width: 33%;
+}
+
+.column-center {
+  width: 33%;
+}
+
+.column-right {
+  width: 33%;
+}
+
+
+.outcome {
+  box-shadow: inset 0px 0px 14px -3px #f2fadc;
+  background: linear-gradient(to bottom, #dbe6c4 5%, #9ba892 100%);
+  border-radius: 6px;
+  padding-top: 2px;
+  padding-bottom: 1px;
+  text-align: center;
+  margin: 1px;
+  visibility: hidden;
+  border: 0.5px solid #777777;
+  padding: 20px;
+  width: 50%;
+}
+
+
+#score {
+  vertical-align: middle;
+  font-size: larger
+}
+
+#continue {
+  background-color: rgba(100, 100, 100, 0.2);
+  
+  background-repeat: no-repeat;
+    border: 0.5px solid;
+    border-color: rgba(100, 100, 100, 0.3);
+    border-radius: 6px;
+  padding: 4px;
+}

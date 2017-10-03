@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Blunder-Bomb</title>
-    <meta name="description" content="Pin test">
+    <meta name="description" content="find blunder bomb in chess">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <!-- analytics -->
     <script>
@@ -25,24 +25,7 @@
     </script>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/chessboard-0.3.0.min.css">
-    <style>
-        div#history {
-            text-align: left;
-            font-size: x-small;
-        }
-
-        b#correct {
-            color: green;
-        }
-
-        b#failed {
-            color: red;
-        }
-
-        .highlight {
-            box-shadow: inset 0 0 6px 6px rgba(0,180,0,0.2);
-        }
-    </style>
+    <link rel="stylesheet" href="css/blunder-bomb.css">
 </head>
 
 <body>
@@ -64,20 +47,39 @@
         </select>
         blunders - all data extracted from <a href="https://database.lichess.org/">database.lichess.org</a></i></div>
         <br/>
-        <div id="board" style="width: 80%; max-width: 425px;"></div>
+        <div class="container">
+            <div class="column-left">
+                <div class="outcome">
+                    <div id="outcometext">
+                    </div>
+                    <br/>
+                    <input type="button" id="continue" value="Continue (Spacebar)" onclick="this.blur();" />
+
+                </div>
+            </div>
+            <div class="column-center">
+                <div id="board"></div>
+            </div>
+            <div class="column-right">
+                <div id="score">Score: 0/0</div>
+            </div>
+        </div>
         <br/>
 
         <input type="button" id="next" value="Move (Spacebar)" onclick="this.blur();" />
+
         <input type="button" id="blunder" value="Blunder (B)" onclick="this.blur();" />
+
         <input type="button" id="flip" value="Flip" onclick="this.blur();" />
 
         <br/>
+        <div id="outcome"></div>
         <br/>
-        <div id="score">Score: 0/0</div>
-        <p>Progress:</p>
+
+        <p>Progress Card:</p>
         <div id="history" style="width: 80%; max-width: 425px;"></div>
         <br />
-        <div style="width: 50%;"><small><i>Step through the moves of the games using the spacebar until you see a blunder. If you identify the blunder you score a point. 
+        <div style="width: 80%;"><small><i>Step through the moves of the games using the spacebar until you see a blunder. If you identify the blunder you score a point. 
         If you miss it or think a good move is a blunder you fail. Click the link in the progress section to see the game on lichess that explains the blunder.
         The games all start out drawn (zero eval in Stockfish) and the objective is to train yourself to spot blunders when they happen in a passage of play.</i></small></div>
 
@@ -133,6 +135,7 @@ blunder by black or white, dont worry about inaccuracies and more than 32 moves
 
 cat siteEvalLine | sed 's/%-*0[^ ]*/X/g' | sed 's/{ X }/X/g' | sed 's/{ [^ ]* }//g' | sed 's/?!//g' |sed 's/  / /g'| egrep -o '^.*(( X [0-9]+\. [^ ?]+\?\?)|( X [^ ?]+\?\?))' | grep  '32\.' > endings
 
+https://lichess.org/MNGTEHEa#106
 
     -->
 
