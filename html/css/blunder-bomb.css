@@ -23,6 +23,19 @@ b#failed {
   box-shadow: inset 0 0 6px 6px rgba(0, 210, 0, 0.5);
 }
 
+.controlledwhite {
+  box-shadow: inset 0 0 32px 32px rgba(180, 180, 0, 0.8);
+}
+
+.controlledblack {
+  box-shadow: inset 0 0 32px 32px rgba(0, 180, 180, 0.8);
+}
+
+.controlledboth {
+  box-shadow: inset 0 0 32px 32px rgba(100, 80, 80, 0.8);
+}
+
+
 .container {
   width: 100%;
   display: flex;

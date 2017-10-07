@@ -1,6 +1,6 @@
 /* globals clearHighlights, highlightFromDescriptions, 
     initializeClock, ChessBoard, $, problems, renderFeature, updateUrlWithState, getParameterByName,
-    updateFilters, Chess, kg_puzzles, mcdonnell_puzzles, caro_puzzles ,endgame_puzzles, selectPuzzle */
+    updateFilters, Chess, kg_puzzles, mcdonnell_puzzles, caro_puzzles ,endgame_puzzles, selectPuzzle, highlight, clearHighlight, highlightControlledSquares */
 
 'use strict';
 
@@ -35,7 +35,7 @@ function loadPuzzle() {
     updateScore(correct, tried);
     puzzleindex = Math.floor(Math.random() * puzzles.length);
     pgn = puzzles[puzzleindex].moves;
-    clearHighlight();
+    clearHighlight(boardEl);
     if (puzzles[puzzleindex].fen) {
         moves = pgn.replace(/[?!]*/g, '').split(' ');
         chess.reset();
@@ -56,26 +56,14 @@ function nextMove() {
         return;
     }
     if (moveWasBlunder()) {
-        highlight(move, 'blunderhighlight');
+        highlight(boardEl, move, 'blunderhighlight');
         failedToIdentifyBlunder("missed blunder");
     }
     else {
         move = chess.move(moves[moveindex++]);
-        highlight(move, 'highlight');
+        highlight(boardEl, move, 'highlight');
         board.position(chess.fen());
     }
-}
-
-function highlight(move, style) {
-    clearHighlight();
-    boardEl.find('.square-' + move.from).addClass(style);
-    boardEl.find('.square-' + move.to).addClass(style);
-}
-
-function clearHighlight() {
-    boardEl.find('.square-55d63').removeClass('highlight');
-    boardEl.find('.square-55d63').removeClass('blunderhighlight');
-    boardEl.find('.square-55d63').removeClass('goodmovehighlight');
 }
 
 function blunder() {
@@ -85,11 +73,11 @@ function blunder() {
     }
 
     if (moveWasBlunder()) {
-        highlight(move, 'blunderhighlight');
+        highlight(boardEl, move, 'blunderhighlight');
         correctlyIdentifiedBlunder();
     }
     else {
-        highlight(move, 'goodmovehighlight');
+        highlight(boardEl, move, 'goodmovehighlight');
         failedToIdentifyBlunder(move.san + " not a blunder");
     }
 }

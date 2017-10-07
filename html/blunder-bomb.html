@@ -97,6 +97,7 @@
     <script src="js/endgames.js"></script>
 
     <!-- code -->
+    <script src="js/chessutils.js"></script>
     <script src="js/blunder-bomb.js"></script>
     <script src="js/queryParam.js"></script>
 
@@ -136,6 +137,11 @@ blunder by black or white, dont worry about inaccuracies and more than 32 moves
 cat siteEvalLine | sed 's/%-*0[^ ]*/X/g' | sed 's/{ X }/X/g' | sed 's/{ [^ ]* }//g' | sed 's/?!//g' |sed 's/  / /g'| egrep -o '^.*(( X [0-9]+\. [^ ?]+\?\?)|( X [^ ?]+\?\?))' | grep  '32\.' > endings
 
 https://lichess.org/MNGTEHEa#106
+https://lichess.org/950qastB#89
+https://lichess.org/Sid3ho11#101
+https://lichess.org/950qastB#84
+https://lichess.org/MNGTEHEa#105
+https://lichess.org/6ugc2499#138
 
     -->
 
