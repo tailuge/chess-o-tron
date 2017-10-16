@@ -44,6 +44,7 @@
          <option value="4p">4 pawn endgame</option>
          <option value="5p">5 pawn endgame</option>
          <option value="6p">6 pawn endgame</option>
+         <option value="rook">K+R endgame</option>
         </select>
         blunders - all data extracted from <a href="https://database.lichess.org/">database.lichess.org</a></i></div>
         <br/>
@@ -95,6 +96,7 @@
     <script src="js/caro.js"></script>
     <script src="js/mcdonnell.js"></script>
     <script src="js/endgames.js"></script>
+    <script src="js/rookendgames.js"></script>
 
     <!-- code -->
     <script src="js/chessutils.js"></script>
@@ -135,6 +137,11 @@ cat siteEvalLine | sed 's/%-*0[^ ]*/X/g' | sed 's/{ X }/X/g' | sed 's/{ [^ ]* }/
 blunder by black or white, dont worry about inaccuracies and more than 32 moves
 
 cat siteEvalLine | sed 's/%-*0[^ ]*/X/g' | sed 's/{ X }/X/g' | sed 's/{ [^ ]* }//g' | sed 's/?!//g' |sed 's/  / /g'| egrep -o '^.*(( X [0-9]+\. [^ ?]+\?\?)|( X [^ ?]+\?\?))' | grep  '32\.' > endings
+
+avoid some data where 2 pgns on one line - insist on 0.0 evals to see if it avoids bad analysis on lichess
+
+time grep '{ %0.0 }' siteEvalLine | grep -v ' 2. .* 2. ' | sed 's/{ %0.0 }/X/g' | sed 's/{[^}]*}//g' | sed 's/  / /g' | egrep -o '^.*(( X [0-9]+\. [^ ?]+\?\?)|( X [^ ?]+\?\?))' > trueZero
+
 
 https://lichess.org/MNGTEHEa#106
 https://lichess.org/950qastB#89

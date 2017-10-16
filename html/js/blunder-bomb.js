@@ -1,6 +1,6 @@
 /* globals clearHighlights, highlightFromDescriptions, 
     initializeClock, ChessBoard, $, problems, renderFeature, updateUrlWithState, getParameterByName,
-    updateFilters, Chess, kg_puzzles, mcdonnell_puzzles, caro_puzzles ,endgame_puzzles, selectPuzzle, highlight, clearHighlight, highlightControlledSquares */
+    updateFilters, Chess, kg_puzzles, mcdonnell_puzzles, caro_puzzles ,endgame_puzzles, rook_puzzles, selectPuzzle, highlight, clearHighlight, highlightControlledSquares */
 
 'use strict';
 
@@ -135,6 +135,7 @@ function changeToPuzzle(selectedValue) {
     if (selectedValue === '4p') { puzzles = e4p }
     if (selectedValue === '5p') { puzzles = e5p }
     if (selectedValue === '6p') { puzzles = e6p }
+    if (selectedValue === 'rook') { puzzles = rook_puzzles }
     restart();
 }
 
