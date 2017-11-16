@@ -66,7 +66,7 @@ function fetchHighScores() {
 function checkHiscore() {
     var scoresInCategory = playerScores(selectedValue, all_scores);
     console.log("check high score: " + correct + " in " + scoresInCategory);
-    if (scoresInCategory.filter(x => x.score > correct).length > 0) {
+    if (scoresInCategory.filter(x => x.score > correct).length > 2) {
         return;
     }
     showHighScoreForm(selectedValue, correct);
