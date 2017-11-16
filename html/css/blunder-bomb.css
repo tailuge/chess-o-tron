@@ -1,13 +1,13 @@
-div#history {
+#history {
   text-align: left;
   font-size: x-small;
 }
 
-b#correct {
+#correct {
   color: green;
 }
 
-b#failed {
+#failed {
   color: red;
 }
 
@@ -39,7 +39,7 @@ b#failed {
 .container {
   width: 100%;
   display: flex;
-  align-items: top;
+  align-items: flex-start;
 }
 
 .column-left {
@@ -73,7 +73,7 @@ b#failed {
 
 .newhighscore {
   box-shadow: inset 0px 0px 14px -3px #f2fadc;
-  background: linear-gradient(to bottom, #dbe6c4 5%, #9ba892 100%);
+  background: linear-gradient(to bottom, #e6ffc4 5%, #a8ff92 100%);
   border-radius: 6px;
   padding-top: 2px;
   padding-bottom: 1px;

@@ -78,6 +78,8 @@ function showHighScoreForm(category, correct) {
     document.getElementById("blunder").disabled = true;
     document.getElementById("next").disabled = true;
     $("#sendscore").removeAttr("click");
+    $("#sendscore").removeAttr("onclick");
+    $("#sendscore").prop('onclick',null).off('click');
     $('#sendscore').on('click', function f() {
         console.log("clicked");
         submitHighscore(category, correct);
