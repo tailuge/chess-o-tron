@@ -18,7 +18,9 @@ function initialiseHighScores(all_puzzles, scores) {
 }
 
 function highscore(key, all_puzzles, all_scores) {
-    var scores = playerScores(key, all_scores);
+    var scores = playerScores(key, all_scores).sort(function(a, b) {
+        return a.score == b.score ? 0 : a.score < b.score ? 1 : -1;
+    });
     var blank = '<div class="highscoreplayer"></div><div class="highscorescore">&ensp;</div>';
     var result = '<div class="highscorebox"><div class="highscoreheader">' + description(key) + '</div>';
     if (scores.length > 0) {
@@ -79,7 +81,7 @@ function showHighScoreForm(category, correct) {
     document.getElementById("next").disabled = true;
     $("#sendscore").removeAttr("click");
     $("#sendscore").removeAttr("onclick");
-    $("#sendscore").prop('onclick',null).off('click');
+    $("#sendscore").prop('onclick', null).off('click');
     $('#sendscore').on('click', function f() {
         console.log("clicked");
         submitHighscore(category, correct);
@@ -100,7 +102,7 @@ function updateHighscores(game, player, score) {
         console.log("invalid username " + player);
         return;
     }
-    
+
     $.ajax({
         url: hss + "/set" +
             "?game=" + encodeURIComponent(game) +
@@ -112,12 +114,14 @@ function updateHighscores(game, player, score) {
     });
 }
 
+var timeinterval;
 /**
  * 60 second timer
  */
 function initializeTimer(id, endtime) {
     var timer = document.getElementById(id);
-    var timeinterval = setInterval(function() {
+    clearInterval(timeinterval);
+    timeinterval = setInterval(function() {
         var t = endtime - Date.now();
         var seconds = (t / 1000);
         seconds = (seconds % 60).toFixed(0);
