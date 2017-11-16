@@ -21,9 +21,9 @@ var puzzleStateShowResult = false;
 var selectedValue = 'p';
 
 function initialiseDropDown() {
-    all_puzzles['kg'] = kg_puzzles;
-    all_puzzles['mcd'] = mcdonnell_puzzles;
-    all_puzzles['caro'] = caro_puzzles;
+    all_puzzles['KG'] = kg_puzzles;
+    all_puzzles['McD'] = mcdonnell_puzzles;
+    all_puzzles['Caro'] = caro_puzzles;
 
     var $selectDropdown = $('#puzzleType');
     $.each(all_puzzles, function(key) {
