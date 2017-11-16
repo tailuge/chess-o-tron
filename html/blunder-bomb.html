@@ -34,51 +34,50 @@
         <h2>Blunder-bomb-<a href="https://tailuge.github.io/chess-o-tron/">o-tron</a></h2>
         <div><i>Identify the 
         <select id="puzzleType" onChange="selectPuzzle(this)">
-         <option value="kg" selected="selected">King's Gambit</option>
-         <option value="mcdonnell">McDonnell Attack</option>
-         <option value="caro">Caro-Kann</option>
-         <option value="endgame">K+P endgame</option>
-         <option value="1p">1 pawn endgame</option>
-         <option value="2p">2 pawn endgame</option>
-         <option value="3p">3 pawn endgame</option>
-         <option value="4p">4 pawn endgame</option>
-         <option value="5p">5 pawn endgame</option>
-         <option value="6p">6 pawn endgame</option>
-         <option value="rook">K+R endgame</option>
         </select>
         blunders - all data extracted from <a href="https://database.lichess.org/">database.lichess.org</a></i></div>
         <br/>
         <div class="container">
             <div class="column-left">
+                <div class="newhighscore">
+                    <div>
+                        New highscore. Enter your lichess username
+                    </div>
+                    <input type="text" id="player" />
+                    <br/>
+                    <input type="button" id="sendscore" value="Submit" onclick="this.blur();" />
+                </div>
                 <div class="outcome">
                     <div id="outcometext">
                     </div>
                     <br/>
                     <input type="button" id="continue" value="Continue (Spacebar)" onclick="this.blur();" />
-
                 </div>
             </div>
             <div class="column-center">
                 <div id="board"></div>
+                <br/>
+                <input type="button" id="next" value="Move (Spacebar)" onclick="this.blur();" />
+                <input type="button" id="blunder" value="Blunder (B)" onclick="this.blur();" />
+                <br/>
+                <div id="outcome"></div>
+                <br/>
+
+                <div id="timer">Clock: 60 s</div>
+                <div id="score">Score: 0/0</div>
+                <br/>
+                <input type="button" id="start" value="Start highscore attempt" onclick="startHighscoreAttempt(); this.blur();" />
+                <p>Progress Card:</p>
+                <div id="history" style="width: 80%; max-width: 425px;"></div>
             </div>
             <div class="column-right">
-                <div id="score">Score: 0/0</div>
+                <div class="highscoretable" id="highscoretable">
+                </div>
             </div>
         </div>
         <br/>
 
-        <input type="button" id="next" value="Move (Spacebar)" onclick="this.blur();" />
 
-        <input type="button" id="blunder" value="Blunder (B)" onclick="this.blur();" />
-
-        <input type="button" id="flip" value="Flip" onclick="this.blur();" />
-
-        <br/>
-        <div id="outcome"></div>
-        <br/>
-
-        <p>Progress Card:</p>
-        <div id="history" style="width: 80%; max-width: 425px;"></div>
         <br />
         <div style="width: 80%;"><small><i>Step through the moves of the games using the spacebar until you see a blunder. If you identify the blunder you score a point. 
         If you miss it or think a good move is a blunder you fail. Click the link in the progress section to see the game on lichess that explains the blunder.
@@ -95,12 +94,12 @@
     <script src="js/kg.js"></script>
     <script src="js/caro.js"></script>
     <script src="js/mcdonnell.js"></script>
-    <script src="js/endgames.js"></script>
-    <script src="js/rookendgames.js"></script>
+    <script src="js/allpuzzles.js"></script>
 
     <!-- code -->
     <script src="js/chessutils.js"></script>
     <script src="js/blunder-bomb.js"></script>
+    <script src="js/blunder-scores.js"></script>
     <script src="js/queryParam.js"></script>
 
     <!-- to extract data
@@ -142,14 +141,15 @@ avoid some data where 2 pgns on one line - insist on 0.0 evals to see if it avoi
 
 time grep '{ %0.0 }' siteEvalLine | grep -v ' 2. .* 2. ' | sed 's/{ %0.0 }/X/g' | sed 's/{[^}]*}//g' | sed 's/  / /g' | egrep -o '^.*(( X [0-9]+\. [^ ?]+\?\?)|( X [^ ?]+\?\?))' > trueZero
 
+// bzgrep -B15 "%eval" lichess_db_standard_rated_2014-01.pgn.bz2 | egrep '^\[Site|^1. ' > /mnt/c/luke/evalPgn
+// time cat /mnt/c/luke/evalPgn | tr -d '\n' | sed 's/\[Site/\n/g' | sed 's/"\]/" /' | sed 's/^ "//' | sed 's/"//' > /mnt/c/luke/siteEval
+// time cat /mnt/c/luke/siteEval | grep '{ %0.0 }' | grep -v ' 2. .* 2. ' | sed 's/{ %0.0 }/X/g' | sed 's/{[^}]*}//g' | sed 's/  / /g' | egrep -o '^.*(( X [0-9]+\. [^ ?]+\?\?)|( X [^ ?]+\?\?))' | sed 's/ X / { X } /g' > /mnt/c/luke/siteEvalTrueZero
 
-https://lichess.org/MNGTEHEa#106
-https://lichess.org/950qastB#89
-https://lichess.org/Sid3ho11#101
-https://lichess.org/950qastB#84
-https://lichess.org/MNGTEHEa#105
-https://lichess.org/6ugc2499#138
+64  cat puzzles.json | egrep 'moves:"([^ ]* ){1,8}[^ ]+$' > nice_puzzles.js
 
+   77  cat nice_puzzles.js | grep -o 'fen[^ ]*' | sed 's/[pPkK/fen:1-8"]//g' | perl -F -lane 'print sort @F' | sort | uniq -c | sort
+   78  cat nice_puzzles.js | grep -o 'fen[^ ]*' | sed 's/[pPkK/fen:1-8"]//g' | tr qrbn QRBN | perl -F -lane 'print sort @F' | sort | uniq -c | sort
+   
     -->
 
 </body>

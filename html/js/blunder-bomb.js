@@ -1,6 +1,7 @@
 /* globals clearHighlights, highlightFromDescriptions, 
     initializeClock, ChessBoard, $, problems, renderFeature, updateUrlWithState, getParameterByName,
-    updateFilters, Chess, kg_puzzles, mcdonnell_puzzles, caro_puzzles ,endgame_puzzles, rook_puzzles, selectPuzzle, highlight, clearHighlight, highlightControlledSquares */
+    updateFilters, Chess, kg_puzzles, mcdonnell_puzzles, caro_puzzles ,endgame_puzzles, rook_puzzles, 
+    selectPuzzle, highlight, clearHighlight, highlightControlledSquares, submitHighscore, all_puzzles, fetchHighScores */
 
 'use strict';
 
@@ -17,13 +18,42 @@ var moves = {};
 var move = {};
 var boardEl = $('#board');
 var puzzleStateShowResult = false;
+var selectedValue = 'p';
 
-var e1p = endgame_puzzles.filter(x => pawnCount(x.fen, 1));
-var e2p = endgame_puzzles.filter(x => pawnCount(x.fen, 2));
-var e3p = endgame_puzzles.filter(x => pawnCount(x.fen, 3));
-var e4p = endgame_puzzles.filter(x => pawnCount(x.fen, 4));
-var e5p = endgame_puzzles.filter(x => pawnCount(x.fen, 5));
-var e6p = endgame_puzzles.filter(x => pawnCount(x.fen, 6));
+function initialiseDropDown() {
+    all_puzzles['kg'] = kg_puzzles;
+    all_puzzles['mcd'] = mcdonnell_puzzles;
+    all_puzzles['caro'] = caro_puzzles;
+
+    var $selectDropdown = $('#puzzleType');
+    $.each(all_puzzles, function(key) {
+        $selectDropdown.append('<option value=' + key + '>' + description(key) + ' (' + all_puzzles[key].length + ')</option>');
+    });
+
+    $("#puzzleType").html($("option").sort(function(a, b) {
+        return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
+    }));
+}
+
+function description(material) {
+    if (/^P+$/.test(material)) {
+        return material.length + " x♙";
+    }
+    if (/[aeiou]+/.test(material)) {
+        return material;
+    }
+    return material
+        .replace(/n/g, "♞")
+        .replace(/b/g, "♝")
+        .replace(/r/g, "♜")
+        .replace(/q/g, "♛")
+        .replace(/p/g, "♟")
+        .replace(/N/g, "♘")
+        .replace(/B/g, "♗")
+        .replace(/R/g, "♖")
+        .replace(/Q/g, "♕")
+        .replace(/P/g, "♙");
+}
 
 function pawnCount(fen, n) {
     return fen.replace(/[^pP]*/g, '').length === n;
@@ -119,23 +149,13 @@ function prependToHistory(text) {
 
 
 function selectPuzzle(a) {
-    var selectedValue = a.options[a.selectedIndex].value;
+    selectedValue = a.options[a.selectedIndex].value;
     changeToPuzzle(selectedValue);
 }
 
 function changeToPuzzle(selectedValue) {
     updateUrlWithState(selectedValue);
-    if (selectedValue === 'kg') { puzzles = kg_puzzles }
-    if (selectedValue === 'mcdonnell') { puzzles = mcdonnell_puzzles }
-    if (selectedValue === 'caro') { puzzles = caro_puzzles }
-    if (selectedValue === 'endgame') { puzzles = endgame_puzzles }
-    if (selectedValue === '1p') { puzzles = e1p }
-    if (selectedValue === '2p') { puzzles = e2p }
-    if (selectedValue === '3p') { puzzles = e3p }
-    if (selectedValue === '4p') { puzzles = e4p }
-    if (selectedValue === '5p') { puzzles = e5p }
-    if (selectedValue === '6p') { puzzles = e6p }
-    if (selectedValue === 'rook') { puzzles = rook_puzzles }
+    puzzles = all_puzzles[selectedValue];
     restart();
 }
 
@@ -143,6 +163,9 @@ function restart() {
     tried = 0;
     correct = 0;
     $('#history').html('');
+    $('.newhighscore').css("visibility", "hidden");
+    document.getElementById("blunder").disabled = false;
+    document.getElementById("next").disabled = false;
     enterNextPuzzleState();
 }
 
@@ -164,28 +187,37 @@ function enterNextPuzzleState() {
     loadPuzzle();
 }
 
-function init() {
-    $('#blunder').on('click', blunder);
-    $('#next').on('click', nextMove);
-    $('#continue').on('click', enterNextPuzzleState);
-    $('#flip').on('click', function f() { board.flip(); });
-    $(document).on('keypress', function(e) {
-        if (e.which == 32) {
-            nextMove();
-            e.preventDefault();
-            return false;
-        }
-        if (e.which == 98) { blunder(); }
-    });
-
-    var puzzle = getParameterByName('p');
-    if (puzzle !== null) {
-        document.getElementById("puzzleType").value = puzzle;
-        changeToPuzzle(puzzle);
+function keyHandler(e) {
+    if ($('.newhighscore').css("visibility") !== "hidden") {
         return;
     }
 
-    loadPuzzle();
+    if (e.which == 32) {
+        nextMove();
+        e.preventDefault();
+        return false;
+    }
+    if (e.which == 98) { blunder(); }
+}
+
+function init() {
+    initialiseDropDown();
+    $('#blunder').on('click', blunder);
+    $('#next').on('click', nextMove);
+    $('#continue').on('click', enterNextPuzzleState);
+    $(document).on('keypress', keyHandler);
+    fetchHighScores();
+
+    var puzzle = getParameterByName('p');
+    if (puzzle === null) {
+        puzzle = 'P';
+    }
+
+    document.getElementById("puzzleType").value = puzzle;
+    selectedValue = puzzle;
+    changeToPuzzle(puzzle);
+    return;
+
 }
 
 $(document).ready(init);
