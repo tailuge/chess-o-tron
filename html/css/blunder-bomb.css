@@ -162,7 +162,8 @@ a:visited {
 #score, #timer {
   font-family: monospace;
   vertical-align: middle;
-  font-size: medium;
+  font-size: large;
+  display:inline;
 }
 
 #continue {

@@ -9,18 +9,24 @@ var all_scores = { results: [] };
 function initialiseHighScores(all_puzzles, scores) {
     all_scores = scores;
     console.log("initialiseHighScores");
-    console.log(all_scores);
+
+    var keys = Object.keys(all_puzzles).sort(function(a, b) {
+        var scoreA = playerScores(a, all_scores);
+        var scoreB = playerScores(b, all_scores);
+        var A = (scoreA.length > 0 ? scoreA[0].score : 0);
+        var B = (scoreB.length > 0 ? scoreB[0].score : 0);
+        return (A === B) ? 0 : ((A < B) ? 1 : -1);
+    });
+
     var $highscoretable = $('#highscoretable');
     $highscoretable.empty();
-    $.each(all_puzzles, function(key) {
+    keys.forEach(function(key) {
         $highscoretable.append(highscore(key, all_puzzles, all_scores));
     });
 }
 
 function highscore(key, all_puzzles, all_scores) {
-    var scores = playerScores(key, all_scores).sort(function(a, b) {
-        return a.score == b.score ? 0 : a.score < b.score ? 1 : -1;
-    });
+    var scores = playerScores(key, all_scores);
     var blank = '<div class="highscoreplayer"></div><div class="highscorescore">&ensp;</div>';
     var result = '<div class="highscorebox"><div class="highscoreheader">' + description(key) + '</div>';
     if (scores.length > 0) {
@@ -50,7 +56,9 @@ function playerLink(player) {
 }
 
 function playerScores(key, all_scores) {
-    return all_scores.results.filter(row => row.game === key);
+    return all_scores.results.filter(row => row.game === key).sort(function(a, b) {
+        return a.score == b.score ? 0 : a.score < b.score ? 1 : -1;
+    });
 }
 
 var hss = "https://sleepy-reaches-61664.herokuapp.com";
