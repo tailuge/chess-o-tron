@@ -6,6 +6,7 @@
 </head>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+	/*global axios*/
 	console.log("Begin test");
 	axios.get('https://lichess.org/games/export/tailuge?max=2&evals=true&moves=true&opening=true', {
 			headers: { Accept: "application/x-ndjson" }
@@ -21,7 +22,7 @@
 </script>
 
 <body>
-	<h3>Test: https://lichess.org/games/export/tailuge?max=1&evals=true&moves=true&opening=true</h3>
+	<h3>Test: https://lichess.org/games/export/tailuge?max=2&evals=true&moves=true&opening=true</h3>
 	<p id="log">loading</p>
 </body>
 
