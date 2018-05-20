@@ -52,8 +52,8 @@ function processData(allgames, player, colour, filter, trim, depth, variant, tim
 	var gamesWithTimecontrol = gamesWithStandardVariant.filter(x => timecontrol ? x.speed === timecontrol : true);
 	console.log("gamesWithTimecontrol:", gamesWithTimecontrol.length);
 	var gamesByPlayer = gamesWithTimecontrol.filter(x => {
-		var id = colour === "white" ? x.players.white.user.id : x.players.black.user.id;
-		return id && id.toUpperCase() == player.toUpperCase();
+		var user = colour === "white" ? x.players.white.user: x.players.black.user;
+		return user && user.id && user.id.toUpperCase() == player.toUpperCase();
 	});
 	console.log("gamesByPlayer:", gamesByPlayer.length);
 
