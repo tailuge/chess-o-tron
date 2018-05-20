@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+
+<head>
+</head>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+	console.log("test");
+	axios.get('https://lichess.org/games/export/tailuge?max=1&evals=true&moves=true&opening=true', {
+			headers: { Accept: "application/x-ndjson" }
+		})
+		.then(function(response) {
+			console.log(response);
+		})
+		.catch(function(error) {
+			console.log(error);
+			document.getElementById("log").innerHTML = error;
+		});
+	console.log("done");
+</script>
+
+<body>
+
+	<h3>Test: https://lichess.org/games/export/tailuge?max=1&evals=true&moves=true&opening=true</h3>
+
+	<p id="log"></p>
+
+</body>
+
+</html>
