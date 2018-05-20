@@ -127,15 +127,19 @@
 <body>
 	<div class="controls">
 		<div class="force">
-			<p><label>Game data</label> from lichess</p>
-			Player:<input type="text" id="player" name="player" value="tailuge" onkeydown="pressEnter(event)" /> Last N games:
+			<p><label>Game History</label><br/><br/>Game history is fetched at 10 games per second from <a href="https://lichess.org/api">lichess</a>. The more you ask for the longer it takes.</p>
+			
+			Player:<input type="text" id="player" name="player" value="tailuge" onkeydown="pressEnter(event)" />
+			<br/>
+			<br/>
+			Number of recent games to fetch:
 			<input type="text" name="pages" id="pages" value="10" onkeydown="pressEnter(event)" />
 			<br/>
 			<br/>
 			<input type="submit" id="Search" value="Fetch data" onclick="search()">
 		</div>
 		<div class="force">
-			<p><label>Analysis</label> </p>
+			<p><label>Opening Analysis</label> </p>
 			Variant: <br/>
 			<select id="variant">
 			  <option value="standard">Standard</option>
@@ -178,6 +182,11 @@
 		<div class="force alpha">
 			<p><label>Activity</label></p>
 			<div id="status" style="font-size: 11px;"></div>
+			<br/>
+		</div>
+
+		<div class="force alpha">
+			<div id="status" style="font-size: 11px;"><a href="https://github.com/tailuge">tailuge</a></div>
 			<br/>
 		</div>
 
