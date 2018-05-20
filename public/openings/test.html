@@ -13,7 +13,7 @@
 		})
 		.then(function(response) {
 			console.log(response);
-			document.getElementById("log").innerHTML = response;
+			document.getElementById("log").innerHTML = response.data.split("\n").filter(x=>x !== "").map(x=>JSON.stringify(x));
 		})
 		.catch(function(error) {
 			console.log(error);
@@ -23,7 +23,7 @@
 
 <body>
 	<h3>Test: https://lichess.org/games/export/tailuge?max=2&evals=true&moves=true&opening=true</h3>
-	<p id="log">loading</p>
+	<pre id="log">loading</pre>
 </body>
 
 </html>

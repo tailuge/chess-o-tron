@@ -128,8 +128,8 @@
 	<div class="controls">
 		<div class="force">
 			<p><label>Game data</label> from lichess</p>
-			Player:<input type="text" id="player" name="player" value="tailuge" onkeydown="pressEnter(event)" /> Pages:
-			<input type="text" name="pages" id="pages" value="1" onkeydown="pressEnter(event)" />
+			Player:<input type="text" id="player" name="player" value="tailuge" onkeydown="pressEnter(event)" /> Last N games:
+			<input type="text" name="pages" id="pages" value="10" onkeydown="pressEnter(event)" />
 			<br/>
 			<br/>
 			<input type="submit" id="Search" value="Fetch data" onclick="search()">
@@ -171,7 +171,7 @@
 			<input type="checkbox" id="trim" checked> Trim tails
 			<br/>
 			<br/>
-			<input type="submit" value="Compute" onclick="search()">
+			<input type="submit" value="Recompute" onclick="search()">
 			<input type="submit" value="Transmogrify" onclick="transmogrify()">
 		</div>
 
@@ -269,7 +269,7 @@
 			var timecontrol = document.getElementById("timecontrol").value;
 
 			updateUrlWithState(player, pages, filter, colour, trim);
-			fetchLichessData(player, [], pages.split(","), player + pages, function(data) {
+			fetchLichessData(player, [], pages, player + pages, function(data) {
 				processData(data, player, colour, filter, trim, depth, variant, timecontrol);
 				document.getElementById("Search").disabled = false;
 			});

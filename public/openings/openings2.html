@@ -241,7 +241,7 @@
 			var trim = document.getElementById('trim').checked;
 			var depth = document.getElementById("depth").value;
 			updateUrlWithState(player, pages, filter, colour, trim);
-			fetchLichessData(player, [], pages.split(","), player + pages, function(data) {
+			fetchLichessData(player, [], pages, player + pages, function(data) {
 				processData(data, player, colour, filter, trim, depth);
 				document.getElementById("Search").disabled = false;
 			});

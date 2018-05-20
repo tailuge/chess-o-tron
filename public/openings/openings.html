@@ -71,7 +71,7 @@
 			var colour = document.getElementById('colour').checked ? 'white' : 'black';
 			var trim = document.getElementById('trim').checked;
 			updateUrlWithState(player, pages, filter, colour, trim);
-			fetchLichessData(player, [], pages.split(","), player + pages, function(data) {
+			fetchLichessData(player, [], pages, player + pages, function(data) {
 				processData(data, player, colour, filter, trim, 24);
 				document.getElementById("Search").disabled = false;
 			});
