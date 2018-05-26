@@ -4,21 +4,40 @@
 
 <head>
 </head>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/oboe.js/2.1.4/oboe-browser.min.js"></script>
 <script>
-	/*global axios*/
-	console.log("Begin test");
-	axios.get('https://lichess.org/games/export/tailuge?max=2&evals=true&moves=true&opening=true', {
-			headers: { Accept: "application/x-ndjson" }
-		})
-		.then(function(response) {
-			console.log(response);
-			document.getElementById("log").innerHTML = response.data.split("\n").filter(x=>x !== "").map(x=>JSON.stringify(x));
-		})
-		.catch(function(error) {
-			console.log(error);
-			document.getElementById("log").innerHTML = error;
+	/*global oboe*/
+
+	function nl() {
+		return "<br/> " + (new Date()).getTime() + " ";
+	}
+
+	function log(x) {
+		document.getElementById("log").innerHTML += nl() + x;
+	}
+
+	fetchAndStream(25,
+		x => { log("stream:" + JSON.stringify(x)); },
+		x => { log("done  :" + JSON.stringify(x)); });
+
+	function fetchAndStream(items, itemCallback, completeCallback) {
+		var all = [];
+		oboe({
+			method: "GET",
+			url: "https://lichess.org/games/export/tailuge?max=" + items + "&evals=true&moves=true&opening=true",
+			headers: { Accept: "application/x-ndjson" },
+		}).node("!", function(data) {
+			all.push(data);
+			itemCallback(data);
+			if (all.length === items) {
+				completeCallback(all);
+				oboe.abort();
+			}
+		}).fail(function(errorReport) {
+			console.error(JSON.stringify(errorReport));
+			document.getElementById("log").innerHTML = JSON.stringify(errorReport);
 		});
+	}
 </script>
 
 <body>

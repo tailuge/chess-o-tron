@@ -1,11 +1,11 @@
-/* globals d3: false $: false gamesToNodes trimArms2 trimArms nodesToLinks backPropagateScores textToNode buildEvalDictionary draw*/
+/* globals oboe gamesToNodes trimArms2 nodesToLinks backPropagateScores textToNode buildEvalDictionary draw*/
 
 function status(text) {
 	console.log(text);
 	document.getElementById("status").innerHTML = text;
 }
 
-var dataCache = {}
+var dataCache = {};
 
 function fetchLichessData(player, accumulated, pages, cacheid, callback) {
 
@@ -19,32 +19,32 @@ function fetchLichessData(player, accumulated, pages, cacheid, callback) {
 		return;
 	}
 
-	$.ajax({
+	var all = [];
+	oboe({
+		method: "GET",
 		url: "https://lichess.org/games/export/" + player + "?max=" + pages + "&evals=true&moves=true&opening=true",
-		headers: {
-			Accept: "application/x-ndjson"
-		},
-		cache: false,
-		success: function(data) {
-			data = data.split("\n").filter(x => x !== "").map(x => JSON.parse(x));
-			console.log(data);
-			dataCache[cacheid] = data;
+		headers: { Accept: "application/x-ndjson" },
+	}).node("!", function(data) {
+		all.push(data);
+		status("Fetching " + all.length + " of " + pages);
+		if (all.length == pages) {
+			dataCache[cacheid] = all;
 			status("Calculating");
 			setTimeout(function() {
-				callback(data);
+				callback(all);
 			}, 100);
-		}.bind(this),
-		error: function(xhr, status, err) {
-			console.error(this.props.url, status, err.toString());
-		}.bind(this)
+		}
+	}).fail(function(errorReport) {
+		console.error(errorReport);
 	});
 }
+
 
 // curl 'https://lichess.org/games/export/tailuge?max=2' -H 'Accept: application/x-ndjson' 
 
 function processData(allgames, player, colour, filter, trim, depth, variant, timecontrol) {
 	console.log(JSON.stringify(allgames, null, 1));
-	variant = variant ? variant : 'standard'
+	variant = variant ? variant : 'standard';
 	console.log("allgames:", allgames.length);
 
 	var gamesWithStandardVariant = allgames.filter(x => x.variant === variant);
@@ -52,7 +52,7 @@ function processData(allgames, player, colour, filter, trim, depth, variant, tim
 	var gamesWithTimecontrol = gamesWithStandardVariant.filter(x => timecontrol ? x.speed === timecontrol : true);
 	console.log("gamesWithTimecontrol:", gamesWithTimecontrol.length);
 	var gamesByPlayer = gamesWithTimecontrol.filter(x => {
-		var user = colour === "white" ? x.players.white.user: x.players.black.user;
+		var user = colour === "white" ? x.players.white.user : x.players.black.user;
 		return user && user.id && user.id.toUpperCase() == player.toUpperCase();
 	});
 	console.log("gamesByPlayer:", gamesByPlayer.length);
@@ -90,15 +90,13 @@ function processData(allgames, player, colour, filter, trim, depth, variant, tim
 	if (trim === true) {
 		trimArms2(nodes);
 	}
-	//nodes = trimArms(nodes);
+
 	status("generate links");
 	var d3Links = nodesToLinks(nodes);
 	status("propagate scores");
 	backPropagateScores(nodes);
-	//	console.log(JSON.stringify(nodes));
 
 	var d3Nodes = nodes.map(t => textToNode(t, evalDictionary));
-	//	console.log(JSON.stringify(d3Nodes));
 
 	status("Produced " + nodes.length + " nodes from " + games.length + " games");
 
@@ -109,8 +107,6 @@ function processData(allgames, player, colour, filter, trim, depth, variant, tim
 		"nodes": d3Nodes,
 		"links": d3Links
 	};
-
-	//console.log(JSON.stringify(data,null,1));
-
+	
 	draw(data);
 }
