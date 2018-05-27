@@ -27,13 +27,12 @@ function fetchLichessData(player, accumulated, pages, cacheid, callback) {
 	}).node("!", function(data) {
 		all.push(data);
 		status("Fetching " + all.length + " of " + pages);
-		if (all.length == pages) {
-			dataCache[cacheid] = all;
-			status("Calculating");
-			setTimeout(function() {
-				callback(all);
-			}, 100);
-		}
+	}).on("end", function(data) {
+		dataCache[cacheid] = all;
+		status("Calculating");
+		setTimeout(function() {
+			callback(all);
+		}, 100);
 	}).fail(function(errorReport) {
 		console.error(errorReport);
 	});
@@ -107,6 +106,6 @@ function processData(allgames, player, colour, filter, trim, depth, variant, tim
 		"nodes": d3Nodes,
 		"links": d3Links
 	};
-	
+
 	draw(data);
 }

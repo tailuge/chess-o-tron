@@ -29,10 +29,8 @@
 		}).node("!", function(data) {
 			all.push(data);
 			itemCallback(data);
-			if (all.length === items) {
-				completeCallback(all);
-				oboe.abort();
-			}
+		}).on("end", function(data) {
+			completeCallback(all);
 		}).fail(function(errorReport) {
 			console.error(JSON.stringify(errorReport));
 			document.getElementById("log").innerHTML = JSON.stringify(errorReport);
