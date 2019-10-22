@@ -32,7 +32,7 @@
 
     <div align="center" style="width: 100%;">
         <h2>Blunder-bomb-<a href="https://tailuge.github.io/chess-o-tron/">o-tron</a></h2>
-        <div><i>Identify the 
+        <div><i>Identify the
         <select id="puzzleType" onChange="selectPuzzle(this)">
         </select>
         blunders - all data extracted from <a href="https://database.lichess.org/">database.lichess.org</a></i></div>
@@ -78,7 +78,7 @@
 
 
         <br />
-        <div style="width: 80%;"><small><i>Step through the moves of the games using the spacebar until you see a blunder. If you identify the blunder you score a point. 
+        <div style="width: 80%;"><small><i>Step through the moves of the games using the spacebar until you see a blunder. If you identify the blunder you score a point.
         If you miss it or think a good move is a blunder you fail. Click the link in the progress section to see the game on lichess that explains the blunder.
         The games all start out drawn (zero eval in Stockfish) and the objective is to train yourself to spot blunders when they happen in a passage of play.</i></small></div>
 
@@ -91,6 +91,7 @@
 
     <!-- puzzle data -->
     <script src="js/kg.js"></script>
+    <script src="js/bertin.js"></script>
     <script src="js/caro.js"></script>
     <script src="js/mcdonnell.js"></script>
     <script src="js/allpuzzles.js"></script>
@@ -102,13 +103,13 @@
     <script src="js/queryParam.js"></script>
 
     <!-- to extract data
-    
+
     time grep "%eval" lichess_db_standard_rated_2017-06.pgn | sed 's/{[^}]*}//g' | sed -r 's/[0-9]{1,2}\.\.\. //g' | sed 's/??.*//' |sed 's/[?!]//g'| sed 's/  / /g' | grep -v '10\.' | egrep 'c6 2\. .* d5 3\.' | sort | uniq -c | sort -r -n | head -100 | cut -c9- | sed 's/\(.*\)/"\1",/'
-    
+
     aquiecent state then blunder after move 20
-    
+
     head -200 evals | sed 's/\[\%eval -*0\..../ X /g' | sed 's/..clk[^]]*.//g' | egrep '20\. .*X[^X?]*X[^X?]*X[^X?]*\?\?'
-    
+
     bzgrep -B15 "%eval" lichess_db_standard_rated_2014-01.pgn.bz2 | egrep '^\[Site|^1. ' | tr -d '\n' | sed 's/\[Site/\n/g' | sed 's/"\]/" /'> siteAndEvals
     cat siteEvals | sed 's/{[^}]*}//g' | sed -r 's/[0-9]{1,2}\.\.\. //g' | sed 's/??.*/??/' | sed 's/  / /g' | grep -v '10\.' | grep '1. e4 e5 2. f4' | grep -v '? ' | sed 's/^\(.*"\) \(.*\)/{url:\1, moves:"\2"},/'
 
@@ -148,7 +149,7 @@ time grep '{ %0.0 }' siteEvalLine | grep -v ' 2. .* 2. ' | sed 's/{ %0.0 }/X/g' 
 
    77  cat nice_puzzles.js | grep -o 'fen[^ ]*' | sed 's/[pPkK/fen:1-8"]//g' | perl -F -lane 'print sort @F' | sort | uniq -c | sort
    78  cat nice_puzzles.js | grep -o 'fen[^ ]*' | sed 's/[pPkK/fen:1-8"]//g' | tr qrbn QRBN | perl -F -lane 'print sort @F' | sort | uniq -c | sort
-   
+
     -->
 
 </body>

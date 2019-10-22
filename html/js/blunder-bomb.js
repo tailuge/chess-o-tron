@@ -1,6 +1,6 @@
-/* globals clearHighlights, highlightFromDescriptions, 
+/* globals clearHighlights, highlightFromDescriptions,
     initializeClock, ChessBoard, $, problems, renderFeature, updateUrlWithState, getParameterByName,
-    updateFilters, Chess, kg_puzzles, mcdonnell_puzzles, caro_puzzles ,endgame_puzzles, rook_puzzles, 
+    updateFilters, Chess, kg_puzzles, mcdonnell_puzzles, caro_puzzles ,endgame_puzzles, rook_puzzles,
     selectPuzzle, highlight, clearHighlight, highlightControlledSquares, submitHighscore, all_puzzles, fetchHighScores */
 
 'use strict';
@@ -22,6 +22,7 @@ var selectedValue = 'p';
 
 function initialiseDropDown() {
     all_puzzles['KG'] = kg_puzzles;
+    all_puzzles['Bertin'] = bertin_puzzles;
     all_puzzles['McD'] = mcdonnell_puzzles;
     all_puzzles['Caro'] = caro_puzzles;
 
