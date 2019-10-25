@@ -9,7 +9,10 @@ cat blunderlines | sort -t']' -k2 -u | wc -l
 
 # extract bertin lines to puzzle format
 
-grep '1. e4 e5 2. f4 exf4 3. Nf3 Be7 4. Bc4' blunderlines | sed 's/\[Site/{ url:/' | sed 's/\] /, moves: "/' | sed 's/??/??" },/' > html/js/bertin.js
+grep '1. e4 e5 2. f4 [^ ]* 3. Nf3 Be7 ' blunderlines | sort -t']' -k2 -u | sed 's/\[Site/{ url:/' | sed 's/\] /, moves: "/' | sed 's/??/??" },/' > html/js/bertin.js
 
+# extract kg*
+
+grep '1. e4 [^ ]* 2. f4 [^ ]* 3. Nf3 ' blunderlines | sort -t']' -k2 -u | sed 's/\[Site/{ url:/' | sed 's/\] /, moves: "/' | sed 's/??/??" },/'
 
 
