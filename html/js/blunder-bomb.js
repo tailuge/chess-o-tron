@@ -133,7 +133,7 @@ function failedToIdentifyBlunder(text) {
 }
 
 function linkToAnalysis(text) {
-    return '<a target="_blank" href="' + puzzles[puzzleindex].url + '">' + text + '</a>';
+    return '<a target="_blank" href="' + puzzles[puzzleindex].url + '#' + moves.length + '">' + text + '</a>';
 }
 
 function moveWasBlunder() {
