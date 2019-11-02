@@ -1,12 +1,39 @@
 var Chess = require('chess.js').Chess;
 var stockfish = require("stockfish");
 var sf = new stockfish();
+var lineByLine = require('n-readlines');
+
+//
+// usage:
+// node analyse.js ../html/js/bertin.js > bertin_solutions.js
+//
+
+async function main() {
+    const liner = new lineByLine(process.argv[2]);
+    var line;
+    while (line = liner.next()) {
+        var fullLine = line.toString();
+        var result = await convertLine(fullLine);
+        console.log(result);
+    }
+}
+
+main();
+
+async function convertLine(line) {
+    if (/moves:/.test(line)) {
+        var pgn = line.match(/moves.*:[^"]*"([^"]*)"/)[1];
+        line = line.replace('}', ', best: "' + await pgnToBestMove(pgn) + '"}');
+    }
+    return line
+}
+
 
 async function bestMove(fen) {
     return new Promise((resolve, reject) => {
         sf.onmessage = (event) => {
             if (/^bestmove/.test(event)) {
-                resolve(event);
+                resolve(event.split(' ')[1]);
             }
         };
         sf.postMessage('position fen ' + fen);
@@ -14,10 +41,8 @@ async function bestMove(fen) {
     });
 }
 
-async function main() {
+async function pgnToBestMove(pgn) {
     var chess = new Chess();
-    chess.load_pgn('1. e4 e5 2. f4 exf4 3. Nf3 Be7 4. Bc4 Bh4+ 5. g3 Bxg3+??')
-    console.log(await bestMove(chess.fen()));
+    chess.load_pgn(pgn);
+    return bestMove(chess.fen());
 }
-
-main();

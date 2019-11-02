@@ -15,4 +15,8 @@ grep '1. e4 e5 2. f4 [^ ]* 3. Nf3 Be7 ' blunderlines | sort -t']' -k2 -u | sed '
 
 grep '1. e4 [^ ]* 2. f4 [^ ]* 3. Nf3 ' blunderlines | sort -t']' -k2 -u | sed 's/\[Site/{ url:/' | sed 's/\] /, moves: "/' | sed 's/??/??" },/'
 
+# enrich lines with solutions
 
+node analyse.js ../html/js/kg.js > kg_solutions.js
+
+grep -o best.* kg_solutions.js | sort | uniq -c | sort -n

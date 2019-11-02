@@ -6,8 +6,9 @@
   "directories": {},
   "devDependencies": {},
   "dependencies": {
-    "stockfish": "~10.0.2",
-    "chess.js": "github:ornicar/chess.js#learn"
+    "chess.js": "github:ornicar/chess.js#learn",
+    "n-readlines": "^1.0.0",
+    "stockfish": "~10.0.2"
   },
   "repository": {
     "type": "git",
