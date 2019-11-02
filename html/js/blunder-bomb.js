@@ -202,7 +202,7 @@ function keyHandler(e) {
         return false;
     }
     if (e.which == 98) { blunder(); }
-    if (e.which == 70) { board.orientation('flip'); }
+    if (e.which == 102) { board.orientation('flip'); }
 }
 
 function init() {
