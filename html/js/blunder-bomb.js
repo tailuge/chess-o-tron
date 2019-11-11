@@ -130,7 +130,10 @@ function failedToIdentifyBlunder(text) {
     prependToHistory(pgn + ' ' + link);
     $('.outcome').css({ 'background-image': 'linear-gradient(#fed1d1, #fd715d)' });
     if (puzzles[puzzleindex].best) {
-        $('#bestmove').html('<b>best continuation is '+puzzles[puzzleindex].best+'</b>');
+        $('#bestmove').html('best continuation is '+puzzles[puzzleindex].best);
+    } else {
+        $('#bestmove').html('');
+
     }
     enterShowIncorrectState();
 }
@@ -171,6 +174,7 @@ function restart() {
     document.getElementById("blunder").disabled = false;
     document.getElementById("next").disabled = false;
     enterNextPuzzleState();
+    $('#puzzleType').blur();
 }
 
 function enterShowCorrectState() {
