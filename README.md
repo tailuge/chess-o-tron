@@ -1,6 +1,6 @@
 # chess-o-tron
 
-[examples](https://tailuge.github.io/chess-o-tron/)
+[examples](https://tailuge.github.io/chess-o-tron/index.html)
 
 ```
 git clone https://github.com/tailuge/chess-o-tron.git
