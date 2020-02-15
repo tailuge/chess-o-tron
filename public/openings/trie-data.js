@@ -22,7 +22,7 @@ function fetchLichessData(player, accumulated, pages, cacheid, callback) {
 	var all = [];
 	oboe({
 		method: "GET",
-		url: "https://lichess.org/games/export/" + player + "?max=" + pages + "&evals=true&moves=true&opening=true",
+		url: "https://lichess.org/api/games/user/" + player + "?max=" + pages + "&evals=true&moves=true&opening=true",
 		headers: { Accept: "application/x-ndjson" },
 	}).node("!", function(data) {
 		all.push(data);
@@ -39,7 +39,7 @@ function fetchLichessData(player, accumulated, pages, cacheid, callback) {
 }
 
 
-// curl 'https://lichess.org/games/export/tailuge?max=2' -H 'Accept: application/x-ndjson' 
+// curl 'https://lichess.org/api/games/user/tailuge?max=2' -H 'Accept: application/x-ndjson' 
 
 function processData(allgames, player, colour, filter, trim, depth, variant, timecontrol) {
 	console.log(JSON.stringify(allgames, null, 1));
